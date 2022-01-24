@@ -65,7 +65,7 @@ export default function Search() {
     >
       <Box
         sx={{
-          bgcolor: "#2e1534",
+          bgcolor: "#333333",
           borderRadius: "0.2rem 0.2rem 0 0",
           py: "0.3rem",
           px: "0.75rem",

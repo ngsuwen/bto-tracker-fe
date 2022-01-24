@@ -51,7 +51,7 @@ export default function CustomizedTabs() {
   };
 
   return (
-    <Box sx={{ bgcolor: "#2e1534" }}>
+    <Box sx={{ bgcolor: "#333333" }}>
       <Container maxWidth="xl">
         <Box
           sx={{
