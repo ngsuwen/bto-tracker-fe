@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Container, TextField, MenuItem, Typography } from "@mui/material";
+import { Container, TextField, MenuItem, Typography, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 // api call to get list of projects
@@ -54,28 +54,31 @@ export default function Search() {
   };
 
   return (
-    <>
-      <Container
-        maxWidth="md"
+    <Container
+      maxWidth="md"
+      sx={{
+        display:"flex",
+        flexDirection:"column",
+        alignItems:"flex-start",
+        marginTop: "40vh"
+      }}
+    >
+      <Box
+        sx={{
+          bgcolor: "#2e1534",
+          borderRadius: "0.2rem 0.2rem 0 0",
+          py: "0.3rem",
+          px: "0.75rem",
+          marginLeft: "1rem"
+        }}
       >
-        <Container
-          maxWidth={false}        
-          sx={{
-            float: "left",
-            width:"8rem",
-            marginTop: "40vh",
-            bgcolor: "#2e1534",
-            borderRadius: "0.2rem 0.2rem 0 0",
-            py:"0.3rem",
-        }}>
-          <Typography sx={{color:"white", fontSize:"0.8rem"}}>Quick Search</Typography>
-        </Container>
-      </Container>
+        <Typography sx={{ color: "white", fontSize: "0.8rem" }}>
+          Quick Search
+        </Typography>
+      </Box>
       <Container
-        maxWidth="md"
         sx={{
           bgcolor: "white",
-          marginTop: "45.3vh",
           borderRadius: "0.4rem",
           boxShadow: "2px 2px 10px #aaaaaa",
           padding: "1.5rem",
@@ -119,6 +122,6 @@ export default function Search() {
           }}
         />
       </Container>
-    </>
+    </Container>
   );
 }
