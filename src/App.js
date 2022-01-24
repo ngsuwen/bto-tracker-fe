@@ -3,13 +3,13 @@ import "./App.css";
 
 // pages
 import ScrollableTabs from "./components/general/tabs";
-import CoverPic from "./components/homepage/cover";
+import Home from "./components/homepage/homepage";
 
 function App() {
   return (
     <>
       <ScrollableTabs />
-      <CoverPic/>
+      <Home/>
     </>
   );
 }
