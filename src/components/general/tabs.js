@@ -1,6 +1,12 @@
 import * as React from "react";
 import { Container, Box, Tab, Tabs, styled } from "@mui/material";
 
+// custom breakpoint
+const nav = (theme) => ({
+  [theme.breakpoints.down('md')]: {display:'none'},
+  [theme.breakpoints.up('md')]: {bgcolor: "#333333", display:'block'}
+});
+
 const StyledTabs = styled((props) => (
   <Tabs
     {...props}
@@ -51,7 +57,7 @@ export default function CustomizedTabs() {
   };
 
   return (
-    <Box sx={{ bgcolor: "#333333" }}>
+    <Box sx={nav}>
       <Container maxWidth="xl">
         <Box
           sx={{

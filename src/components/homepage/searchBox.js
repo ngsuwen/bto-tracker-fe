@@ -30,6 +30,7 @@ const btoProjects = [
   },
 ];
 
+// page destination
 const searchFx = [
   {
     value: "info",
@@ -40,6 +41,13 @@ const searchFx = [
     label: "Tracker",
   },
 ];
+
+// custom breakpoints
+const searchSx = (theme) => ({
+  [theme.breakpoints.down('sm')]: { marginRight: "1.5rem", width: "40%", textAlign: "left" },
+  [theme.breakpoints.up('sm')]: { marginRight: "1.5rem", width: "40%", textAlign: "left" },
+  [theme.breakpoints.up('md')]: { marginRight: "1.5rem", width: "45%", textAlign: "left" },
+});
 
 export default function Search() {
   const [bto, setBto] = React.useState("nov21hg");
@@ -90,7 +98,7 @@ export default function Search() {
           label="Projects"
           value={bto}
           onChange={handleChange}
-          sx={{ marginRight: "1.5rem", width: "45%", textAlign: "left" }}
+          sx={searchSx}
           InputProps={{ style: { fontSize: "0.85rem" } }}
         >
           {btoProjects.map((option) => (
@@ -106,7 +114,7 @@ export default function Search() {
           value={search}
           onChange={handleChange2}
           InputProps={{ style: { fontSize: "0.85rem" } }}
-          sx={{ marginRight: "1.5rem", width: "45%", textAlign: "left" }}
+          sx={searchSx}
         >
           {searchFx.map((option) => (
             <MenuItem key={option.value} value={option.value}>
