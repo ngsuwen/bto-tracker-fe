@@ -13,29 +13,29 @@ function Home() {
         <Typography variant="h5" marginBottom="3vh">
           Ongoing Projects
         </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
+        <Grid container spacing={2} sx={{display:"flex",justifyContent:"center"}}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
         </Grid>
@@ -47,17 +47,17 @@ function Home() {
         <Typography variant="h5" marginBottom="3vh">
           Upcoming Projects
         </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
+        <Grid container spacing={2} sx={{display:"flex",justifyContent:"center"}}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3}>
             <ProjectCard />
           </Grid>
         </Grid>
