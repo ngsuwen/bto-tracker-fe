@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/bto-tracker/static/css/main.0b829041.css",
-    "main.js": "/bto-tracker/static/js/main.6097aeb3.js",
-    "static/js/787.4d3ad370.chunk.js": "/bto-tracker/static/js/787.4d3ad370.chunk.js",
-    "index.html": "/bto-tracker/index.html",
-    "main.0b829041.css.map": "/bto-tracker/static/css/main.0b829041.css.map",
-    "main.6097aeb3.js.map": "/bto-tracker/static/js/main.6097aeb3.js.map",
-    "787.4d3ad370.chunk.js.map": "/bto-tracker/static/js/787.4d3ad370.chunk.js.map"
+    "main.css": "/bto-tracker-fe/static/css/main.0b829041.css",
+    "main.js": "/bto-tracker-fe/static/js/main.a9e25da8.js",
+    "static/js/787.4d3ad370.chunk.js": "/bto-tracker-fe/static/js/787.4d3ad370.chunk.js",
+    "index.html": "/bto-tracker-fe/index.html",
+    "main.0b829041.css.map": "/bto-tracker-fe/static/css/main.0b829041.css.map",
+    "main.a9e25da8.js.map": "/bto-tracker-fe/static/js/main.a9e25da8.js.map",
+    "787.4d3ad370.chunk.js.map": "/bto-tracker-fe/static/js/787.4d3ad370.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0b829041.css",
-    "static/js/main.6097aeb3.js"
+    "static/js/main.a9e25da8.js"
   ]
 }
