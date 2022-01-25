@@ -5,10 +5,7 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from '@mui/icons-material/Menu';
 
 // custom breakpoint
@@ -48,12 +45,9 @@ export default function SwipeableTemporaryDrawer() {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              {["Inbox", "Starred", "Send email", "Drafts"].map(
+              {["BTO Projects", "Tracker", "Useful links", "FAQs", "Disclaimer"].map(
                 (text, index) => (
                   <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
                     <ListItemText primary={text} />
                   </ListItem>
                 )
@@ -61,11 +55,8 @@ export default function SwipeableTemporaryDrawer() {
             </List>
             <Divider />
             <List>
-              {["All mail", "Trash", "Spam"].map((text, index) => (
+              {["+ Constribute", "Sign In"].map((text, index) => (
                 <ListItem button key={text}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
               ))}

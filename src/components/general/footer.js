@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
@@ -9,11 +9,13 @@ export default function Footer() {
             paddingY: "1.5rem",
             display: "flex",
             flexDirection:"column",
-            alignItems:"center"
+            textAlign:"center"
           }}
         >
-          <p>Built With ♡ For Fellow New Flat Owners.</p>
-          <p>© BTracker 2021 All rights reserved.</p>
+          <Typography variant="body2" color="#666666">
+          Built With ♡ For New Flat Owners. <br/>
+          © BTracker 2021 All rights reserved.
+          </Typography>
         </Box>
     </Box>
   );
