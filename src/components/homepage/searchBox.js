@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Container, TextField, MenuItem, Typography, Box } from "@mui/material";
+import { Container, TextField, MenuItem, Typography, Box, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 // api call to get list of projects
@@ -44,9 +44,20 @@ const searchFx = [
 
 // custom breakpoints
 const searchSx = (theme) => ({
-  [theme.breakpoints.down('sm')]: { marginRight: "1.5rem", width: "40%", textAlign: "left" },
+  [theme.breakpoints.down(500)]: { marginBottom:"1rem", width: "100%", textAlign: "left" },
+  [theme.breakpoints.up(500)]: { marginRight: "1.5rem", width: "40%", textAlign: "left" },
   [theme.breakpoints.up('sm')]: { marginRight: "1.5rem", width: "40%", textAlign: "left" },
   [theme.breakpoints.up('md')]: { marginRight: "1.5rem", width: "45%", textAlign: "left" },
+});
+
+const searchButton = (theme) => ({
+  [theme.breakpoints.down(500)]: { width:"100%", display: "block" },
+  [theme.breakpoints.up(500)]: { display: "none" }
+});
+
+const searchIcon = (theme) => ({
+  [theme.breakpoints.down(500)]: { display: "none" },
+  [theme.breakpoints.up(500)]: { py: "0.8rem" }
 });
 
 export default function Search() {
@@ -125,10 +136,9 @@ export default function Search() {
         <SearchIcon
           fontSize="medium"
           filled="true"
-          sx={{
-            py: "0.8rem",
-          }}
+          sx={searchIcon}
         />
+        <Button variant="contained" sx={searchButton}>Submit</Button> {/* ////////////////////// */}
       </Container>
     </Container>
   );

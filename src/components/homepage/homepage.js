@@ -5,11 +5,17 @@ import { Container, Typography, Grid, Button, Box } from "@mui/material";
 import CoverPic from "./cover";
 import ProjectCard from "./projectCard";
 
+// breakpoint
+const topOffset = (theme) => ({
+  [theme.breakpoints.down(500)]: { marginBottom: "8vh", marginTop: "250px" },
+  [theme.breakpoints.up(500)]: { marginBottom: "8vh", marginTop: "calc(8vh + 100px)" }
+});
+
 function Home() {
   return (
     <>
       <CoverPic />
-      <Container maxWidth="xl" sx={{ marginY: "8vh" }}>
+      <Container maxWidth="xl" sx={topOffset}>
         <Typography variant="h5" marginBottom="3vh">
           Ongoing Projects
         </Typography>
