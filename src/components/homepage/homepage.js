@@ -7,7 +7,7 @@ import ProjectCard from "./projectCard";
 
 // breakpoint
 const topOffset = (theme) => ({
-  [theme.breakpoints.down(500)]: { marginBottom: "8vh", marginTop: "250px" },
+  [theme.breakpoints.down(500)]: { marginBottom: "8vh", marginTop: "180px" },
   [theme.breakpoints.up(500)]: { marginBottom: "8vh", marginTop: "calc(8vh + 100px)" }
 });
 

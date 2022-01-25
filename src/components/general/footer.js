@@ -14,7 +14,7 @@ export default function Footer() {
         >
           <Typography variant="body2" color="#666666">
           Built With ♡ For New Flat Owners. <br/>
-          © BTracker 2021 All rights reserved.
+          © BTO Tracker 2021 All rights reserved.
           </Typography>
         </Box>
     </Box>

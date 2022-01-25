@@ -43,7 +43,7 @@ const searchFx = [
 ];
 
 // custom breakpoints
-const searchSx = (theme) => ({
+const searchText = (theme) => ({
   [theme.breakpoints.down(500)]: { marginBottom:"1rem", width: "100%", textAlign: "left" },
   [theme.breakpoints.up(500)]: { marginRight: "1.5rem", width: "40%", textAlign: "left" },
   [theme.breakpoints.up('sm')]: { marginRight: "1.5rem", width: "40%", textAlign: "left" },
@@ -58,6 +58,21 @@ const searchButton = (theme) => ({
 const searchIcon = (theme) => ({
   [theme.breakpoints.down(500)]: { display: "none" },
   [theme.breakpoints.up(500)]: { py: "0.8rem" }
+});
+
+const searchBoxOffset = (theme) => ({
+  [theme.breakpoints.down("md")]: {
+    display:"flex",
+    flexDirection:"column",
+    alignItems:"flex-start",
+    marginTop: "calc(15vh)"
+  },
+  [theme.breakpoints.up("md")]: {
+    display:"flex",
+    flexDirection:"column",
+    alignItems:"flex-start",
+    marginTop: "calc(20vh + 50px)"
+  }
 });
 
 export default function Search() {
@@ -75,12 +90,7 @@ export default function Search() {
   return (
     <Container
       maxWidth="md"
-      sx={{
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"flex-start",
-        marginTop: "40vh"
-      }}
+      sx={searchBoxOffset}
     >
       <Box
         sx={{
@@ -109,7 +119,7 @@ export default function Search() {
           label="Projects"
           value={bto}
           onChange={handleChange}
-          sx={searchSx}
+          sx={searchText}
           InputProps={{ style: { fontSize: "0.85rem" } }}
         >
           {btoProjects.map((option) => (
@@ -125,7 +135,7 @@ export default function Search() {
           value={search}
           onChange={handleChange2}
           InputProps={{ style: { fontSize: "0.85rem" } }}
-          sx={searchSx}
+          sx={searchText}
         >
           {searchFx.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -138,7 +148,7 @@ export default function Search() {
           filled="true"
           sx={searchIcon}
         />
-        <Button variant="contained" sx={searchButton}>Submit</Button> {/* ////////////////////// */}
+        <Button variant="contained" sx={searchButton}>Submit</Button>
       </Container>
     </Container>
   );
