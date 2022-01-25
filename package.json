@@ -1,6 +1,7 @@
 {
   "name": "bto-tracker-fe",
   "version": "0.1.0",
+  "homepage": "https://ngsuwen.github.io/bto-tracker/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.1",
