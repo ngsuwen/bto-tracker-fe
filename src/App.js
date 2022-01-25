@@ -3,9 +3,10 @@ import "./App.css";
 import { createTheme, ThemeProvider } from "@mui/material";
 // pages
 import ScrollableTabs from "./components/general/tabs";
-import Home from "./components/homepage/homepage";
-import Footer from "./components/general/footer";
 import SwipeableTemporaryDrawer from "./components/general/drawer";
+import Home from "./components/homepage/homepage";
+import Info from "./components/infopage/infopage";
+import Footer from "./components/general/footer";
 
 // font
 const theme = createTheme({
@@ -23,6 +24,7 @@ function App() {
       <ScrollableTabs />
       <SwipeableTemporaryDrawer />
       <Home />
+      {/* <Info /> */}
       <Footer />
     </ThemeProvider>
   );

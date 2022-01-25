@@ -10,6 +10,7 @@ export default function ProjectCard() {
           backgroundImage:
             "url(https://cdn-blog.seedly.sg/wp-content/uploads/2021/10/17143739/Hougang-Olive-Nov-BTO-2021-768x420.jpeg)",
           height: 200,
+          maxWidth:"100%",
           width: 325,
           backgroundSize: "cover",
           backgroundPosition: "center",
