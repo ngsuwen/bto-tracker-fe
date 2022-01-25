@@ -1,15 +1,13 @@
 {
   "files": {
     "main.css": "/bto-tracker-fe/static/css/main.0b829041.css",
-    "main.js": "/bto-tracker-fe/static/js/main.a9e25da8.js",
-    "static/js/787.4d3ad370.chunk.js": "/bto-tracker-fe/static/js/787.4d3ad370.chunk.js",
+    "main.js": "/bto-tracker-fe/static/js/main.f0156d89.js",
     "index.html": "/bto-tracker-fe/index.html",
     "main.0b829041.css.map": "/bto-tracker-fe/static/css/main.0b829041.css.map",
-    "main.a9e25da8.js.map": "/bto-tracker-fe/static/js/main.a9e25da8.js.map",
-    "787.4d3ad370.chunk.js.map": "/bto-tracker-fe/static/js/787.4d3ad370.chunk.js.map"
+    "main.f0156d89.js.map": "/bto-tracker-fe/static/js/main.f0156d89.js.map"
   },
   "entrypoints": [
     "static/css/main.0b829041.css",
-    "static/js/main.a9e25da8.js"
+    "static/js/main.f0156d89.js"
   ]
 }
