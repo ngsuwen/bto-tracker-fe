@@ -1,3 +1,6 @@
+// api call for project list
+// pass props for projectCard
+
 import * as React from "react";
 import { Container, Typography, Grid, Button, Box } from "@mui/material";
 

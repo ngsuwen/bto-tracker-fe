@@ -1,3 +1,6 @@
+// to do search button
+// pass proj list from homepage
+
 import * as React from "react";
 import { Container, TextField, MenuItem, Typography, Box, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";

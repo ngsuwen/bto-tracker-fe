@@ -1,3 +1,6 @@
+// api call for proj info
+// ref parameter
+
 import * as React from "react";
 import { Container, Typography, Divider, Grid } from "@mui/material";
 function Info() {
