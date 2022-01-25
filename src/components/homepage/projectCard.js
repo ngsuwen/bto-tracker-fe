@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom"
 
 export default function ProjectCard() {
   return (
-    <>
+    <Link style={{textDecoration:'none', color:"black"}} to="/info">
       <Box
         sx={{
           borderRadius: "0.4rem",
@@ -18,6 +19,6 @@ export default function ProjectCard() {
       />
       <Typography variant="body1" fontWeight={"bold"} paddingY={"0.2rem"}>Hougang Olive @ Hougang</Typography>
       <Typography variant="subtitle2" color="text.secondary">390 units, 4-Room, 5-Room</Typography>
-    </>
+    </Link>
   );
 }

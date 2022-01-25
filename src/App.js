@@ -1,6 +1,8 @@
 import * as React from "react";
 import "./App.css";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+
 // pages
 import ScrollableTabs from "./components/general/tabs";
 import SwipeableTemporaryDrawer from "./components/general/drawer";
@@ -11,10 +13,7 @@ import Footer from "./components/general/footer";
 // font
 const theme = createTheme({
   typography: {
-    fontFamily: [
-      "Roboto",
-      "sans-serif"
-    ].join(","),
+    fontFamily: ["Roboto", "sans-serif"].join(","),
   },
 });
 
@@ -23,8 +22,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <ScrollableTabs />
       <SwipeableTemporaryDrawer />
-      <Home />
-      {/* <Info /> */}
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/info' element={<Info />} />
+      </Routes>
       <Footer />
     </ThemeProvider>
   );

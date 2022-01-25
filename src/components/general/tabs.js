@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Container, Box, Tab, Tabs, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 // custom breakpoint
 const nav = (theme) => ({
@@ -23,7 +24,7 @@ const StyledTabs = styled((props) => (
   },
 });
 
-const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
+const StyledTab = styled((props) => <Link style={{ textDecoration: 'none' }} to={`${props.link}`}><Tab disableRipple {...props} /></Link>)(
   ({ theme }) => ({
     textTransform: "none",
     fontWeight: theme.typography.fontWeightBold,
@@ -71,6 +72,7 @@ export default function CustomizedTabs() {
               onChange={handleChange}
               aria-label="styled tabs example"
             >
+              <StyledTab label="Home" link="/"/>
               <StyledTab label="BTO Projects" />
               <StyledTab label="Tracker" />
               <StyledTab label="Useful links" />

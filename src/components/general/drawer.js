@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from "react-router-dom"
 
 // custom breakpoint
 const nav = (theme) => ({
@@ -45,11 +46,13 @@ export default function SwipeableTemporaryDrawer() {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              {["BTO Projects", "Tracker", "Useful links", "FAQs", "Disclaimer"].map(
+              {["Home", "BTO Projects", "Tracker", "Useful links", "FAQs", "Disclaimer"].map(
                 (text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemText primary={text} />
-                  </ListItem>
+                  <Link style={{textDecoration:'none', color:"black"}} to="/">
+                    <ListItem button key={text}>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  </Link>
                 )
               )}
             </List>
