@@ -27,7 +27,7 @@ function Info() {
         variant="body1"
         sx={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}
       >
-        To track units, click <Link style={{ textDecoration: 'none' }} to='/tracker'>here.</Link>
+        To track units, click <Link style={{ textDecoration: 'none' }} to='/tracker' target="_blank" rel="noopener noreferrer">here.</Link>
       </Typography>
       <Divider />
 
