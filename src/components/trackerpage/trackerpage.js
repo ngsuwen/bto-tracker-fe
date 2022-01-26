@@ -8,7 +8,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Box
 } from "@mui/material";
 
 // dummy data
@@ -20,6 +21,15 @@ for (let i = 0; i < blk.total.length; i++) {
   let unit = blk.total[i][0].substr(3);
   if (!unitNo.includes(unit)) {
     unitNo.push(unit);
+  }
+}
+
+// get unittype
+const unitType = [];
+for (let i = 0; i < blk.total.length; i++) {
+  let unit = blk.total[i][1];
+  if (!unitType.includes(unit)) {
+    unitType.push(unit);
   }
 }
 
@@ -62,9 +72,17 @@ function Tracker() {
       </Typography>
       <Typography
         variant="body1"
-        sx={{ marginTop: "0.5rem", marginBottom: "1.5rem", wordSpacing: "1rem"}}
+        sx={{ marginTop: "0.5rem", marginBottom:"1rem",  wordSpacing: "1rem"}}
       >
-        95A | 95B | 95C | 97A | 97B | 99A | 99B {/* UNIT TYPE */}<br/>
+        95A | 95B | 95C | 97A | 97B | 99A | 99B {/* UNIT TYPE */}
+      </Typography>
+      <Typography
+        variant="subtitle2"
+        sx={{ display:"flex", marginTop: "0.5rem", marginBottom: "1.5rem"}}
+      > 
+        {unitType.map((unit)=>(
+          <Box bgcolor={colorCode[unit]} sx={{paddingX:"0.75rem", marginRight:"1rem"}}>{`${unit[1]}-room`}</Box> 
+        ))}
       </Typography>
       <TableContainer sx={{ boxShadow: 0, marginBottom:"3rem"}} component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
