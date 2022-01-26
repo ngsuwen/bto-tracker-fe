@@ -46,7 +46,7 @@ export default function SwipeableTemporaryDrawer() {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              {["Home", "BTO Projects", "Tracker", "Useful links", "FAQs", "Disclaimer"].map(
+              {["Home", "BTO Projects", "Watchlist", "Useful links", "FAQs", "Disclaimer"].map(
                 (text, index) => (
                   <Link style={{textDecoration:'none', color:"black"}} to="/">
                     <ListItem button key={text}>

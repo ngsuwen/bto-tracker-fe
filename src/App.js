@@ -10,6 +10,7 @@ import Home from "./components/homePage/homePage";
 import Info from "./components/infoPage/infoPage";
 import Tracker from "./components/trackerPage/trackerPage";
 import ProjectList from "./components/infoPage/projectListPage";
+import TrackerOverview from "./components/trackerPage/trackerOverviewPage";
 import Footer from "./components/general/footer";
 import Summary from "./components/trackerPage/summaryPage";
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/info" element={<Info />} />
         <Route path="/tracker" element={<Tracker />} />
         <Route path="/tracker/summary" element={<Summary />} />
+        <Route path="/tracker/projects" element={<TrackerOverview />} />
         <Route path="/projects" element={<ProjectList />} />
       </Routes>
       <Footer />
