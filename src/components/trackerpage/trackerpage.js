@@ -8,33 +8,47 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  createTheme,
+  TableRow
 } from "@mui/material";
 
 // dummy data
 import { blk, floors } from "./dummyData";
-import { borderColor } from "@mui/system";
 
 // get unit number
 const unitNo = [];
 for (let i = 0; i < blk.total.length; i++) {
-  let unit = blk.total[i].substr(3);
+  let unit = blk.total[i][0].substr(3);
   if (!unitNo.includes(unit)) {
     unitNo.push(unit);
   }
 }
 
+// available colors
+const colorCode={
+  R2:"#F4CCCC",
+  R3: "#B6D7A8",
+  R4: "#FFD966",
+  R5: "#B1DCD4"
+}
+
 // check unit availability
 function checkUnitAvaiable(level) {
   let cell = [];
-  for (let i = unitNo.length - 1; i >= 0; i--) {
+  for (let i = 0; i <unitNo.length; i++) {
     if (blk.taken.includes(level + "-" + unitNo[i])) {
-      cell.push(<TableCell sx={{ bgcolor: "#999999" }} />);
-    } else if (blk.total.includes(level + "-" + unitNo[i])) {
-      cell.push(<TableCell sx={{ bgcolor: "#FFD966"}}/>);
-    } else {
-      cell.push(<TableCell sx={{ bgcolor: "fff"}}/>);
+      cell.push(<TableCell sx={{ bgcolor: "#999999" }}/>);
+      continue;
+    } 
+    let added = false
+    for (let j=0;j<blk.total.length;j++){
+      if (blk.total[j][0].includes(level + "-" + unitNo[i])) {
+        cell.push(<TableCell sx={{ bgcolor: colorCode[blk.total[j][1]]}}/>);
+        added=true
+        break;
+      }
+    }
+    if (!added){
+      cell.push(<TableCell sx={{ bgcolor: "#fff" }}/>);
     }
   }
   return cell;
@@ -48,16 +62,16 @@ function Tracker() {
       </Typography>
       <Typography
         variant="body1"
-        sx={{ marginTop: "0.5rem", marginBottom: "1.5rem" }}
+        sx={{ marginTop: "0.5rem", marginBottom: "1.5rem", wordSpacing: "1rem"}}
       >
-        Blk 522B {/* UNIT TYPE */}
+        95A | 95B | 95C | 97A | 97B | 99A | 99B {/* UNIT TYPE */}<br/>
       </Typography>
-      <TableContainer sx={{ boxShadow: 0 }} component={Paper}>
+      <TableContainer sx={{ boxShadow: 0, marginBottom:"3rem"}} component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>
-                LEVEL
+              <TableCell sx={{ width: 100 }}>
+                LEVEL / UNIT
               </TableCell>
               {unitNo.map((unit) => (
                 <TableCell>
