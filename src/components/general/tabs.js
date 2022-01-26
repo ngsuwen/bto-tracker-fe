@@ -73,7 +73,7 @@ export default function CustomizedTabs() {
               aria-label="styled tabs example"
             >
               <StyledTab label="Home" link="/"/>
-              <StyledTab label="BTO Projects" />
+              <StyledTab label="BTO Projects" link="/projects"/>
               <StyledTab label="Tracker" />
               <StyledTab label="Useful links" />
               <StyledTab label="FAQs" />

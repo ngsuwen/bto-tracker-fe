@@ -9,6 +9,7 @@ import SwipeableTemporaryDrawer from "./components/general/drawer";
 import Home from "./components/homepage/homepage";
 import Info from "./components/infopage/infopage";
 import Tracker from "./components/trackerpage/trackerpage";
+import ProjectList from "./components/infopage/projectListPage";
 import Footer from "./components/general/footer";
 
 // font
@@ -38,6 +39,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/info" element={<Info />} />
         <Route path="/tracker" element={<Tracker />} />
+        <Route path="/projects" element={<ProjectList />} />
       </Routes>
       <Footer />
     </ThemeProvider>
