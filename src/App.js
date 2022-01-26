@@ -3,13 +3,13 @@ import "./App.css";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 
-// pages
+// Pages
 import ScrollableTabs from "./components/general/tabs";
 import SwipeableTemporaryDrawer from "./components/general/drawer";
-import Home from "./components/homepage/homepage";
-import Info from "./components/infopage/infopage";
-import Tracker from "./components/trackerpage/trackerpage";
-import ProjectList from "./components/infopage/projectListPage";
+import Home from "./components/homePage/homePage";
+import Info from "./components/infoPage/infoPage";
+import Tracker from "./components/trackerPage/trackerPage";
+import ProjectList from "./components/infoPage/projectListPage";
 import Footer from "./components/general/footer";
 
 // font
