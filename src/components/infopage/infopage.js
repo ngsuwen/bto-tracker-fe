@@ -3,6 +3,8 @@
 
 import * as React from "react";
 import { Container, Typography, Divider, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
+
 function Info() {
   return (
     <Container maxWidth="md">
@@ -17,6 +19,7 @@ function Info() {
       </Typography>
       <img
         style={{ marginTop: "1.5rem", maxWidth:"100%", width: 500 }}
+        alt="render"
         src="https://cdn-blog.seedly.sg/wp-content/uploads/2021/10/17143739/Hougang-Olive-Nov-BTO-2021-768x420.jpeg"
       />
       <Typography variant="subtitle2">Source: HDB</Typography>
@@ -24,7 +27,7 @@ function Info() {
         variant="body1"
         sx={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}
       >
-        To track units, click here.
+        To track units, click <Link style={{ textDecoration: 'none' }} to='/tracker'>here.</Link>
       </Typography>
       <Divider />
 
@@ -76,6 +79,7 @@ function Info() {
 
       <img
         style={{ marginTop: "1.5rem", maxWidth:"100%", width: 500 }}
+        alt="location_map"
         src="https://cdn-blog.seedly.sg/wp-content/uploads/2021/10/17143833/Screenshot-2021-11-17-at-2.36.55-PM.png"
       />
       <Typography variant="subtitle2" sx={{ marginBottom: "1.5rem" }}>
