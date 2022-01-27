@@ -11,6 +11,7 @@ import {
   TableRow,
   Box
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 // dummy data
 import { blk, floors } from "./dummyData";
@@ -74,7 +75,7 @@ function Tracker() {
         variant="body1"
         sx={{ marginTop: "0.5rem", marginBottom:"1rem",  wordSpacing: "1rem"}}
       >
-        95A | 95B | 95C | 97A | 97B | 99A | 99B {/* UNIT TYPE */}
+        <Link style={{ textDecoration: 'none' }} to='/tracker/summary'>QUEUE </Link>| <Link style={{ textDecoration: 'none' }} to='/tracker'>95A | 95B | 95C | 97A | 97B | 99A | 99B </Link>{/* UNIT TYPE */}
       </Typography>
       <Typography
         variant="subtitle2"

@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { Container, Typography, Grid } from "@mui/material";
-import ProjectCard from "../homepage/projectCard";
+import ProjectCard from "../homePage/projectCard";
 
 function ProjectList() {
   return (
