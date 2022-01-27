@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Container, Box, Tab, Tabs, styled } from "@mui/material";
-import { Link } from "react-router-dom";
 
 // custom breakpoint
 const nav = (theme) => ({
@@ -24,28 +23,28 @@ const StyledTabs = styled((props) => (
   },
 });
 
-const StyledTab = styled((props) => <Link style={{ textDecoration: 'none' }} to={`${props.link}`}><Tab disableRipple {...props} /></Link>)(
+const StyledTab = styled((props) => <a id="tab-nav" href={`#${props.link}`}><Tab disableRipple {...props} /></a>)(
   ({ theme }) => ({
     textTransform: "none",
     fontWeight: theme.typography.fontWeightBold,
     fontSize: theme.typography.pxToRem(14),
     marginRight: theme.spacing(1),
-    color: "rgba(255, 255, 255, 0.7)",
+    color: "inherit",
     "&.Mui-selected": {
-      color: "#fff",
+      color: "inherit",
     },
   })
 );
 
-const StyledTab2 = styled((props) => <Tab disableRipple {...props} />)(
+const StyledTab2 = styled((props) => <a id={props.specialId} href={`#${props.link}`}><Tab disableRipple {...props} /></a>)(
   ({ theme }) => ({
     textTransform: "none",
     fontWeight: theme.typography.fontWeightBold,
     fontSize: theme.typography.pxToRem(14),
     marginRight: theme.spacing(1),
-    color: "rgba(31, 199, 106)",
+    color: "inherit",
     "&.Mui-selected": {
-      color: "#fff",
+      color: "inherit",
     },
   })
 );
@@ -82,8 +81,8 @@ export default function CustomizedTabs() {
           </Box>
           <Box>
             <StyledTabs value={1} aria-label="styled tabs example">
-              <StyledTab2 label="+ Contribute" />
-              <StyledTab2 label="Sign In" />
+              <StyledTab2 label="+ Contribute" specialId="contribute-tab"/>
+              <StyledTab2 label="Sign In" specialId="tab-nav"/>
             </StyledTabs>
           </Box>
         </Box>

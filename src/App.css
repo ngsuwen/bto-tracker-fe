@@ -10,3 +10,23 @@
   background-size: cover;
   background-position: center;
 }
+
+#tab-nav {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+#tab-nav:hover {
+  color: rgb(255, 255, 255, 0.5);
+  text-decoration:blue
+}
+
+#contribute-tab {
+  color: rgba(31, 199, 106);
+  text-decoration: none;
+}
+
+#contribute-tab:hover {
+  color: rgba(31, 199, 107, 0.5);
+  text-decoration:blue
+}

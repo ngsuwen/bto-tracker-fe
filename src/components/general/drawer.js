@@ -46,11 +46,11 @@ export default function SwipeableTemporaryDrawer() {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              {["Home", "BTO Projects", "Watchlist", "Useful links", "FAQs", "Disclaimer"].map(
+              {[["Home", "/"], ["BTO Projects", "/projects"], ["Watchlist", "/tracker/projects"], ["Useful links", "/"], ["FAQs", "/"], ["Disclaimer", "/"]].map(
                 (text, index) => (
-                  <Link style={{textDecoration:'none', color:"black"}} to="/">
-                    <ListItem button key={text}>
-                      <ListItemText primary={text} />
+                  <Link style={{textDecoration:'none', color:"black"}} to={text[1]}>
+                    <ListItem button key={text[0]}>
+                      <ListItemText primary={text[0]} />
                     </ListItem>
                   </Link>
                 )
@@ -58,10 +58,12 @@ export default function SwipeableTemporaryDrawer() {
             </List>
             <Divider />
             <List>
-              {["+ Constribute", "Sign In"].map((text, index) => (
+              {[["+ Constribute", "/"], ["Sign In", "/"]].map((text, index) => (
+                <Link style={{textDecoration:'none', color:"black"}} to={text[1]}>
                 <ListItem button key={text}>
                   <ListItemText primary={text} />
                 </ListItem>
+                </Link>
               ))}
             </List>
           </Box>
