@@ -12,8 +12,10 @@ import Tracker from "./components/trackerPage/trackerPage";
 import ProjectList from "./components/infoPage/projectListPage";
 import TrackerOverview from "./components/trackerPage/trackerOverviewPage";
 import Links from "./components/miscPages/usefulLinksPage";
+import Faq from "./components/miscPages/faqPage";
 import Footer from "./components/general/footer";
 import Summary from "./components/trackerPage/summaryPage";
+import Disclaimer from "./components/miscPages/disclaimerPage";
 
 // font
 const theme = createTheme({
@@ -46,6 +48,8 @@ function App() {
         <Route path="/tracker/projects" element={<TrackerOverview />} />
         <Route path="/projects" element={<ProjectList />} />
         <Route path="/links" element={<Links />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
       </Routes>
       <Footer />
     </ThemeProvider>

@@ -75,8 +75,8 @@ export default function CustomizedTabs() {
               <StyledTab label="BTO Projects" link="/projects"/>
               <StyledTab label="Watchlist" link="/tracker/projects"/>
               <StyledTab label="Useful links" link="/links"/>
-              <StyledTab label="FAQs" />
-              <StyledTab label="Disclaimer" />
+              <StyledTab label="FAQs" link="/faq"/>
+              <StyledTab label="Disclaimer" link="/disclaimer"/>
             </StyledTabs>
           </Box>
           <Box>
