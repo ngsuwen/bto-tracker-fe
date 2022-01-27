@@ -30,3 +30,14 @@
   color: rgba(31, 199, 107, 0.5);
   text-decoration:blue
 }
+
+a {
+  color: rgba(0,0,0);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgba(0,0,0);
+  font-weight: bold;
+  text-decoration: none;
+}

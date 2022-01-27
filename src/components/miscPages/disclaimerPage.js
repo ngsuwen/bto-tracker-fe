@@ -1,0 +1,1 @@
+// Most information in this group is based on experiences and knowledge that were learned and passed on by "generations" of different groups and people. As they are merely opinions of the respective authors and not official HDB information, please DYODD and believe at your own risk.

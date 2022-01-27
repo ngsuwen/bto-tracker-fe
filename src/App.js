@@ -11,6 +11,7 @@ import Info from "./components/infoPage/infoPage";
 import Tracker from "./components/trackerPage/trackerPage";
 import ProjectList from "./components/infoPage/projectListPage";
 import TrackerOverview from "./components/trackerPage/trackerOverviewPage";
+import Links from "./components/miscPages/usefulLinksPage";
 import Footer from "./components/general/footer";
 import Summary from "./components/trackerPage/summaryPage";
 
@@ -44,6 +45,7 @@ function App() {
         <Route path="/tracker/summary" element={<Summary />} />
         <Route path="/tracker/projects" element={<TrackerOverview />} />
         <Route path="/projects" element={<ProjectList />} />
+        <Route path="/links" element={<Links />} />
       </Routes>
       <Footer />
     </ThemeProvider>
