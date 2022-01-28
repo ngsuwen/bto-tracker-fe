@@ -47,9 +47,9 @@ const StyledTab = styled((props) => (
 }));
 
 const StyledTab2 = styled((props) => (
-  <a id={props.specialId} href={`#${props.link}`}>
+  <div id={props.specialId}>
     <Tab disableRipple {...props} />
-  </a>
+  </div>
 ))(({ theme }) => ({
   textTransform: "none",
   fontWeight: theme.typography.fontWeightBold,
@@ -107,7 +107,7 @@ export default function CustomizedTabs() {
                 label="+ Contribute"
                 specialId="contribute-tab"
               />
-              <StyledTab2 label="Sign In" specialId="tab-nav" />
+              <StyledTab label="Sign In" link="/disclaimer" />
             </StyledTabs>
           </Box>
           <Menu
