@@ -27,7 +27,7 @@ export default function Summary() {
         variant="body1"
         sx={{ marginTop: "0.5rem", marginBottom: "1rem", wordSpacing: "1rem" }}
       >
-        <Link style={{ textDecoration: 'none' }} to='/tracker/summary'>QUEUE </Link>| <Link style={{ textDecoration: 'none' }} to='/tracker'>95A | 95B | 95C | 97A | 97B | 99A | 99B </Link>{/* UNIT TYPE */}
+        <Link style={{ textDecoration: 'none', color: 'black' }} to='/tracker/summary'>QUEUE </Link>| <Link style={{ textDecoration: 'none', color: 'black' }} to='/tracker'>95A | 95B | 95C | 97A | 97B | 99A | 99B </Link>{/* UNIT TYPE */}
       </Typography>
       <Typography variant="body2" color="red">
         * Volunteers required: Data scrapers, admin. Apply here.
