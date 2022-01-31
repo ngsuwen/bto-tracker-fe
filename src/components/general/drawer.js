@@ -93,7 +93,7 @@ export default function SwipeableTemporaryDrawer() {
               </Collapse>
               <Link
                 style={{ textDecoration: "none", color: "black" }}
-                to={"/"}
+                to={"/signin"}
                 onClick={toggleDrawer(false)}
               >
               <ListItem>

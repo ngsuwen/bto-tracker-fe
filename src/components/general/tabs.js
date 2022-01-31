@@ -107,7 +107,7 @@ export default function CustomizedTabs() {
                 label="+ Contribute"
                 specialId="contribute-tab"
               />
-              <StyledTab label="Sign In" link="/disclaimer" />
+              <StyledTab label="Sign In" link="/signin" />
             </StyledTabs>
           </Box>
           <Menu
