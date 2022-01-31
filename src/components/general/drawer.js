@@ -76,7 +76,7 @@ export default function SwipeableTemporaryDrawer() {
               <Collapse in={open} timeout="auto" unmountOnExit>
                 {[
                   ["Data Scrapper", "/form"],
-                  ["Admin", "/form"],
+                  ["Admin", "/admin-form"],
                   ["Appointment Date", "/appointment-form"],
                   ["Feedback", "/form"]
                 ].map((text, index) => (

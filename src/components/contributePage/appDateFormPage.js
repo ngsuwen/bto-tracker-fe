@@ -81,7 +81,7 @@ export default function AppDateForm() {
         again for your public queue number.
       </Typography>
 
-      <FormControl fullWidth sx={{ marginBottom: "5vh" }}>
+      <FormControl fullWidth sx={{ marginBottom: "3vh" }}>
         <InputLabel id="demo-simple-select-label">Queue type</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -112,7 +112,7 @@ export default function AppDateForm() {
         flat type for the MARRIED CHILD application.
       </Typography>
 
-      <FormControl fullWidth sx={{ marginBottom: "5vh" }}>
+      <FormControl fullWidth sx={{ marginBottom: "3vh" }}>
         <InputLabel id="demo-simple-select-label">Flat type</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -142,7 +142,7 @@ export default function AppDateForm() {
         You can be specific e.g. "Q456", or vague e.g. "Q45x".
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "5vh" }} />
+      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -153,7 +153,7 @@ export default function AppDateForm() {
         Your appointment date
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "5vh" }} />
+      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -171,7 +171,7 @@ export default function AppDateForm() {
         If there are conflicting submissions, those with validations will be prioritized.
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "5vh" }} />
+      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
 
     {/* ---------------------------------------------------------------------------------- */}
     <Box sx={{ display:"flex", justifyContent:"flex-end",  marginBottom: "8vh" }}>

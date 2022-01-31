@@ -120,7 +120,7 @@ export default function CustomizedTabs() {
             }}
           >
             <Link to="/"><MenuItem onClick={handleClose}>Data Scrapper</MenuItem></Link>
-            <Link to="/"><MenuItem onClick={handleClose}>Admin</MenuItem></Link>
+            <Link to="/admin-form"><MenuItem onClick={handleClose}>Admin</MenuItem></Link>
             <Link to="/appointment-form"><MenuItem onClick={handleClose}>Appointment Date</MenuItem></Link>
             <Link to="/"><MenuItem onClick={handleClose}>Feedback</MenuItem></Link>
           </Menu>

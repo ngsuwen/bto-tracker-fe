@@ -16,7 +16,8 @@ import Faq from "./components/miscPages/faqPage";
 import Footer from "./components/general/footer";
 import Summary from "./components/trackerPage/summaryPage";
 import Disclaimer from "./components/miscPages/disclaimerPage";
-import AppDateForm from "./components/contributePage/formPage/appDateFormPage";
+import AppDateForm from "./components/contributePage/appDateFormPage";
+import AdminForm from "./components/contributePage/adminFormPage";
 
 // font
 const theme = createTheme({
@@ -52,6 +53,7 @@ function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/appointment-form" element={<AppDateForm />} />
+        <Route path="/admin-form" element={<AdminForm />} />
       </Routes>
       <Footer />
     </ThemeProvider>
