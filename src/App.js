@@ -18,6 +18,7 @@ import Summary from "./components/trackerPage/summaryPage";
 import Disclaimer from "./components/miscPages/disclaimerPage";
 import AppDateForm from "./components/contributePage/appDateFormPage";
 import AdminForm from "./components/contributePage/adminFormPage";
+import ScraperForm from "./components/contributePage/scraperFormPage";
 
 // font
 const theme = createTheme({
@@ -54,6 +55,7 @@ function App() {
         <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/appointment-form" element={<AppDateForm />} />
         <Route path="/admin-form" element={<AdminForm />} />
+        <Route path="/scraper-form" element={<ScraperForm />} />
       </Routes>
       <Footer />
     </ThemeProvider>

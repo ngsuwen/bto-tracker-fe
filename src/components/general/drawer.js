@@ -75,7 +75,7 @@ export default function SwipeableTemporaryDrawer() {
               </ListItem>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 {[
-                  ["Data Scrapper", "/form"],
+                  ["Data Scraper", "/scraper-form"],
                   ["Admin", "/admin-form"],
                   ["Appointment Date", "/appointment-form"],
                   ["Feedback", "/form"]
