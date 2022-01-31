@@ -75,10 +75,10 @@ export default function SwipeableTemporaryDrawer() {
               </ListItem>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 {[
-                  ["Data Scrapper", "/"],
-                  ["Admin", "/projects"],
-                  ["Appointment Date", "/"],
-                  ["Feedback", "/"]
+                  ["Data Scrapper", "/form"],
+                  ["Admin", "/form"],
+                  ["Appointment Date", "/appointment-form"],
+                  ["Feedback", "/form"]
                 ].map((text, index) => (
                   <Link
                     style={{ textDecoration: "none", color: "black" }}
