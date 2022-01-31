@@ -19,6 +19,7 @@ import Disclaimer from "./components/miscPages/disclaimerPage";
 import AppDateForm from "./components/contributePage/appDateFormPage";
 import AdminForm from "./components/contributePage/adminFormPage";
 import ScraperForm from "./components/contributePage/scraperFormPage";
+import FeedbackForm from "./components/contributePage/feedbackFormPage";
 
 // font
 const theme = createTheme({
@@ -56,6 +57,7 @@ function App() {
         <Route path="/appointment-form" element={<AppDateForm />} />
         <Route path="/admin-form" element={<AdminForm />} />
         <Route path="/scraper-form" element={<ScraperForm />} />
+        <Route path="/feedback-form" element={<FeedbackForm />} />
       </Routes>
       <Footer />
     </ThemeProvider>

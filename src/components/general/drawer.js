@@ -78,7 +78,7 @@ export default function SwipeableTemporaryDrawer() {
                   ["Data Scraper", "/scraper-form"],
                   ["Admin", "/admin-form"],
                   ["Appointment Date", "/appointment-form"],
-                  ["Feedback", "/form"]
+                  ["Feedback", "/feedback-form"]
                 ].map((text, index) => (
                   <Link
                     style={{ textDecoration: "none", color: "black" }}
