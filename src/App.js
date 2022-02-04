@@ -23,6 +23,8 @@ import FeedbackForm from "./components/contributePage/feedbackFormPage";
 import SigninPage from "./components/userPages/signinPage";
 import AddBto from "./components/adminPages/projects/addProjectPage";
 import EditBto from "./components/adminPages/projects/editProjectPage";
+import AddUnits from "./components/adminPages/units/addUnitsPage";
+import EditUnits from "./components/adminPages/units/editUnitsPage";
 
 // font
 const theme = createTheme({
@@ -64,6 +66,8 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/admin/add" element={<AddBto />} />
         <Route path="/admin/edit" element={<EditBto />} />
+        <Route path="/admin/add/units" element={<AddUnits />} />
+        <Route path="/admin/edit/units" element={<EditUnits />} />
       </Routes>
       <Footer />
     </ThemeProvider>
