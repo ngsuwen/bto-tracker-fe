@@ -10,6 +10,8 @@ import {
   Button,
   Box,
   Grid,
+  Radio,
+  RadioGroup
 } from "@mui/material";
 
 export default function AddBto() {
@@ -252,7 +254,19 @@ export default function AddBto() {
         Status
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <FormControl>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          sx={{ marginBottom: "3vh" }}
+        >
+          <FormControlLabel value="ongoing" control={<Radio />} label="Ongoing" />
+          <FormControlLabel value="upcoming" control={<Radio />} label="Upcoming" />
+        </RadioGroup>
+      </FormControl>
+
+      {/* ---------------------------------------------------------------------------------- */}
 
       <Box
         sx={{
@@ -261,7 +275,7 @@ export default function AddBto() {
           marginBottom: "8vh",
         }}
       >
-        <Button variant="outlined">Submit form</Button>
+        <Button variant="outlined">Add new</Button>
       </Box>
     </Container>
   );
