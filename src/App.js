@@ -21,6 +21,7 @@ import AdminForm from "./components/contributePage/adminFormPage";
 import ScraperForm from "./components/contributePage/scraperFormPage";
 import FeedbackForm from "./components/contributePage/feedbackFormPage";
 import SigninPage from "./components/userPages/signinPage";
+import AddBto from "./components/adminPages/projects/addProjectPage";
 
 // font
 const theme = createTheme({
@@ -60,6 +61,7 @@ function App() {
         <Route path="/scraper-form" element={<ScraperForm />} />
         <Route path="/feedback-form" element={<FeedbackForm />} />
         <Route path="/signin" element={<SigninPage />} />
+        <Route path="/admin/add" element={<AddBto />} />
       </Routes>
       <Footer />
     </ThemeProvider>
