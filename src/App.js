@@ -65,7 +65,7 @@ function App() {
         <Route path="/feedback-form" element={<FeedbackForm />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/admin/add" element={<AddBto />} />
-        <Route path="/admin/edit" element={<EditBto />} />
+        <Route path="/admin/edit/:launch" element={<EditBto />} />
         <Route path="/admin/add/units" element={<AddUnits />} />
         <Route path="/admin/edit/units" element={<EditUnits />} />
       </Routes>

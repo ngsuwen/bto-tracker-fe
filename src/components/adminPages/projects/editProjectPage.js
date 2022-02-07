@@ -11,10 +11,16 @@ import {
   Box,
   Grid,
   Radio,
-  RadioGroup
+  RadioGroup,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
+import editProjectApi from "../../api/editProject";
+import findProjectApi from "../../api/findProject";
 
-export default function EditBto() {
+export default function AddBto() {
+  let { launch } = useParams();
+
+  // useStates
   const [state, setState] = React.useState({
     r2: false,
     r3: false,
@@ -22,6 +28,27 @@ export default function EditBto() {
     r5: false,
     gen: false,
   });
+  const [projName, setProjName] = React.useState();
+  const [location, setLocation] = React.useState();
+  const [projLaunch, setLaunch] = React.useState();
+  const [priceLowR2, setPriceLowR2] = React.useState();
+  const [priceHighR2, setPriceHighR2] = React.useState();
+  const [r2Units, setR2Units] = React.useState();
+  const [priceLowR3, setPriceLowR3] = React.useState();
+  const [priceHighR3, setPriceHighR3] = React.useState();
+  const [r3Units, setR3Units] = React.useState();
+  const [priceLowR4, setPriceLowR4] = React.useState();
+  const [priceHighR4, setPriceHighR4] = React.useState();
+  const [r4Units, setR4Units] = React.useState();
+  const [priceLowR5, setPriceLowR5] = React.useState();
+  const [priceHighR5, setPriceHighR5] = React.useState();
+  const [r5Units, setR5Units] = React.useState();
+  const [priceLowGen, setPriceLowGen] = React.useState();
+  const [priceHighGen, setPriceHighGen] = React.useState();
+  const [genUnits, setGenUnits] = React.useState();
+  const [units, setUnits] = React.useState();
+  const [articles, setArticles] = React.useState();
+  const [status, setStatus] = React.useState();
 
   const handleChange = (event) => {
     setState({
@@ -30,7 +57,76 @@ export default function EditBto() {
     });
   };
 
+  const submitHandler = async () => {
+    const obj = {
+      name: projName,
+      location: location,
+      launch: projLaunch,
+      no_of_units: units,
+      unit_breakdown: [
+        r2 ? r2Units: 0,
+        r3 ? r3Units: 0,
+        r4 ? r4Units: 0,
+        r5 ? r5Units: 0,
+        gen ? genUnits: 0,
+      ],
+      price_range_2R: r2
+        ? [priceLowR2, priceHighR2]
+        : null,
+      price_range_3R: r3
+        ? [priceLowR3, priceHighR3]
+        : null,
+      price_range_4R: r4
+        ? [priceLowR4, priceHighR4]
+        : null,
+      price_range_5R: r5
+        ? [priceLowR5, priceHighR5]
+        : null,
+      price_range_3Gen: gen
+        ? [priceLowGen, priceHighGen]
+        : null,
+      status: status,
+      articles: articles,
+    };
+    await editProjectApi(launch, obj, state);
+  };
+
   const { r2, r3, r4, r5, gen } = state;
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const projectToEdit = await findProjectApi('may2021geylang');
+      setProjName(projectToEdit.name);
+      setLocation(projectToEdit.location);
+      setLaunch(projectToEdit.launch);
+      setState({
+        r2: projectToEdit.unit_breakdown[0]===0?false:true,
+        r3: projectToEdit.unit_breakdown[1]===0?false:true,
+        r4: projectToEdit.unit_breakdown[2]===0?false:true,
+        r5: projectToEdit.unit_breakdown[3]===0?false:true,
+        gen: projectToEdit.unit_breakdown[4]===0?false:true,
+      });
+      setPriceLowR2(projectToEdit.price_range_2R?projectToEdit.price_range_2R[0].value : null);
+      setPriceHighR2(projectToEdit.price_range_2R?projectToEdit.price_range_2R[1].value : null);
+      setR2Units(projectToEdit.unit_breakdown[0]);
+      setPriceLowR3(projectToEdit.price_range_3R?projectToEdit.price_range_3R[0].value : null);
+      setPriceHighR3(projectToEdit.price_range_3R?projectToEdit.price_range_3R[1].value : null);
+      setR3Units(projectToEdit.unit_breakdown[1]);
+      setPriceLowR4(projectToEdit.price_range_4R?projectToEdit.price_range_4R[0].value : null);
+      setPriceHighR4(projectToEdit.price_range_4R?projectToEdit.price_range_4R[1].value : null);
+      setR4Units(projectToEdit.unit_breakdown[2]);
+      setPriceLowR5(projectToEdit.price_range_5R?projectToEdit.price_range_5R[0].value : null);
+      setPriceHighR5(projectToEdit.price_range_5R?projectToEdit.price_range_5R[1].value : null);
+      setR5Units(projectToEdit.unit_breakdown[3]);
+      setPriceLowGen(projectToEdit.price_range_3Gen?projectToEdit.price_range_3Gen[0].value : null);
+      setPriceHighGen(projectToEdit.price_range_3Gen?projectToEdit.price_range_3Gen[1].value : null);
+      setGenUnits(projectToEdit.unit_breakdown[4]);
+      setUnits(projectToEdit.no_of_units);
+      setArticles(projectToEdit.articles.join(","));
+      setStatus(projectToEdit.status);
+    };
+    fetchData();
+  },[]);
 
   return (
     <Container maxWidth="md">
@@ -39,7 +135,7 @@ export default function EditBto() {
         fontWeight="bold"
         sx={{ marginTop: "3rem", marginBottom: "3vh" }}
       >
-        Project name here
+        Edit project
       </Typography>
 
       <Typography
@@ -49,8 +145,14 @@ export default function EditBto() {
       >
         Name
       </Typography>
+      <Typography
+        variant="body2"
+        sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
+      >
+        Eg. Machperson Weave
+      </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField value={projName} onChange={(event) => {setProjName(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -61,7 +163,18 @@ export default function EditBto() {
         Location
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <Typography
+        variant="body2"
+        sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
+      >
+        Eg. Geylang
+      </Typography>
+
+      <TextField
+        value={location} onChange={(event) => {setLocation(event.target.value)}}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -72,7 +185,14 @@ export default function EditBto() {
         Launch
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <Typography
+        variant="body2"
+        sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
+      >
+        Eg. may2021geylang
+      </Typography>
+
+      <TextField value={projLaunch} onChange={(event) => {setLaunch(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -83,7 +203,12 @@ export default function EditBto() {
         Total no. of units
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField
+        value={units} onChange={(event) => {setUnits(event.target.value)}}
+        fullWidth
+        type="number"
+        sx={{ marginBottom: "3vh" }}
+      />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -94,7 +219,7 @@ export default function EditBto() {
         Types of units
       </Typography>
 
-      <FormControl variant="standard" sx={{marginBottom: "3vh"}}>
+      <FormControl variant="standard" sx={{ marginBottom: "3vh" }}>
         <FormGroup>
           <FormControlLabel
             control={
@@ -108,16 +233,22 @@ export default function EditBto() {
                 sx={{ paddingY: 1, paddingRight: 2 }}
                 size="small"
                 placeholder="lowest price"
+                type="number"
+                value={priceLowR2} onChange={(event) => {setPriceLowR2(event.target.value)}}
               />
               <TextField
                 sx={{ paddingY: 1, paddingRight: 2 }}
                 size="small"
                 placeholder="highest price"
+                type="number"
+                value={priceHighR2} onChange={(event) => {setPriceHighR2(event.target.value)}}
               />
               <TextField
                 sx={{ paddingY: 1, paddingRight: 2 }}
                 size="small"
                 placeholder="no. of units"
+                type="number"
+                value={r2Units} onChange={(event) => {setR2Units(event.target.value)}}
               />
             </Grid>
           ) : (
@@ -131,22 +262,28 @@ export default function EditBto() {
           />
           {r3 ? (
             <Grid>
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="lowest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="highest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="no. of units"
-              />
-            </Grid>
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="lowest price"
+              type="number"
+              value={priceLowR3} onChange={(event) => {setPriceLowR3(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="highest price"
+              type="number"
+              value={priceHighR3} onChange={(event) => {setPriceHighR3(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="no. of units"
+              type="number"
+              value={r3Units} onChange={(event) => {setR3Units(event.target.value)}}
+            />
+          </Grid>
           ) : (
             ""
           )}
@@ -158,22 +295,28 @@ export default function EditBto() {
           />
           {r4 ? (
             <Grid>
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="lowest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="highest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="no. of units"
-              />
-            </Grid>
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="lowest price"
+              type="number"
+              value={priceLowR4} onChange={(event) => {setPriceLowR4(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="highest price"
+              type="number"
+              value={priceHighR4} onChange={(event) => {setPriceHighR4(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="no. of units"
+              type="number"
+              value={r4Units} onChange={(event) => {setR4Units(event.target.value)}}
+            />
+          </Grid>
           ) : (
             ""
           )}
@@ -185,22 +328,28 @@ export default function EditBto() {
           />
           {r5 ? (
             <Grid>
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="lowest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="highest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="no. of units"
-              />
-            </Grid>
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="lowest price"
+              type="number"
+              value={priceLowR5} onChange={(event) => {setPriceLowR5(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="highest price"
+              type="number"
+              value={priceHighR5} onChange={(event) => {setPriceHighR5(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="no. of units"
+              type="number"
+              value={r5Units} onChange={(event) => {setR5Units(event.target.value)}}
+            />
+          </Grid>
           ) : (
             ""
           )}
@@ -212,22 +361,28 @@ export default function EditBto() {
           />
           {gen ? (
             <Grid>
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="lowest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="highest price"
-              />
-              <TextField
-                sx={{ paddingY: 1, paddingRight: 2 }}
-                size="small"
-                placeholder="no. of units"
-              />
-            </Grid>
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="lowest price"
+              type="number"
+              value={priceLowGen} onChange={(event) => {setPriceLowGen(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="highest price"
+              type="number"
+              value={priceHighGen} onChange={(event) => {setPriceHighGen(event.target.value)}}
+            />
+            <TextField
+              sx={{ paddingY: 1, paddingRight: 2 }}
+              size="small"
+              placeholder="no. of units"
+              type="number"
+              value={genUnits} onChange={(event) => {setGenUnits(event.target.value)}}
+            />
+          </Grid>
           ) : (
             ""
           )}
@@ -243,7 +398,11 @@ export default function EditBto() {
         Articles
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField
+        value={articles} onChange={(event) => {setArticles(event.target.value)}}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -261,8 +420,20 @@ export default function EditBto() {
           name="row-radio-buttons-group"
           sx={{ marginBottom: "3vh" }}
         >
-          <FormControlLabel value="ongoing" control={<Radio />} label="Ongoing" />
-          <FormControlLabel value="upcoming" control={<Radio />} label="Upcoming" />
+          <FormControlLabel
+            checked={status==="ongoing"?true:false}
+            value="ongoing"
+            control={<Radio />}
+            label="Ongoing"
+            onClick={()=>setStatus("ongoing")}
+          />
+          <FormControlLabel
+            checked={status==="upcoming"?true:false}
+            value="upcoming"
+            control={<Radio />}
+            label="Upcoming"
+            onClick={()=>setStatus("upcoming")}
+          />
         </RadioGroup>
       </FormControl>
 
@@ -275,7 +446,9 @@ export default function EditBto() {
           marginBottom: "8vh",
         }}
       >
-        <Button variant="outlined">Edit</Button>
+        <Button onClick={submitHandler} variant="outlined">
+          Edit
+        </Button>
       </Box>
     </Container>
   );

@@ -1,11 +1,13 @@
-export default async function addProjectApi(obj, state) {
+export default async function editProjectApi(launch, obj, state) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  
+
   // unit types array
-  const unit_types = []
-  for (let properties in state){
-    state[properties]?unit_types.push(properties):console.log(`no ${properties}`)
+  const unit_types = [];
+  for (let properties in state) {
+    state[properties]
+      ? unit_types.push(properties)
+      : console.log(`no ${properties}`);
   }
 
   // articles array
@@ -28,12 +30,13 @@ export default async function addProjectApi(obj, state) {
   });
 
   var requestOptions = {
-    method: "POST",
+    method: "PUT",
     headers: myHeaders,
     body: raw,
     redirect: "follow",
   };
-  fetch("http://localhost:8000/api/project/", requestOptions)
+
+  fetch(`http://localhost:8000/api/project/${launch}`, requestOptions)
     .then((response) => response.json())
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
