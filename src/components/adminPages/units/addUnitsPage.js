@@ -13,13 +13,61 @@ import {
   MenuItem,
   Select
 } from "@mui/material";
+import getProjectList from "../../api/getProjectList"
+import addUnitApi from "../../api/addUnit"
 
 export default function AddUnits() {
+
+  // useStates
   const [proj, setProj] = React.useState("");
+  const [launchArr, setLaunchArr] = React.useState([]);
+  const [blk, setBlk] = React.useState();
+  const [unitNo, setUnitNo] = React.useState();
+  const [floors, setFloors] = React.useState();
+  const [except, setExcept] = React.useState();
+  const [state, setState] = React.useState({
+    r2: false,
+    r3: false,
+    r4: false,
+    r5: false,
+    gen: false,
+  });
+  const { r2, r3, r4, r5, gen } = state;
 
   const projHandleChange = (event) => {
     setProj(event.target.value);
   };
+
+  const radioHandler=(a,b,c,d,e)=>{
+    setState({
+      r2: a,
+      r3: b,
+      r4: c,
+      r5: d,
+      gen: e,
+    })
+  }
+
+  const submitHandler = async() => {
+    const obj = {
+      "launch": proj,
+      "blk": blk,
+      "unit": floors+'-'+unitNo,
+      "unit_type": "r5",
+    }
+    await addUnitApi(obj)
+    console.log(await addUnitApi(obj))
+  };
+
+  React.useEffect(()=>{
+    let arr=[]
+    const fetchData=async()=>{
+      const projectArr = await getProjectList();
+      projectArr.forEach((element, index)=>arr.push(<MenuItem value={index}>{element.launch}</MenuItem>))
+      setLaunchArr(arr)
+    }
+    fetchData()
+  },[])
 
   return (
     <Container maxWidth="md">
@@ -55,9 +103,7 @@ export default function AddUnits() {
           label="BTO project"
           onChange={projHandleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {launchArr}
         </Select>
       </FormControl>
 
@@ -76,7 +122,7 @@ export default function AddUnits() {
         Eg. 99B
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField value={blk} onChange={(event) => {setBlk(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -93,7 +139,7 @@ export default function AddUnits() {
         Eg: 1024
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField value={unitNo} onChange={(event) => {setUnitNo(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -110,7 +156,7 @@ export default function AddUnits() {
         Eg: 02 to 23
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField value={floors} onChange={(event) => {setFloors(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -127,7 +173,7 @@ export default function AddUnits() {
         Eg: 05, 06, 07, 13
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField value={except} onChange={(event) => {setExcept(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -145,11 +191,11 @@ export default function AddUnits() {
           name="row-radio-buttons-group"
           sx={{ marginBottom: "3vh" }}
         >
-          <FormControlLabel value="r2" control={<Radio />} label="2-Room" />
-          <FormControlLabel value="r3" control={<Radio />} label="3-Room" />
-          <FormControlLabel value="r4" control={<Radio />} label="4-Room" />
-          <FormControlLabel value="r5" control={<Radio />} label="5-Room" />
-          <FormControlLabel value="gen" control={<Radio />} label="3-Gen" />
+          <FormControlLabel checked={r2} onClick={()=>radioHandler(true,false,false,false,false)} value="r2" control={<Radio />} label="2-Room" />
+          <FormControlLabel checked={r3} onClick={()=>radioHandler(false,true,false,false,false)} value="r3" control={<Radio />} label="3-Room" />
+          <FormControlLabel checked={r4} onClick={()=>radioHandler(false,false,true,false,false)} value="r4" control={<Radio />} label="4-Room" />
+          <FormControlLabel checked={r5} onClick={()=>radioHandler(false,false,false,true,false)} value="r5" control={<Radio />} label="5-Room" />
+          <FormControlLabel checked={gen} onClick={()=>radioHandler(false,false,false,false,true)} value="gen" control={<Radio />} label="3-Gen" />
         </RadioGroup>
       </FormControl>
 
@@ -162,7 +208,7 @@ export default function AddUnits() {
           marginBottom: "8vh",
         }}
       >
-        <Button variant="outlined">Add new</Button>
+        <Button onClick={submitHandler} variant="outlined">Add new</Button>
       </Box>
     </Container>
   );

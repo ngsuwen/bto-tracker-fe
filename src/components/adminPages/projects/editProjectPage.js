@@ -95,7 +95,7 @@ export default function AddBto() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const projectToEdit = await findProjectApi('may2021geylang');
+      const projectToEdit = await findProjectApi(launch);
       setProjName(projectToEdit.name);
       setLocation(projectToEdit.location);
       setLaunch(projectToEdit.launch);
