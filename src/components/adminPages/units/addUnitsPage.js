@@ -11,13 +11,12 @@ import {
   RadioGroup,
   InputLabel,
   MenuItem,
-  Select
+  Select,
 } from "@mui/material";
-import getProjectList from "../../api/getProjectList"
-import addUnitApi from "../../api/addUnit"
+import getProjectList from "../../api/getProjectList";
+import addUnitApi from "../../api/addUnit";
 
 export default function AddUnits() {
-
   // useStates
   const [proj, setProj] = React.useState("");
   const [launchArr, setLaunchArr] = React.useState([]);
@@ -38,36 +37,60 @@ export default function AddUnits() {
     setProj(event.target.value);
   };
 
-  const radioHandler=(a,b,c,d,e)=>{
+  const radioHandler = (a, b, c, d, e) => {
     setState({
       r2: a,
       r3: b,
       r4: c,
       r5: d,
       gen: e,
-    })
-  }
-
-  const submitHandler = async() => {
-    const obj = {
-      "launch": proj,
-      "blk": blk,
-      "unit": floors+'-'+unitNo,
-      "unit_type": "r5",
-    }
-    await addUnitApi(obj)
-    console.log(await addUnitApi(obj))
+    });
   };
 
-  React.useEffect(()=>{
-    let arr=[]
-    const fetchData=async()=>{
-      const projectArr = await getProjectList();
-      projectArr.forEach((element, index)=>arr.push(<MenuItem value={index}>{element.launch}</MenuItem>))
-      setLaunchArr(arr)
+  const submitHandler = async () => {
+    let floorRange = floors.split(" to ");
+    let floorExcept = except.split(",");
+    let lowestFloor = floorRange[0];
+    while (lowestFloor<Number(floorRange[1])+1){
+      if (floorExcept.includes(lowestFloor.toString())){
+        lowestFloor++
+        continue;
+      } else {
+        let unit=''
+        if (lowestFloor<10){
+          unit='0'+lowestFloor
+        } else {
+          unit+=lowestFloor
+        }
+        let unitType
+        for (let prop in state){
+          if (state[prop]) {
+            unitType=prop
+          }
+        }
+        const obj = {
+          "launch": proj,
+          "blk": blk,
+          "unit": unit+'-'+unitNo,
+          "unit_type": unitType,
+        }
+        await addUnitApi(obj)
+      }
+      lowestFloor++
     }
-    fetchData()
-  },[])
+  };
+
+  React.useEffect(() => {
+    let arr = [];
+    const fetchData = async () => {
+      const projectArr = await getProjectList();
+      projectArr.forEach((element, index) =>
+        arr.push(<MenuItem value={element.launch}>{element.name}</MenuItem>)
+      );
+      setLaunchArr(arr);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Container maxWidth="md">
@@ -82,7 +105,11 @@ export default function AddUnits() {
         variant="body2"
         sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
       >
-        To edit the availability and individual unit price, please use <a href="#/">this page</a> after successfully adding the units. This form is meant to submit ONE unit number for ONE blk. To submit multiple unit numbers across different blks, please resubmit this form accordingly.
+        To edit the availability and individual unit price, please use{" "}
+        <a href="#/">this page</a> after successfully adding the units. This
+        form is meant to submit ONE unit number for ONE blk. To submit multiple
+        unit numbers across different blks, please resubmit this form
+        accordingly.
       </Typography>
 
       {/* ---------------------------------------------------------------------------------- */}
@@ -122,7 +149,14 @@ export default function AddUnits() {
         Eg. 99B
       </Typography>
 
-      <TextField value={blk} onChange={(event) => {setBlk(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField
+        value={blk}
+        onChange={(event) => {
+          setBlk(event.target.value);
+        }}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -139,7 +173,14 @@ export default function AddUnits() {
         Eg: 1024
       </Typography>
 
-      <TextField value={unitNo} onChange={(event) => {setUnitNo(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField
+        value={unitNo}
+        onChange={(event) => {
+          setUnitNo(event.target.value);
+        }}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -153,10 +194,17 @@ export default function AddUnits() {
         variant="body2"
         sx={{ marginBottom: "1vh", textAlign: "justify" }}
       >
-        Eg: 02 to 23
+        Eg: 2 to 23
       </Typography>
 
-      <TextField value={floors} onChange={(event) => {setFloors(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField
+        value={floors}
+        onChange={(event) => {
+          setFloors(event.target.value);
+        }}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -170,10 +218,17 @@ export default function AddUnits() {
         variant="body2"
         sx={{ marginBottom: "1vh", textAlign: "justify" }}
       >
-        Eg: 05, 06, 07, 13
+        Eg: 5, 6, 7, 13
       </Typography>
 
-      <TextField value={except} onChange={(event) => {setExcept(event.target.value)}} fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField
+        value={except}
+        onChange={(event) => {
+          setExcept(event.target.value);
+        }}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -191,11 +246,41 @@ export default function AddUnits() {
           name="row-radio-buttons-group"
           sx={{ marginBottom: "3vh" }}
         >
-          <FormControlLabel checked={r2} onClick={()=>radioHandler(true,false,false,false,false)} value="r2" control={<Radio />} label="2-Room" />
-          <FormControlLabel checked={r3} onClick={()=>radioHandler(false,true,false,false,false)} value="r3" control={<Radio />} label="3-Room" />
-          <FormControlLabel checked={r4} onClick={()=>radioHandler(false,false,true,false,false)} value="r4" control={<Radio />} label="4-Room" />
-          <FormControlLabel checked={r5} onClick={()=>radioHandler(false,false,false,true,false)} value="r5" control={<Radio />} label="5-Room" />
-          <FormControlLabel checked={gen} onClick={()=>radioHandler(false,false,false,false,true)} value="gen" control={<Radio />} label="3-Gen" />
+          <FormControlLabel
+            checked={r2}
+            onClick={() => radioHandler(true, false, false, false, false)}
+            value="r2"
+            control={<Radio />}
+            label="2-Room"
+          />
+          <FormControlLabel
+            checked={r3}
+            onClick={() => radioHandler(false, true, false, false, false)}
+            value="r3"
+            control={<Radio />}
+            label="3-Room"
+          />
+          <FormControlLabel
+            checked={r4}
+            onClick={() => radioHandler(false, false, true, false, false)}
+            value="r4"
+            control={<Radio />}
+            label="4-Room"
+          />
+          <FormControlLabel
+            checked={r5}
+            onClick={() => radioHandler(false, false, false, true, false)}
+            value="r5"
+            control={<Radio />}
+            label="5-Room"
+          />
+          <FormControlLabel
+            checked={gen}
+            onClick={() => radioHandler(false, false, false, false, true)}
+            value="gen"
+            control={<Radio />}
+            label="3-Gen"
+          />
         </RadioGroup>
       </FormControl>
 
@@ -208,7 +293,9 @@ export default function AddUnits() {
           marginBottom: "8vh",
         }}
       >
-        <Button onClick={submitHandler} variant="outlined">Add new</Button>
+        <Button onClick={submitHandler} variant="outlined">
+          Add new
+        </Button>
       </Box>
     </Container>
   );
