@@ -48,6 +48,8 @@ export default function AddBto() {
   const unitsRef = React.useRef()
   const articlesRef = React.useRef()
   const statusRef = React.useRef()
+  const previewUrlRef = React.useRef()
+  const locationUrlRef = React.useRef()
 
   const handleChange = (event) => {
     setState({
@@ -69,7 +71,9 @@ export default function AddBto() {
       "price_range_5R": r5? [priceLowR5Ref.current.value, priceHighR5Ref.current.value] : null,
       "price_range_3Gen": gen? [priceLowGenRef.current.value, priceHighGenRef.current.value] : null,
       "status": statusRef.current.checked?"ongoing":"upcoming",
-      "articles": articlesRef.current.value
+      "articles": articlesRef.current.value,
+      "preview_url": previewUrlRef.current.value,
+      "location_url": locationUrlRef.current.value,
     }
     await addProjectApi(obj, state)
   };
@@ -85,6 +89,13 @@ export default function AddBto() {
       >
         Add new project
       </Typography>
+      <Typography
+        variant="body2"
+        sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
+      >
+        Newly added projects are assumed to not have any admins and data scapers. To update this info, please use this form after creation.
+      </Typography>
+
 
       <Typography
         variant="body1"
@@ -359,6 +370,28 @@ export default function AddBto() {
           <FormControlLabel value="upcoming" control={<Radio />} label="Upcoming" />
         </RadioGroup>
       </FormControl>
+
+      {/* ---------------------------------------------------------------------------------- */}
+      <Typography
+        variant="body1"
+        fontWeight="bold"
+        sx={{ marginTop: "0.5rem", marginBottom: "1vh", textAlign: "justify" }}
+      >
+        Preview Image URL
+      </Typography>
+
+      <TextField inputRef={previewUrlRef} fullWidth sx={{ marginBottom: "3vh" }} />
+
+      {/* ---------------------------------------------------------------------------------- */}
+      <Typography
+        variant="body1"
+        fontWeight="bold"
+        sx={{ marginTop: "0.5rem", marginBottom: "1vh", textAlign: "justify" }}
+      >
+        Location Image URL
+      </Typography>
+
+      <TextField inputRef={locationUrlRef} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
 

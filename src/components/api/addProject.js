@@ -24,7 +24,9 @@ export default async function addProjectApi(obj, state) {
     "price_range_5R": obj.price_range_5R,
     "price_range_3Gen": obj.price_range_3Gen,
     "status": obj.status,
-    "articles": articles_arr
+    "articles": articles_arr,
+    "preview_url": obj.preview_url,
+    "location_url": obj.location_url,
   });
 
   var requestOptions = {
