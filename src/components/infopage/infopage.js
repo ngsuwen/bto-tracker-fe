@@ -15,13 +15,104 @@ export default function Info() {
 
   React.useEffect(() => {
     const fetchData = async() => {
-      const data = await findOneProjectApi(launch);   
+      const data = await findOneProjectApi(launch);  
+      data.launch = data.launch[0].toUpperCase()+data.launch.slice(1,3)+' '+data.launch.slice(3,7)
       setProject(data);
     };
     fetchData();
   }, []);
 
+  // unit types function
+  const unitTypes=()=>{
+    let unitTypes=[]
+    project.unit_breakdown.forEach((element,index)=>{
+      if (element!==0){
+        if (index!==4){
+          let room = index+2
+          unitTypes.push(
+            <>
+            <Grid item xs={3}>
+              {room+'-Room'}
+            </Grid>
+            <Grid item xs={9} sx={{ textAlign: "left" }}>
+              {element===1?"Not yet released":element}
+            </Grid>
+            </>
+          )
+        } else {
+          unitTypes.push(
+            <>
+            <Grid item xs={3}>
+              {'3Gen'}
+            </Grid>
+            <Grid item xs={9} sx={{ textAlign: "left" }}>
+              {element===1?"Not yet released":element}
+            </Grid>
+            </>
+          )
+        }
+      }
+    })
+    return unitTypes
+  }
+
+  // unit price function
+  const unitPrices=()=>{
+    let unitPrices=[]
+    project.unit_breakdown.forEach((element,index)=>{
+      if (element!==0){
+        if (index!==4){
+          let room = index+2
+          let price_range = `price_range_${room}R`
+          unitPrices.push(
+            <>
+            <Grid item xs={3}>
+              {room+'-Room'}
+            </Grid>
+            <Grid item xs={9} sx={{ textAlign: "left" }}>
+              {element===1?"Not yet released":`$${project[`${price_range}`][0].value.toString().slice(0,3)},000 - $${project[`${price_range}`][1].value.toString().slice(0,3)},000`}
+            </Grid>
+            </>
+          )
+        } else {
+          unitPrices.push(
+            <>
+            <Grid item xs={3}>
+              {'3Gen'}
+            </Grid>
+            <Grid item xs={9} sx={{ textAlign: "left" }}>
+              {element===1?"Not yet released":`$${project.price_range_3Gen[0].value.toString().slice(0,3)},000 - $${project.price_range_3Gen[1].value.toString().slice(0,3)},000`}
+            </Grid>
+            </>
+          )
+        }
+      }
+    })
+    return unitPrices
+  }
+
+  // articles function
+  const articlesList=()=>{
+    let articlesList=[]
+    project.articles.forEach((element, index)=>{
+      let articleSections = element.split('.')
+      articlesList.push(
+        <>
+        {index===0?"": " | "}
+        <a href={element} 
+        target="_blank"
+        rel="noopener noreferrer"
+        >{articleSections[1]}
+        </a>
+        </>
+      )
+    })
+    return articlesList
+  }
+
   return (
+    <>
+    {project.name?
     <Container maxWidth="md">
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
         {project.name}
@@ -31,9 +122,14 @@ export default function Info() {
         {/* November 2021 BTO */}
       </Typography>
       <Typography variant="body2" color="red">
-        {project.admin}
+        {(project.admin && project.data_scraper)?"":"Volunteers required: "}
+        {(!project.admin && !project.data_scraper)?"Data scrapers, admin.": 
+          !project.admin?"Admin":
+          !project.data_scraper?"Data scrapers":""}
         {/* * Volunteers required: Data scrapers, admin. Apply here. */}
       </Typography>
+      {project.preview_url?
+      <>
       <img
         style={{ marginTop: "1.5rem", maxWidth: "100%", width: 500 }}
         alt="render"
@@ -59,54 +155,34 @@ export default function Info() {
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
         Project Details
       </Typography>
+      </>
+      :""}
 
       <Typography variant="body2" sx={{ marginTop: "0.5rem" }}>
-        <b>Town: </b>
+        <b>Area: </b>
         {project.location}
         <br />
         <br />
         <b>Flat Types & Number of Units: </b>
         <br />
         <Grid container>
-          <Grid item xs={3}>
-            4-Room
-          </Grid>
-          <Grid item xs={9} sx={{ textAlign: "left" }}>
-            378
-          </Grid>
-          <Grid item xs={3}>
-            5-Room
-          </Grid>
-          <Grid item xs={9} sx={{ textAlign: "left" }}>
-            312
-          </Grid>
+          {unitTypes()}
         </Grid>
         <br />
         <b>Pricing: </b>
         <br />
         <Grid container>
-          <Grid item xs={3}>
-            4-Room
-          </Grid>
-          <Grid item xs={9} sx={{ textAlign: "left" }}>
-            $511,000 - $600,100
-          </Grid>
-          <Grid item xs={3}>
-            5-Room
-          </Grid>
-          <Grid item xs={9} sx={{ textAlign: "left" }}>
-            $521,000 - $600,100
-          </Grid>
+          {unitPrices()}
         </Grid>
         <br />
-        <b>Status: </b>BTO selection in progress
+        <b>Status: </b>{project.status==="ongoing"?"BTO selection in progress":"Upcoming launch"}
         <br />
       </Typography>
 
       <img
         style={{ marginTop: "1.5rem", maxWidth: "100%", width: 500 }}
         alt="location_map"
-        src="https://cdn-blog.seedly.sg/wp-content/uploads/2021/10/17143833/Screenshot-2021-11-17-at-2.36.55-PM.png"
+        src={project.location_url}
       />
       <Typography variant="subtitle2" sx={{ marginBottom: "1.5rem" }}>
         Source: HDB
@@ -116,13 +192,12 @@ export default function Info() {
         variant="body2"
         sx={{ marginTop: "0.5rem", marginBottom: "1.5rem" }}
       >
-        <b>Articles: </b>
-        <br />
-        Seedly | stackedhomes
+        <b>Recommended Articles: </b>
+        {project.articles[0]===""?"-":articlesList()}
         <br />
       </Typography>
 
-      <Divider />
-    </Container>
+    </Container>:""}
+    </>
   );
 }
