@@ -23,7 +23,7 @@ export default function ProjectCard({ project }) {
   }
   
   return (
-    <Link style={{textDecoration:'none', color:"black"}} to="/info">
+    <Link style={{textDecoration:'none', color:"black"}} to={`/info/${project.launch}`}>
       <Box
         sx={{
           borderRadius: "0.4rem",

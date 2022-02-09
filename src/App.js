@@ -86,7 +86,7 @@ function App() {
       <SwipeableTemporaryDrawer />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/info/:launch" element={<Info />} />
         <Route path="/tracker" element={<Tracker />} />
         <Route path="/tracker/summary" element={<Summary />} />
         <Route path="/tracker/projects" element={<TrackerOverview />} />
