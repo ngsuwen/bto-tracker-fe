@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import { Container, Typography, Grid, Button, Box } from "@mui/material";
+import { DataContext } from "../../App";
 
 // home components
 import CoverPic from "./cover";
@@ -18,7 +19,29 @@ const topOffset = (theme) => ({
   },
 });
 
-function Home() {
+export default function Home() {
+  // context
+  const { ongoing, upcoming } = React.useContext(DataContext)
+  console.log(ongoing)
+
+  // ongoing function
+  const ongoingProjList=()=>{
+    let ongoingProjArr=[];
+      ongoing.forEach((element)=>
+      ongoingProjArr.push(<Grid item lg={3}><ProjectCard project={element}/></Grid>)
+      )
+    return ongoingProjArr.slice(0,4)
+  }
+
+  // upcoming function
+  const upcomingProjList=()=>{
+    let upcomingProjArr=[];
+      upcoming.forEach((element)=>
+      upcomingProjArr.push(<Grid item lg={3}><ProjectCard project={element}/></Grid>)
+      )
+    return upcomingProjArr.slice(0,4)
+  }
+
   return (
     <>
       <CoverPic />
@@ -31,30 +54,7 @@ function Home() {
           spacing={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
+          {ongoingProjList()}
         </Grid>
         <Box
           sx={{
@@ -82,18 +82,7 @@ function Home() {
           spacing={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
-          <Grid item lg={3}>
-            <ProjectCard />
-          </Grid>
+          {upcomingProjList()}
         </Grid>
         <Box
           sx={{
@@ -115,5 +104,3 @@ function Home() {
     </>
   );
 }
-
-export default Home;

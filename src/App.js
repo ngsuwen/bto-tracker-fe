@@ -26,6 +26,9 @@ import EditBto from "./components/adminPages/projects/editProjectPage";
 import AddUnits from "./components/adminPages/units/addUnitsPage";
 import EditUnits from "./components/adminPages/units/editUnitsPage";
 
+//api
+import getProjectListApi from "./components/api/getProjectList";
+
 // font
 const theme = createTheme({
   typography: {
@@ -44,9 +47,41 @@ const theme = createTheme({
   },
 });
 
+export const DataContext = React.createContext()
+
 function App() {
+  const [ongoing, setOngoing] = React.useState([])
+  const [upcoming, setUpcoming] = React.useState([])
+  const [projList, setProjList] = React.useState([])
+
+  React.useEffect(()=>{
+    const ongoingArr = []
+    const upcomingArr = []
+    const projArr = []
+
+    const fetchData = async() =>{
+      const projectArr = await getProjectListApi()
+      projectArr.forEach((element, index) =>{
+        if (element.status==="ongoing"){
+          projArr.push(element.launch)
+          ongoingArr.push(element)
+        } else {
+          upcomingArr.push(element)
+        }
+      });
+      setOngoing(ongoingArr);
+      setUpcoming(upcomingArr);
+      setProjList(projArr);
+    }
+    fetchData()
+
+  },[])
+
   return (
     <ThemeProvider theme={theme}>
+      <DataContext.Provider value={{
+        ongoing, upcoming, projList
+      }}>
       <ScrollableTabs />
       <SwipeableTemporaryDrawer />
       <Routes>
@@ -70,6 +105,7 @@ function App() {
         <Route path="/admin/edit/units" element={<EditUnits />} />
       </Routes>
       <Footer />
+      </DataContext.Provider>
     </ThemeProvider>
   );
 }
