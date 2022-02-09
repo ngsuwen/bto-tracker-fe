@@ -1,6 +1,3 @@
-// api call for project list
-// pass props for projectCard
-
 import * as React from "react";
 import { Container, Typography, Grid, Button, Box } from "@mui/material";
 import { DataContext } from "../../App";
@@ -22,7 +19,6 @@ const topOffset = (theme) => ({
 export default function Home() {
   // context
   const { ongoing, upcoming } = React.useContext(DataContext)
-  console.log(ongoing)
 
   // ongoing function
   const ongoingProjList=()=>{

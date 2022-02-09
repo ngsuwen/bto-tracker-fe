@@ -62,8 +62,8 @@ function App() {
     const fetchData = async() =>{
       const projectArr = await getProjectListApi()
       projectArr.forEach((element, index) =>{
+        projArr.push(element.launch)
         if (element.status==="ongoing"){
-          projArr.push(element.launch)
           ongoingArr.push(element)
         } else {
           upcomingArr.push(element)

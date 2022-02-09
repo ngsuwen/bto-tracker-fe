@@ -4,34 +4,7 @@
 import * as React from "react";
 import { Container, TextField, MenuItem, Typography, Box, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-
-// api call to get list of projects
-const btoProjects = [
-  {
-    value: "nov21hg",
-    label: "Hougang Nov 2021",
-  },
-  {
-    value: "nov21jw",
-    label: "Jurong West Nov 2021",
-  },
-  {
-    value: "nov21t",
-    label: "Tengah Nov 2021",
-  },
-  {
-    value: "nov21yt",
-    label: "Yew Tee Nov 2021",
-  },
-  {
-    value: "nov21k",
-    label: "Kallang Nov 2021",
-  },
-  {
-    value: "nov21r",
-    label: "Rochor Nov 2021",
-  },
-];
+import { DataContext } from "../../App";
 
 // page destination
 const searchFx = [
@@ -79,8 +52,23 @@ const searchBoxOffset = (theme) => ({
 });
 
 export default function Search() {
-  const [bto, setBto] = React.useState("nov21hg");
-  const [search, setSearch] = React.useState("info");
+  const [search, setSearch] = React.useState("");
+  const { projList } = React.useContext(DataContext);
+  const [bto, setBto] = React.useState("");
+
+  // project list function
+  const projectList =()=>{
+    let projectArr=[]
+    projList.sort()
+    projList.forEach((element,index)=>{
+      projectArr.push(
+      <MenuItem key={element} value={element}>
+        {element[0].toUpperCase()+element.slice(1,3)+' '+element.slice(3,7)+' '+element[7].toUpperCase()+element.slice(8)}
+      </MenuItem>
+      )
+    })
+    return projectArr.sort()
+  }
 
   const handleChange = (event) => {
     setBto(event.target.value);
@@ -125,11 +113,7 @@ export default function Search() {
           sx={searchText}
           InputProps={{ style: { fontSize: "0.85rem" } }}
         >
-          {btoProjects.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
+          {projectList()}
         </TextField>
         <TextField
           id="outlined-select-currency"

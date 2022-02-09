@@ -21,14 +21,7 @@ export default function ProjectCard({ project }) {
     })
     return unitTypes.join(', ')
   }
-
-  // preview img function
-  // const previewImage=()=>{
-  //   let previewImage=""
-  //   if (project)
-  //   return previewImage
-  // }
-
+  
   return (
     <Link style={{textDecoration:'none', color:"black"}} to="/info">
       <Box
