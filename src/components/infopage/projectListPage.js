@@ -4,8 +4,30 @@
 import * as React from "react";
 import { Container, Typography, Grid } from "@mui/material";
 import ProjectCard from "../homePage/projectCard";
+import { DataContext } from "../../App";
 
-function ProjectList() {
+export default function ProjectList() {
+    // context
+    const { ongoing, upcoming } = React.useContext(DataContext)
+
+    // ongoing function
+    const ongoingProjList=()=>{
+      let ongoingProjArr=[];
+        ongoing.forEach((element)=>
+        ongoingProjArr.push(<Grid item lg={3}><ProjectCard project={element}/></Grid>)
+        )
+      return ongoingProjArr
+    }
+  
+    // upcoming function
+    const upcomingProjList=()=>{
+      let upcomingProjArr=[];
+        upcoming.forEach((element)=>
+        upcomingProjArr.push(<Grid item lg={3}><ProjectCard project={element}/></Grid>)
+        )
+      return upcomingProjArr
+    }
+    
   return (
     <>
       <section id="ongoing">
@@ -18,48 +40,7 @@ function ProjectList() {
             spacing={2}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
+            {ongoingProjList()}
           </Grid>
         </Container>
       </section>
@@ -73,35 +54,10 @@ function ProjectList() {
             spacing={2}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
-            <Grid item lg={3}>
-              <ProjectCard />
-            </Grid>
+            {upcomingProjList()}
           </Grid>
         </Container>
       </section>
     </>
   );
 }
-
-export default ProjectList;
