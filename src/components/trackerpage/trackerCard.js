@@ -4,7 +4,7 @@ import * as React from "react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom"
 
-export default function ProjectCard() {
+export default function TrackerCard({ name }) { //props to be updated
   return (
     <Link style={{textDecoration:'none', color:"black"}} to="/tracker/summary" target="_blank" rel="noopener noreferrer">
       <Box
@@ -19,7 +19,7 @@ export default function ProjectCard() {
           backgroundPosition: "center",
         }}
       />
-      <Typography variant="body1" fontWeight={"bold"} paddingY={"0.2rem"}>Hougang Olive @ Hougang</Typography>
+      <Typography variant="body1" fontWeight={"bold"} paddingY={"0.2rem"}>{name}</Typography>
       <Typography variant="subtitle2" color="text.secondary">Last queue number: 060 (28/08)</Typography>
     </Link>
   );

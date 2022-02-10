@@ -2,13 +2,15 @@
 // ref parameter
 
 import * as React from "react";
-import { Container, Typography, Divider, Grid } from "@mui/material";
+import { Container, Typography, Divider, Grid, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import findOneProjectApi from "../api/findOneProject";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Info() {
   const [project, setProject] = React.useState({});
+  const [favourite, setFavourite] = React.useState(false)
 
   let { launch } = useParams();
   launch = launch.replace("/%20/g", " ");
@@ -18,6 +20,8 @@ export default function Info() {
       const data = await findOneProjectApi(launch);  
       data.launch = data.launch[0].toUpperCase()+data.launch.slice(1,3)+' '+data.launch.slice(3,7)
       setProject(data);
+      var storedWatchlist = JSON.parse(localStorage.watchlist);
+      setFavourite(storedWatchlist.includes(data.name)?true:false)
     };
     fetchData();
   }, []);
@@ -110,12 +114,28 @@ export default function Info() {
     return articlesList
   }
 
+  // favourite handler
+  const favouriteHandler=()=>{
+    setFavourite(!favourite)
+    var storedWatchlist = JSON.parse(localStorage.watchlist);
+    if (favourite){
+      storedWatchlist.splice(storedWatchlist.indexOf(project.name),1)
+      localStorage.watchlist = JSON.stringify(storedWatchlist);
+    } else {
+      storedWatchlist.push(project.name)
+      localStorage.watchlist = JSON.stringify(storedWatchlist);
+    }
+  }
+
   return (
     <>
     {project.name?
     <Container maxWidth="md">
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
         {project.name}
+        <IconButton aria-label="add to favorites" onClick={favouriteHandler}>
+          <FavoriteIcon fontSize="small" color={favourite?"error":"inherit"} />
+        </IconButton>
       </Typography>
       <Typography variant="body2" sx={{ marginTop: "0.5rem" }}>
         {project.launch}
