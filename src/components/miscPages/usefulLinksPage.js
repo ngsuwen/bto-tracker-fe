@@ -127,7 +127,7 @@ export default function Links() {
         </a>
         <br />
         <a
-          href="https://www.teoalida.com/singapore/btobrochures"
+          href="https://www.teoalida.com/singapore/btolist/"
           target="_blank"
           rel="noopener noreferrer"
         >

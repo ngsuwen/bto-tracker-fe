@@ -49,7 +49,7 @@ export default function AddUnits() {
 
   const submitHandler = async () => {
     let floorRange = floors.split(" to ");
-    let floorExcept = except.split(",");
+    let floorExcept = except.split(", ");
     let lowestFloor = floorRange[0];
     while (lowestFloor<Number(floorRange[1])+1){
       if (floorExcept.includes(lowestFloor.toString())){
