@@ -88,7 +88,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/info/:launch" element={<Info />} />
         <Route path="/tracker" element={<Tracker />} />
-        <Route path="/tracker/summary" element={<Summary />} />
+        <Route path="/tracker/summary/:launch" element={<Summary />} />
         <Route path="/tracker/projects" element={<TrackerOverview />} />
         <Route path="/projects" element={<ProjectList />} />
         <Route path="/links" element={<Links />} />
