@@ -11,7 +11,6 @@ import {
   TableRow,
   Box,
 } from "@mui/material";
-import Tabs from "./trackerTabs";
 import getUnitsPerBlkApi from "../api/getUnitsPerBlk";
 import { useParams } from "react-router-dom";
 
@@ -81,14 +80,13 @@ export default function Units() {
       setUnitNo(unitNoArr.sort());
       setUnitType(unitTypeArr.sort());
       setUnitBlk(data.blkObj);
-      setFloors(data.floors)
+      setFloors(data.floors);
     };
     fetchData();
-  },[blk]);
+  }, [blk, launch]);
 
   return (
     <>
-      <Tabs />
       <Container maxWidth="md">
         <Typography
           variant="subtitle2"

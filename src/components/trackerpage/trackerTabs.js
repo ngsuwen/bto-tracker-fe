@@ -31,7 +31,7 @@ export default function Tabs() {
   const displayBlks=()=>{
     let blksArr=[]
     blks.forEach((element)=>{
-      blksArr.push(<> | <Link style={{ textDecoration: 'none', color: 'black' }} to={`/tracker/nov2021hougang-Olive/${element}`}>{element}</Link></>)
+      blksArr.push(<> | <Link style={{ textDecoration: 'none', color: 'black' }} to={`/tracker/${launch}/${element}`}>{element}</Link></>)
     })
     return blksArr
   }
@@ -45,7 +45,7 @@ export default function Tabs() {
         variant="body1"
         sx={{ marginTop: "0.5rem", marginBottom: "1rem", wordSpacing: "1rem" }}
       >
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/tracker/summary/nov2021hougang-Olive`}>QUEUE</Link>{displayBlks()}
+        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/tracker/summary/${launch}`}>QUEUE</Link>{displayBlks()}
       </Typography>
       <Typography variant="body2" color="red">
         * Volunteers required: Data scrapers, admin. Apply here.
