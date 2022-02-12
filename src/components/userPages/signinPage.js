@@ -6,8 +6,17 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import createSessionApi from "../api/createSession";
 
 export default function SigninPage() {
+
+  const userRef = React.useRef()
+  const passwordRef = React.useRef()
+
+  const submitHandler=async()=>{
+    const data = await createSessionApi(userRef.current.value, passwordRef.current.value)
+    console.log(data)
+  }
 
   return (
     <Container maxWidth="xs">
@@ -32,7 +41,7 @@ export default function SigninPage() {
         username
       </Typography>
 
-      <TextField size="small" fullWidth sx={{ marginBottom: "1vh" }} />
+      <TextField inputRef={userRef} size="small" fullWidth sx={{ marginBottom: "1vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -43,7 +52,7 @@ export default function SigninPage() {
         password
       </Typography>
 
-      <TextField size="small" fullWidth sx={{ marginBottom: "5vh" }} />
+      <TextField type="password" inputRef={passwordRef} size="small" fullWidth sx={{ marginBottom: "5vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Box
@@ -53,7 +62,7 @@ export default function SigninPage() {
           marginBottom: "50%",
         }}
       >
-        <Button fullWidth variant="outlined">
+        <Button onClick={submitHandler} fullWidth variant="outlined">
           Sign In
         </Button>
       </Box>
