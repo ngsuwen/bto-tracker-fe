@@ -8,13 +8,12 @@ import ScrollableTabs from "./components/general/tabs";
 import SwipeableTemporaryDrawer from "./components/general/drawer";
 import Home from "./components/homePage/homePage";
 import Info from "./components/infoPage/infoPage";
-import Units from "./components/trackerPage/unitsPage";
 import ProjectList from "./components/infoPage/projectListPage";
 import TrackerOverview from "./components/trackerPage/trackerOverviewPage";
 import Links from "./components/miscPages/usefulLinksPage";
 import Faq from "./components/miscPages/faqPage";
 import Footer from "./components/general/footer";
-import Summary from "./components/trackerPage/summaryPage";
+import Tracker from "./components/trackerPage/trackerPage";
 import Disclaimer from "./components/miscPages/disclaimerPage";
 import AppDateForm from "./components/contributePage/appDateFormPage";
 import AdminForm from "./components/contributePage/adminFormPage";
@@ -87,8 +86,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/info/:launch" element={<Info />} />
-        <Route path="/tracker/:launch/:blk" element={<Units />} />
-        <Route path="/tracker/summary/:launch" element={<Summary />} />
+        <Route path="/tracker/:launch/:blk" element={<Tracker page="units" />} />
+        <Route path="/tracker/summary/:launch" element={<Tracker page="summary" />} />
         <Route path="/tracker/projects" element={<TrackerOverview />} />
         <Route path="/projects" element={<ProjectList />} />
         <Route path="/links" element={<Links />} />
