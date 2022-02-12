@@ -8,7 +8,7 @@ import ScrollableTabs from "./components/general/tabs";
 import SwipeableTemporaryDrawer from "./components/general/drawer";
 import Home from "./components/homePage/homePage";
 import Info from "./components/infoPage/infoPage";
-import Tracker from "./components/trackerPage/trackerPage";
+import Units from "./components/trackerPage/unitsPage";
 import ProjectList from "./components/infoPage/projectListPage";
 import TrackerOverview from "./components/trackerPage/trackerOverviewPage";
 import Links from "./components/miscPages/usefulLinksPage";
@@ -87,7 +87,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/info/:launch" element={<Info />} />
-        <Route path="/tracker" element={<Tracker />} />
+        <Route path="/tracker/:launch/:blk" element={<Units />} />
         <Route path="/tracker/summary/:launch" element={<Summary />} />
         <Route path="/tracker/projects" element={<TrackerOverview />} />
         <Route path="/projects" element={<ProjectList />} />

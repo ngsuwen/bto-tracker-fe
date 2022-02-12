@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 export default function TrackerCard({ name }) { //props to be updated
   return (
-    <Link style={{textDecoration:'none', color:"black"}} to="/tracker/summary" target="_blank" rel="noopener noreferrer">
+    <Link style={{textDecoration:'none', color:"black"}} to="/tracker/summary/nov2021hougang-Olive" target="_blank" rel="noopener noreferrer">
       <Box
         sx={{
           borderRadius: "0.4rem",

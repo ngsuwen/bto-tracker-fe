@@ -15,41 +15,14 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
-import getUnitsListApi from "../api/getUnitsList";
+import Tabs from "./trackerTabs";
 
 export default function Summary() {
-  let { launch } = useParams();
-  const [blks, setBlks] = React.useState([])
-
-  React.useEffect(()=>{
-    const fetchData=async()=>{
-      let blocks = []
-      let units = await getUnitsListApi(launch)
-      units.forEach((element)=>{
-        if (!blocks.includes(element.blk)){
-          blocks.push(element.blk)
-        }
-      })
-      setBlks(blocks)
-    }
-    fetchData()
-  },[])
 
   return (
+    <>
+    <Tabs/>
     <Container maxWidth="md">
-      <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
-        Hougang Olive @ Hougang {/* NAME */}
-      </Typography>
-      <Typography
-        variant="body1"
-        sx={{ marginTop: "0.5rem", marginBottom: "1rem", wordSpacing: "1rem" }}
-      >
-        <Link style={{ textDecoration: 'none', color: 'black' }} to='/tracker/summary'>QUEUE </Link>| <Link style={{ textDecoration: 'none', color: 'black' }} to='/tracker'>{blks}</Link>{/* UNIT TYPE */}
-      </Typography>
-      <Typography variant="body2" color="red">
-        * Volunteers required: Data scrapers, admin. Apply here.
-      </Typography>
 
       <TableContainer
         sx={{ boxShadow: 0, marginBottom: "3rem" }}
@@ -157,5 +130,6 @@ export default function Summary() {
       </Typography>
       <Divider sx={{ marginY: "1.5rem" }} />
     </Container>
+    </>
   );
 }
