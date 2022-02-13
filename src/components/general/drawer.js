@@ -1,3 +1,5 @@
+// PASS USER LOGIN STATE (affects sign in and user nav)
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
@@ -28,7 +30,14 @@ export default function SwipeableTemporaryDrawer() {
 
   const toggleDrawer = (open) => (event) => {
     setOpen(false)
+    setOpen2(false)
     setState(open);
+  };
+
+  const [open2, setOpen2] = React.useState(false);
+
+  const handleClick2 = () => {
+    setOpen2(!open2);
   };
 
   return (
@@ -91,7 +100,7 @@ export default function SwipeableTemporaryDrawer() {
                   </Link>
                 ))}
               </Collapse>
-              <Link
+              {/* <Link
                 style={{ textDecoration: "none", color: "black" }}
                 to={"/signin"}
                 onClick={toggleDrawer(false)}
@@ -99,7 +108,27 @@ export default function SwipeableTemporaryDrawer() {
               <ListItem>
                 <ListItemText primary={"Sign In"} />
               </ListItem>
-              </Link>
+              </Link> */}
+              <ListItem button key={"username"} onClick={handleClick2} >
+                <ListItemText primary={"Username"} />
+                {open2 ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={open2} timeout="auto" unmountOnExit>
+                {[
+                  ["Dashboard", "/"],
+                  ["Change Password", "/profile"]
+                ].map((text, index) => (
+                  <Link
+                    style={{ textDecoration: "none", color: "black" }}
+                    to={text[1]}
+                    onClick={toggleDrawer(false)}
+                  >
+                    <ListItem button key={text[0]} sx={{ pl: 4 }}>
+                      <ListItemText primary={text[0]} />
+                    </ListItem>
+                  </Link>
+                ))}
+              </Collapse>
             </List>
           </Box>
         </SwipeableDrawer>

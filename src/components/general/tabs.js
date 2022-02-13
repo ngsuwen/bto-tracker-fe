@@ -1,3 +1,5 @@
+// PASS USER LOGIN STATE (affects sign in and user nav)
+
 import * as React from "react";
 import {
   Container,
@@ -66,6 +68,8 @@ export default function CustomizedTabs() {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const open2 = Boolean(anchorEl2);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -75,6 +79,13 @@ export default function CustomizedTabs() {
   };
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
   };
 
   return (
@@ -107,7 +118,12 @@ export default function CustomizedTabs() {
                 label="+ Contribute"
                 specialId="contribute-tab"
               />
-              <StyledTab label="Sign In" link="/signin" />
+              {/* <StyledTab label="Sign In" link="/signin" /> */}
+              <StyledTab2
+                onClick={handleClick2}
+                label="Username"
+                specialId="tab-nav"
+              />
             </StyledTabs>
           </Box>
           <Menu
@@ -123,6 +139,18 @@ export default function CustomizedTabs() {
             <Link to="/admin-form"><MenuItem onClick={handleClose}>Admin</MenuItem></Link>
             <Link to="/appointment-form"><MenuItem onClick={handleClose}>Appointment Date</MenuItem></Link>
             <Link to="/feedback-form"><MenuItem onClick={handleClose}>Feedback</MenuItem></Link>
+          </Menu>
+          <Menu
+            id="contribute-menu"
+            anchorEl={anchorEl2}
+            open={open2}
+            onClose={handleClose2}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <Link to="/"><MenuItem onClick={handleClose2}>Dashboard</MenuItem></Link>
+            <Link to="/profile"><MenuItem onClick={handleClose2}>Change Password</MenuItem></Link>
           </Menu>
         </Box>
       </Container>
