@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
-import createSessionApi from "../api/createSession";
 
 export default function ProfilePage() {
   const oldPasswordRef = React.useRef();

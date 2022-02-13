@@ -115,7 +115,7 @@ export default function SwipeableTemporaryDrawer() {
               </ListItem>
               <Collapse in={open2} timeout="auto" unmountOnExit>
                 {[
-                  ["Dashboard", "/"],
+                  ["Dashboard", "/dashboard"],
                   ["Change Password", "/profile"]
                 ].map((text, index) => (
                   <Link

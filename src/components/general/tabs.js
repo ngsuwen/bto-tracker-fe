@@ -149,7 +149,7 @@ export default function CustomizedTabs() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <Link to="/"><MenuItem onClick={handleClose2}>Dashboard</MenuItem></Link>
+            <Link to="/dashboard"><MenuItem onClick={handleClose2}>Dashboard</MenuItem></Link>
             <Link to="/profile"><MenuItem onClick={handleClose2}>Change Password</MenuItem></Link>
           </Menu>
         </Box>

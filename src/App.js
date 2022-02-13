@@ -25,6 +25,7 @@ import AddBto from "./components/adminPages/projects/addProjectPage";
 import EditBto from "./components/adminPages/projects/editProjectPage";
 import AddUnits from "./components/adminPages/units/addUnitsPage";
 import EditUnits from "./components/adminPages/units/editUnitsPage";
+import Dashboard from "./components/adminPages/dashboard/dashboardPage";
 
 //api
 import getProjectListApi from "./components/api/getProjectList";
@@ -104,6 +105,7 @@ function App() {
         <Route path="/admin/edit/:launch" element={<EditBto />} />
         <Route path="/admin/add/units" element={<AddUnits />} />
         <Route path="/admin/edit/units" element={<EditUnits />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
       </DataContext.Provider>
