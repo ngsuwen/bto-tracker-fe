@@ -20,6 +20,7 @@ import AdminForm from "./components/contributePage/adminFormPage";
 import ScraperForm from "./components/contributePage/scraperFormPage";
 import FeedbackForm from "./components/contributePage/feedbackFormPage";
 import SigninPage from "./components/userPages/signinPage";
+import ProfilePage from "./components/userPages/profilePage";
 import AddBto from "./components/adminPages/projects/addProjectPage";
 import EditBto from "./components/adminPages/projects/editProjectPage";
 import AddUnits from "./components/adminPages/units/addUnitsPage";
@@ -98,6 +99,7 @@ function App() {
         <Route path="/scraper-form" element={<ScraperForm />} />
         <Route path="/feedback-form" element={<FeedbackForm />} />
         <Route path="/signin" element={<SigninPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/admin/add" element={<AddBto />} />
         <Route path="/admin/edit/:launch" element={<EditBto />} />
         <Route path="/admin/add/units" element={<AddUnits />} />
