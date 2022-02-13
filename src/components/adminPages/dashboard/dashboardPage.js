@@ -4,10 +4,13 @@ import * as React from "react";
 import { Container, Typography } from "@mui/material";
 import Message from "./message";
 import Queue from "./queue";
+import Project from "./project";
+import User from "./user";
 
 export default function Dashboard() {
   return (
     <Container maxWidth="md">
+      
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
         Messages
       </Typography>
@@ -25,20 +28,9 @@ export default function Dashboard() {
       <Message />
 
       {/* ---------------------------------------------------------------------------------- */}
-      <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
-        Overview
-      </Typography>
 
-      <Typography
-        variant="body2"
-        sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
-      >
-        You can edit individual entries here.
-      </Typography>
-
-      {/* ---------------------------------------------------------------------------------- */}
-
-      <Queue />
+      <Project />
+      <User />
 
       {/* ---------------------------------------------------------------------------------- */}
     

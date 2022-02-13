@@ -28,194 +28,212 @@ export default function Message() {
   };
 
   return (
-    <Paper
-      variant="outlined"
-      elevation={0}
-      sx={{ maxHeight: 400, overflow: "auto", marginBottom: "8vh" }}
-    >
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        variant="scrollable"
-        scrollButtons={false}
-        allowScrollButtonsMobile
-        aria-label="scrollable force tabs example"
+    <>
+      <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
+        Overview
+      </Typography>
+
+      <Typography
+        variant="body2"
+        sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
       >
-        <Tab label="2-room" />
-        <Tab label="3-room" />
-        <Tab label="4-room" />
-        <Tab label="5-room" />
-      </Tabs>
+        You can edit individual entries here.
+      </Typography>
 
       {/* ---------------------------------------------------------------------------------- */}
-
-      <SwipeableViews index={value} onChangeIndex={handleChangeIndex} disabled>
-        <List
-          sx={{
-            width: "100%",
-            maxWidth: "100%",
-            minWidth: 530,
-            bgcolor: "background.paper",
-          }}
+      <Paper
+        variant="outlined"
+        elevation={0}
+        sx={{ maxHeight: 400, overflow: "auto", marginBottom: "8vh" }}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons={false}
+          allowScrollButtonsMobile
+          aria-label="scrollable force tabs example"
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <>
-                  <IconButton>
-                    <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                  <IconButton>
-                    <CloseIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                </>
-              }
-            >
-              <ListItemText
-                primary={
-                  <Box display="flex">
-                    <Typography sx={{ marginBottom: "0.5rem" }}>
-                      Flat Selection on 04 Oct 2021 for Queue Number 094
-                    </Typography>
-                    <ImageSearchIcon
-                      fontSize="small"
-                      color="action"
-                      sx={{ marginLeft: "0.5rem" }}
-                    />
-                  </Box>
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
+          <Tab label="2-room" />
+          <Tab label="3-room" />
+          <Tab label="4-room" />
+          <Tab label="5-room" />
+        </Tabs>
 
         {/* ---------------------------------------------------------------------------------- */}
 
-        <List
-          sx={{
-            width: "100%",
-            maxWidth: "100%",
-            minWidth: 530,
-            bgcolor: "background.paper",
-          }}
+        <SwipeableViews
+          index={value}
+          onChangeIndex={handleChangeIndex}
+          disabled
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <>
-                  <IconButton>
-                    <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                  <IconButton>
-                    <CloseIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                </>
-              }
-            >
-              <ListItemText
-                primary={
-                  <Box display="flex">
-                    <Typography sx={{ marginBottom: "0.5rem" }}>
-                      Flat Selection on 04 Oct 2021 for Queue Number 097
-                    </Typography>
-                    <ImageSearchIcon
-                      fontSize="small"
-                      color="action"
-                      sx={{ marginLeft: "0.5rem" }}
-                    />
-                  </Box>
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 530,
+              bgcolor: "background.paper",
+            }}
+          >
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
+              <ListItem
+                key={value}
+                secondaryAction={
+                  <>
+                    <IconButton>
+                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                    <IconButton>
+                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                  </>
                 }
-              />
-            </ListItem>
-          ))}
-        </List>
+              >
+                <ListItemText
+                  primary={
+                    <Box display="flex">
+                      <Typography sx={{ marginBottom: "0.5rem" }}>
+                        Flat Selection on 04 Oct 2021 for Queue Number 094
+                      </Typography>
+                      <ImageSearchIcon
+                        fontSize="small"
+                        color="action"
+                        sx={{ marginLeft: "0.5rem" }}
+                      />
+                    </Box>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
 
-        {/* ---------------------------------------------------------------------------------- */}
+          {/* ---------------------------------------------------------------------------------- */}
 
-        <List
-          sx={{
-            width: "100%",
-            maxWidth: "100%",
-            minWidth: 530,
-            bgcolor: "background.paper",
-          }}
-        >
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <>
-                  <IconButton>
-                    <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                  <IconButton>
-                    <CloseIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                </>
-              }
-            >
-              <ListItemText
-                primary={
-                  <Box display="flex">
-                    <Typography sx={{ marginBottom: "0.5rem" }}>
-                      Flat Selection on 04 Oct 2021 for Queue Number 098
-                    </Typography>
-                    <ImageSearchIcon
-                      fontSize="small"
-                      color="action"
-                      sx={{ marginLeft: "0.5rem" }}
-                    />
-                  </Box>
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 530,
+              bgcolor: "background.paper",
+            }}
+          >
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
+              <ListItem
+                key={value}
+                secondaryAction={
+                  <>
+                    <IconButton>
+                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                    <IconButton>
+                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                  </>
                 }
-              />
-            </ListItem>
-          ))}
-        </List>
+              >
+                <ListItemText
+                  primary={
+                    <Box display="flex">
+                      <Typography sx={{ marginBottom: "0.5rem" }}>
+                        Flat Selection on 04 Oct 2021 for Queue Number 097
+                      </Typography>
+                      <ImageSearchIcon
+                        fontSize="small"
+                        color="action"
+                        sx={{ marginLeft: "0.5rem" }}
+                      />
+                    </Box>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
 
-        {/* ---------------------------------------------------------------------------------- */}
+          {/* ---------------------------------------------------------------------------------- */}
 
-        <List
-          sx={{
-            width: "100%",
-            maxWidth: "100%",
-            minWidth: 530,
-            bgcolor: "background.paper",
-          }}
-        >
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <>
-                  <IconButton>
-                    <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                  <IconButton>
-                    <CloseIcon sx={{ marginBottom: "0.7rem" }}/>
-                  </IconButton>
-                </>
-              }
-            >
-              <ListItemText
-                primary={
-                  <Box display="flex">
-                    <Typography sx={{ marginBottom: "0.5rem" }}>
-                      Flat Selection on 04 Oct 2021 for Queue Number 095
-                    </Typography>
-                    <ImageSearchIcon
-                      fontSize="small"
-                      color="action"
-                      sx={{ marginLeft: "0.5rem" }}
-                    />
-                  </Box>
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 530,
+              bgcolor: "background.paper",
+            }}
+          >
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
+              <ListItem
+                key={value}
+                secondaryAction={
+                  <>
+                    <IconButton>
+                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                    <IconButton>
+                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                  </>
                 }
-              />
-            </ListItem>
-          ))}
-        </List>
-      </SwipeableViews>
-    </Paper>
+              >
+                <ListItemText
+                  primary={
+                    <Box display="flex">
+                      <Typography sx={{ marginBottom: "0.5rem" }}>
+                        Flat Selection on 04 Oct 2021 for Queue Number 098
+                      </Typography>
+                      <ImageSearchIcon
+                        fontSize="small"
+                        color="action"
+                        sx={{ marginLeft: "0.5rem" }}
+                      />
+                    </Box>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+
+          {/* ---------------------------------------------------------------------------------- */}
+
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 530,
+              bgcolor: "background.paper",
+            }}
+          >
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
+              <ListItem
+                key={value}
+                secondaryAction={
+                  <>
+                    <IconButton>
+                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                    <IconButton>
+                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                  </>
+                }
+              >
+                <ListItemText
+                  primary={
+                    <Box display="flex">
+                      <Typography sx={{ marginBottom: "0.5rem" }}>
+                        Flat Selection on 04 Oct 2021 for Queue Number 095
+                      </Typography>
+                      <ImageSearchIcon
+                        fontSize="small"
+                        color="action"
+                        sx={{ marginLeft: "0.5rem" }}
+                      />
+                    </Box>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        </SwipeableViews>
+      </Paper>
+    </>
   );
 }
