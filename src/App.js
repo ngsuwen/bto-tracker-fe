@@ -29,6 +29,7 @@ import Dashboard from "./components/adminPages/dashboard/dashboardPage";
 
 //api
 import getProjectListApi from "./components/api/getProjectList";
+import AddUser from "./components/adminPages/user.js/addUsersPage";
 
 // font
 const theme = createTheme({
@@ -102,8 +103,9 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/admin/add" element={<AddBto />} />
-        <Route path="/admin/edit/:launch" element={<EditBto />} />
         <Route path="/admin/add/units" element={<AddUnits />} />
+        <Route path="/admin/add/user" element={<AddUser />} />
+        <Route path="/admin/edit/:launch" element={<EditBto />} />
         <Route path="/admin/edit/units" element={<EditUnits />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>

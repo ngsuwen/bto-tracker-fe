@@ -20,7 +20,7 @@ export default function User() {
             fontSize: "1rem",
             color: "#555555",
           }}
-          to="/admin/add"
+          to="/admin/add/user"
         >
           (Add new user)
         </Link>

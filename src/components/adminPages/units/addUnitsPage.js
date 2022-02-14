@@ -85,7 +85,7 @@ export default function AddUnits() {
     const fetchData = async () => {
       const projectArr = await getProjectList();
       projectArr.forEach((element, index) =>
-        arr.push(<MenuItem value={element.launch}>{element.name}</MenuItem>)
+        arr.push(<MenuItem value={element.launch}>{element.launch[0].toUpperCase()+element.launch.slice(1,3)+' '+element.launch.slice(3,7)+' '+element.launch[7].toUpperCase()+element.launch.slice(8)}</MenuItem>)
       );
       setLaunchArr(arr);
     };
