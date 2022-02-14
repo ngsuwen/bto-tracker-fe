@@ -132,25 +132,25 @@ export default function EditBto() {
         r5: projectToEdit.unit_breakdown[3]===0?false:true,
         gen: projectToEdit.unit_breakdown[4]===0?false:true,
       });
-      setPriceLowR2(projectToEdit.price_range_2R?projectToEdit.price_range_2R[0].value : null);
-      setPriceHighR2(projectToEdit.price_range_2R?projectToEdit.price_range_2R[1].value : null);
+      setPriceLowR2(projectToEdit.price_range_2R!==null?projectToEdit.price_range_2R.length>0?projectToEdit.price_range_2R[0].value : 0:null);
+      setPriceHighR2(projectToEdit.price_range_2R!==null?projectToEdit.price_range_2R.length>0?projectToEdit.price_range_2R[0].value : 0:null);
       setR2Units(projectToEdit.unit_breakdown[0]);
-      setPriceLowR3(projectToEdit.price_range_3R?projectToEdit.price_range_3R[0].value : null);
-      setPriceHighR3(projectToEdit.price_range_3R?projectToEdit.price_range_3R[1].value : null);
+      setPriceLowR3(projectToEdit.price_range_3R!==null?projectToEdit.price_range_3R.length>0?projectToEdit.price_range_3R[0].value : 0:null);
+      setPriceHighR3(projectToEdit.price_range_3R!==null?projectToEdit.price_range_3R.length>0?projectToEdit.price_range_3R[0].value : 0:null);
       setR3Units(projectToEdit.unit_breakdown[1]);
-      setPriceLowR4(projectToEdit.price_range_4R?projectToEdit.price_range_4R[0].value : null);
-      setPriceHighR4(projectToEdit.price_range_4R?projectToEdit.price_range_4R[1].value : null);
+      setPriceLowR4(projectToEdit.price_range_4R!==null?projectToEdit.price_range_4R.length>0?projectToEdit.price_range_4R[0].value : 0:null);
+      setPriceHighR4(projectToEdit.price_range_4R!==null?projectToEdit.price_range_4R.length>0?projectToEdit.price_range_4R[0].value : 0:null);
       setR4Units(projectToEdit.unit_breakdown[2]);
-      setPriceLowR5(projectToEdit.price_range_5R?projectToEdit.price_range_5R[0].value : null);
-      setPriceHighR5(projectToEdit.price_range_5R?projectToEdit.price_range_5R[1].value : null);
+      setPriceLowR5(projectToEdit.price_range_5R!==null?projectToEdit.price_range_5R.length>0?projectToEdit.price_range_5R[0].value : 0:null);
+      setPriceHighR5(projectToEdit.price_range_5R!==null?projectToEdit.price_range_5R.length>0?projectToEdit.price_range_5R[0].value : 0:null);
       setR5Units(projectToEdit.unit_breakdown[3]);
-      setPriceLowGen(projectToEdit.price_range_3Gen?projectToEdit.price_range_3Gen[0].value : null);
-      setPriceHighGen(projectToEdit.price_range_3Gen?projectToEdit.price_range_3Gen[1].value : null);
+      setPriceLowGen(projectToEdit.price_range_3Gen!==null?projectToEdit.price_range_3Gen.length>0?projectToEdit.price_range_3Gen[0].value : 0:null);
+      setPriceHighGen(projectToEdit.price_range_3Gen!==null?projectToEdit.price_range_3Gen.length>0?projectToEdit.price_range_3Gen[0].value : 0:null);
       setGenUnits(projectToEdit.unit_breakdown[4]);
-      setUnits(projectToEdit.no_of_units);
-      setArticles(projectToEdit.articles.join(","));
+      setUnits(projectToEdit.no_of_units?projectToEdit.no_of_units:null);
+      setArticles(projectToEdit.articles?projectToEdit.articles.join(","):null);
       setStatus(projectToEdit.status);
-      setPreviewUrl(projectToEdit.preview_url);
+      setPreviewUrl(projectToEdit.preview_url?projectToEdit.preview_url:null);
       setLocationUrl(projectToEdit.location_url);
     };
     fetchData();

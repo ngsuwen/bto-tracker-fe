@@ -10,7 +10,7 @@ export default async function editProjectApi(launch, obj, state) {
       : console.log(`no ${properties}`);
   }
     
-  if (unit_types.length === 0 || obj.name === "" || obj.location === "" || obj.launch === "" || obj.location_url===""){
+  if (unit_types.length === 0 || obj.name === "" || obj.location === "" || obj.launch === "" || obj.no_of_units === "" || obj.location_url===""){
     console.log('here')
     return {message:"Some fields are empty"}
   }
