@@ -9,6 +9,11 @@ export default async function editProjectApi(launch, obj, state) {
       ? unit_types.push(properties)
       : console.log(`no ${properties}`);
   }
+    
+  if (unit_types.length === 0 || obj.name === "" || obj.location === "" || obj.launch === "" || obj.no_of_units === "" || obj.location_url===""){
+    console.log('here')
+    return {message:"Some fields are empty"}
+  }
 
   // articles array
   const articles_arr = obj.articles.split(",")
@@ -26,7 +31,9 @@ export default async function editProjectApi(launch, obj, state) {
     "price_range_5R": obj.price_range_5R,
     "price_range_3Gen": obj.price_range_3Gen,
     "status": obj.status,
-    "articles": articles_arr
+    "articles": articles_arr,
+    "location_url": obj.location_url,
+    "preview_url": obj.preview_url
   });
 
   var requestOptions = {
@@ -36,8 +43,9 @@ export default async function editProjectApi(launch, obj, state) {
     redirect: "follow",
   };
 
-  fetch(`http://localhost:8000/api/project/${launch}`, requestOptions)
+  const result = fetch(`http://localhost:8000/api/project/${launch}`, requestOptions)
     .then((response) => response.json())
-    .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
+
+  return result
 }

@@ -7,7 +7,10 @@ export default async function addProjectApi(obj, state) {
   for (let properties in state){
     state[properties]?unit_types.push(properties):console.log(`no ${properties}`)
   }
-
+  
+  if (unit_types.length === 0 || obj.name === "" || obj.location === "" || obj.launch === "" || obj.no_of_units === "" || obj.location_url===""){
+    return {message:"Some fields are empty"}
+  }
   // articles array
   const articles_arr = obj.articles.split(",")
   

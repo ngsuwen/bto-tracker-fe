@@ -12,12 +12,16 @@ import {
   Grid,
   Radio,
   RadioGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import editProjectApi from "../../api/editProject";
 import findProjectApi from "../../api/findProject";
 
-export default function AddBto() {
+export default function EditBto() {
   let { launch } = useParams();
 
   // useStates
@@ -49,6 +53,10 @@ export default function AddBto() {
   const [units, setUnits] = React.useState();
   const [articles, setArticles] = React.useState();
   const [status, setStatus] = React.useState();
+  const [previewUrl, setPreviewUrl] = React.useState();
+  const [locationUrl, setLocationUrl] = React.useState();
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState();
 
   const handleChange = (event) => {
     setState({
@@ -57,12 +65,22 @@ export default function AddBto() {
     });
   };
 
+  const handleClose = () => {
+    if (message==="Edited project successfully."){
+      window.location.href = "#/dashboard"
+    }
+    setOpen(false);
+  };
+
+
   const submitHandler = async () => {
     const obj = {
       name: projName,
       location: location,
       launch: projLaunch,
       no_of_units: units,
+      preview_url: previewUrl,
+      location_url: locationUrl,
       unit_breakdown: [
         r2 ? r2Units: 0,
         r3 ? r3Units: 0,
@@ -88,7 +106,15 @@ export default function AddBto() {
       status: status,
       articles: articles,
     };
-    await editProjectApi(launch, obj, state);
+    const result = await editProjectApi(launch, obj, state);
+    console.log(result)
+    if (result.message) {
+      setMessage("Edit failed. Please check your fields again.");
+      setOpen(true);
+    } else {
+      setMessage("Edited project successfully.");
+      setOpen(true);
+    }
   };
 
   const { r2, r3, r4, r5, gen } = state;
@@ -124,6 +150,8 @@ export default function AddBto() {
       setUnits(projectToEdit.no_of_units);
       setArticles(projectToEdit.articles.join(","));
       setStatus(projectToEdit.status);
+      setPreviewUrl(projectToEdit.preview_url);
+      setLocationUrl(projectToEdit.location_url);
     };
     fetchData();
   },[]);
@@ -438,6 +466,36 @@ export default function AddBto() {
       </FormControl>
 
       {/* ---------------------------------------------------------------------------------- */}
+      <Typography
+        variant="body1"
+        fontWeight="bold"
+        sx={{ marginTop: "0.5rem", marginBottom: "1vh", textAlign: "justify" }}
+      >
+        Preview Image URL
+      </Typography>
+
+      <TextField
+        value={previewUrl} onChange={(event) => {setPreviewUrl(event.target.value)}}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
+
+      {/* ---------------------------------------------------------------------------------- */}
+      <Typography
+        variant="body1"
+        fontWeight="bold"
+        sx={{ marginTop: "0.5rem", marginBottom: "1vh", textAlign: "justify" }}
+      >
+        Location Image URL
+      </Typography>
+
+      <TextField
+        value={locationUrl} onChange={(event) => {setLocationUrl(event.target.value)}}
+        fullWidth
+        sx={{ marginBottom: "3vh" }}
+      />
+
+      {/* ---------------------------------------------------------------------------------- */}
 
       <Box
         sx={{
@@ -450,6 +508,25 @@ export default function AddBto() {
           Edit
         </Button>
       </Box>
+
+      {/* ---------------------------------------------------------------------------------- */}
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+
     </Container>
   );
 }
