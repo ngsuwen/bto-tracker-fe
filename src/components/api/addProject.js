@@ -35,8 +35,10 @@ export default async function addProjectApi(obj, state) {
     body: raw,
     redirect: "follow",
   };
-  fetch("http://localhost:8000/api/project/", requestOptions)
+  
+  const result = fetch("http://localhost:8000/api/project/", requestOptions)
     .then((response) => response.json())
-    .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
+
+  return result
 }
