@@ -2,13 +2,19 @@ export default async function addUnitApi(obj) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
+  if (obj.blk === "" || obj.unit.length <= 5 || obj.unit_type === undefined || obj.launch === ""){
+    return {message:"Some fields are empty"}
+  }
+
+  console.log('here')
+
   var raw = JSON.stringify({
-    "launch": obj.launch,
-    "blk": obj.blk,
-    "unit": obj.unit,
-    "unit_type": obj.unit_type,
-    "price": null,
-    "availability": true
+    launch: obj.launch,
+    blk: obj.blk,
+    unit: obj.unit,
+    unit_type: obj.unit_type,
+    price: null,
+    availability: true,
   });
 
   var requestOptions = {
@@ -18,8 +24,8 @@ export default async function addUnitApi(obj) {
     redirect: "follow",
   };
 
-  fetch("http://localhost:8000/api/units", requestOptions)
+  const result = fetch("http://localhost:8000/api/units", requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
-    
+  return result;
 }

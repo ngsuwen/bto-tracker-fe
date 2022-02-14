@@ -5,9 +5,7 @@ import {
   ListItemText,
   IconButton,
   Typography,
-  Box,
   Paper,
-  Divider,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -55,9 +53,11 @@ export default function Project() {
               key={value}
               secondaryAction={
                 <>
-                  <IconButton>
-                    <AddIcon sx={{ marginBottom: "0.7rem" }} />
-                  </IconButton>
+                  <Link to="/admin/add/units">
+                    <IconButton>
+                      <AddIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                  </Link>
                   <IconButton>
                     <CloseIcon sx={{ marginBottom: "0.7rem" }} />
                   </IconButton>

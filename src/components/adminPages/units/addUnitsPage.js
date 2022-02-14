@@ -12,6 +12,10 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import getProjectList from "../../api/getProjectList";
 import addUnitApi from "../../api/addUnit";
@@ -32,6 +36,8 @@ export default function AddUnits() {
     gen: false,
   });
   const { r2, r3, r4, r5, gen } = state;
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState();
 
   const projHandleChange = (event) => {
     setProj(event.target.value);
@@ -47,36 +53,55 @@ export default function AddUnits() {
     });
   };
 
+  const handleClose = () => {
+    if (message === "Added units successfully.") {
+      window.location.reload();
+    }
+    setOpen(false);
+  };
+
   const submitHandler = async () => {
-    let floorRange = floors.split(" to ");
-    let floorExcept = except.split(", ");
-    let lowestFloor = floorRange[0];
-    while (lowestFloor<Number(floorRange[1])+1){
-      if (floorExcept.includes(lowestFloor.toString())){
-        lowestFloor++
-        continue;
-      } else {
-        let unit=''
-        if (lowestFloor<10){
-          unit='0'+lowestFloor
+    try {
+      let floorRange = floors.split(" to ");
+      let floorExcept = except.split(", ");
+      let lowestFloor = floorRange[0];
+      while (lowestFloor < Number(floorRange[1]) + 1) {
+        if (floorExcept.includes(lowestFloor.toString())) {
+          lowestFloor++;
+          continue;
         } else {
-          unit+=lowestFloor
-        }
-        let unitType
-        for (let prop in state){
-          if (state[prop]) {
-            unitType=prop
+          let unit = "";
+          if (lowestFloor < 10) {
+            unit = "0" + lowestFloor;
+          } else {
+            unit += lowestFloor;
+          }
+          let unitType;
+          for (let prop in state) {
+            if (state[prop]) {
+              unitType = prop;
+            }
+          }
+          const obj = {
+            launch: proj,
+            blk: blk,
+            unit: unit + "-" + unitNo,
+            unit_type: unitType,
+          };
+          const result = await addUnitApi(obj);
+          if (result.message) {
+            setMessage("Add failed. Please check your fields again.");
+            setOpen(true);
+            return
           }
         }
-        const obj = {
-          "launch": proj,
-          "blk": blk,
-          "unit": unit+'-'+unitNo,
-          "unit_type": unitType,
-        }
-        await addUnitApi(obj)
+        lowestFloor++;
       }
-      lowestFloor++
+      setMessage("Added units successfully.");
+      setOpen(true);
+    } catch (err) {
+      setMessage("Add failed. Please check your fields again.");
+      setOpen(true);
     }
   };
 
@@ -85,7 +110,17 @@ export default function AddUnits() {
     const fetchData = async () => {
       const projectArr = await getProjectList();
       projectArr.forEach((element, index) =>
-        arr.push(<MenuItem value={element.launch}>{element.launch[0].toUpperCase()+element.launch.slice(1,3)+' '+element.launch.slice(3,7)+' '+element.launch[7].toUpperCase()+element.launch.slice(8)}</MenuItem>)
+        arr.push(
+          <MenuItem value={element.launch}>
+            {element.launch[0].toUpperCase() +
+              element.launch.slice(1, 3) +
+              " " +
+              element.launch.slice(3, 7) +
+              " " +
+              element.launch[7].toUpperCase() +
+              element.launch.slice(8)}
+          </MenuItem>
+        )
       );
       setLaunchArr(arr);
     };
@@ -297,6 +332,24 @@ export default function AddUnits() {
           Add new
         </Button>
       </Box>
+
+      {/* ---------------------------------------------------------------------------------- */}
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
