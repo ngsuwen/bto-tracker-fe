@@ -12,6 +12,10 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import getProjectList from "../../api/getProjectList";
 import addUserApi from "../../api/addUser";
@@ -23,9 +27,18 @@ export default function AddUser() {
   const [username, setUsername] = React.useState();
   const [password, setPassword] = React.useState();
   const [role, setRole] = React.useState();
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState();
 
   const projHandleChange = (event) => {
     setProj(event.target.value);
+  };
+
+  const handleClose = () => {
+    if (message==="Added user successfully."){
+      window.location.reload()
+    }
+    setOpen(false);
   };
 
   const radioHandler = (option) => {
@@ -33,13 +46,21 @@ export default function AddUser() {
   };
 
   const submitHandler = async () => {
-      const obj={
-          "username": username,
-          "password": password,
-          "role": role,
-          "launch": proj
-      }
-      await addUserApi(obj)
+    const obj = {
+      username: username,
+      password: password,
+      role: role,
+      launch: proj,
+    };
+    const result = await addUserApi(obj);
+    console.log(result)
+    if (result.username) {
+      setMessage("Added user successfully.");
+      setOpen(true);
+    } else {
+      setMessage("Add failed. Please check your fields again.");
+      setOpen(true);
+    }
   };
 
   React.useEffect(() => {
@@ -47,9 +68,19 @@ export default function AddUser() {
     const fetchData = async () => {
       const projectArr = await getProjectList();
       projectArr.forEach((element, index) =>
-        arr.push(<MenuItem value={element.launch}>{element.launch[0].toUpperCase()+element.launch.slice(1,3)+' '+element.launch.slice(3,7)+' '+element.launch[7].toUpperCase()+element.launch.slice(8)}</MenuItem>)
+        arr.push(
+          <MenuItem value={element.launch}>
+            {element.launch[0].toUpperCase() +
+              element.launch.slice(1, 3) +
+              " " +
+              element.launch.slice(3, 7) +
+              " " +
+              element.launch[7].toUpperCase() +
+              element.launch.slice(8)}
+          </MenuItem>
+        )
       );
-      arr.sort()
+      arr.sort();
       setLaunchArr(arr);
     };
     fetchData();
@@ -180,6 +211,24 @@ export default function AddUser() {
           Add new
         </Button>
       </Box>
+
+      {/* ---------------------------------------------------------------------------------- */}
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
