@@ -9,8 +9,50 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
+import getUserListApi from "../../api/getUserList";
 
 export default function User() {
+  const [users,setUsers]=React.useState([])
+
+  React.useEffect(()=>{
+    const fetchData=async()=>{
+      const data = await getUserListApi()
+      if (!data.message){
+        setUsers(data)
+      }
+    }
+    fetchData()
+  },[])
+
+  // user list function
+  const userList =()=>{
+    let userArr=[]
+    users.sort()
+    users.forEach((element,index)=>{
+      userArr.push(
+        <ListItem
+        key={element.username}
+        secondaryAction={
+          <>
+            <IconButton>
+              <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+            </IconButton>
+          </>
+        }
+      >
+        <ListItemText
+          primary={
+              <Typography sx={{ marginBottom: "0.5rem" }}>
+                {element.username}
+              </Typography>
+          }
+        />
+      </ListItem>
+      )
+    })
+    return userArr.sort()
+  }
+
   return (
     <>
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
@@ -47,26 +89,7 @@ export default function User() {
             bgcolor: "background.paper",
           }}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <>
-                  <IconButton>
-                    <CloseIcon sx={{ marginBottom: "0.7rem" }} />
-                  </IconButton>
-                </>
-              }
-            >
-              <ListItemText
-                primary={
-                    <Typography sx={{ marginBottom: "0.5rem" }}>
-                      nov-hougang-admin1
-                    </Typography>
-                }
-              />
-            </ListItem>
-          ))}
+          {userList()}
         </List>
       </Paper>
     </>
