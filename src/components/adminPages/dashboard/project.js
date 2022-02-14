@@ -10,8 +10,47 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
+import { DataContext } from "../../../App";
 
 export default function Project() {
+  const { projList } = React.useContext(DataContext);
+  
+  // project list function
+  const projectList =()=>{
+    let projectArr=[]
+    projList.sort()
+    projList.forEach((element,index)=>{
+      projectArr.push(
+      <ListItem
+        key={element}
+        secondaryAction={
+          <>
+            <Link to="/admin/add/units">
+              <IconButton>
+                <AddIcon sx={{ marginBottom: "0.7rem" }} />
+              </IconButton>
+            </Link>
+            <IconButton>
+              <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+            </IconButton>
+          </>
+        }
+      >
+        <ListItemText
+          primary={
+            <Link to={`/admin/edit/${element}`}>
+              <Typography sx={{ marginBottom: "0.5rem" }}>
+                {element[0].toUpperCase()+element.slice(1,3)+' '+element.slice(3,7)+' '+element[7].toUpperCase()+element.slice(8)}
+              </Typography>
+            </Link>
+          }
+        />
+      </ListItem>
+      )
+    })
+    return projectArr.sort()
+  }
+
   return (
     <>
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
@@ -48,7 +87,8 @@ export default function Project() {
             bgcolor: "background.paper",
           }}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
+          {projectList()}
+          {/* {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
             <ListItem
               key={value}
               secondaryAction={
@@ -74,7 +114,7 @@ export default function Project() {
                 }
               />
             </ListItem>
-          ))}
+          ))} */}
         </List>
       </Paper>
     </>

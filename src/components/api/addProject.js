@@ -8,7 +8,7 @@ export default async function addProjectApi(obj, state) {
     state[properties]?unit_types.push(properties):console.log(`no ${properties}`)
   }
   
-  if (unit_types.length === 0 || obj.name === "" || obj.location === "" || obj.launch === "" || obj.no_of_units === "" || obj.location_url===""){
+  if (unit_types.length === 0 || obj.name === "" || obj.location === "" || obj.launch === "" || obj.location_url===""){
     return {message:"Some fields are empty"}
   }
   // articles array
