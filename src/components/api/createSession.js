@@ -10,11 +10,10 @@ export default async function createSessionApi(username, password) {
   var requestOptions = {
     method: "POST",
     headers: myHeaders,
-    body: raw,
-    redirect: "follow",
+    body: raw
   };
 
-  const result = fetch("http://localhost:8000/api/sessions", requestOptions)
+  const result = fetch("https://bto-tracker-website.herokuapp.com/api/sessions", requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
 

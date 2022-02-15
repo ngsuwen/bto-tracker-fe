@@ -6,7 +6,7 @@ export default async function findOneProjectApi(launch) {
   };
 
   const result = fetch(
-    `http://localhost:8000/api/project/${launch}`,
+    `https://bto-tracker-website.herokuapp.com/api/project/${launch}`,
     requestOptions
   )
     .then((response) => response.json())
