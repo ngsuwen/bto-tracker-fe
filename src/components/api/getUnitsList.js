@@ -1,11 +1,11 @@
-export default async function getUnitsListApi(launch) {
+export default function getUnitsListApi(launch) {
   var requestOptions = {
     method: "GET",
     redirect: "follow",
   };
 
   const result = fetch(
-    `https://bto-tracker-website.herokuapp.com/api/units/${launch}`,
+    `/api/units/${launch}`,
     requestOptions
   )
     .then((response) => response.json())

@@ -1,4 +1,4 @@
-export default async function createSessionApi(username, password) {
+export default function createSessionApi(username, password) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -13,7 +13,7 @@ export default async function createSessionApi(username, password) {
     body: raw
   };
 
-  const result = fetch("https://bto-tracker-website.herokuapp.com/api/sessions", requestOptions)
+  const result = fetch("/api/sessions", requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
 

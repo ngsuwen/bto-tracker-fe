@@ -30,6 +30,7 @@ import Dashboard from "./components/adminPages/dashboard/dashboardPage";
 //api
 import getProjectListApi from "./components/api/getProjectList";
 import AddUser from "./components/adminPages/user.js/addUsersPage";
+import getSessionApi from "./components/api/getSession";
 
 // font
 const theme = createTheme({
@@ -55,6 +56,7 @@ function App() {
   const [ongoing, setOngoing] = React.useState([])
   const [upcoming, setUpcoming] = React.useState([])
   const [projList, setProjList] = React.useState([])
+  const [user, setUser] = React.useState()
 
   React.useEffect(()=>{
     const ongoingArr = []
@@ -74,6 +76,12 @@ function App() {
       setOngoing(ongoingArr);
       setUpcoming(upcomingArr);
       setProjList(projArr);
+      // session
+      const session = await getSessionApi()
+      if (session.username){
+        console.log(session.username)
+        setUser(session)
+      }
     }
     fetchData()
 
@@ -82,7 +90,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <DataContext.Provider value={{
-        ongoing, upcoming, projList
+        ongoing, upcoming, projList, user, setUser
       }}>
       <ScrollableTabs />
       <SwipeableTemporaryDrawer />

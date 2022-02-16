@@ -1,4 +1,4 @@
-export default async function addUnitApi(obj) {
+export default function addUnitApi(obj) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -24,7 +24,7 @@ export default async function addUnitApi(obj) {
     redirect: "follow",
   };
 
-  const result = fetch("https://bto-tracker-website.herokuapp.com/api/units", requestOptions)
+  const result = fetch("/api/units", requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
   return result;

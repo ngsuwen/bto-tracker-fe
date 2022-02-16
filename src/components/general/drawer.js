@@ -13,6 +13,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import { Link } from "react-router-dom";
+import deleteSessionApi from "../api/deleteSession";
 
 // custom breakpoint
 const nav = (theme) => ({
@@ -29,6 +30,13 @@ export default function SwipeableTemporaryDrawer() {
   };
 
   const toggleDrawer = (open) => (event) => {
+    setOpen(false)
+    setOpen2(false)
+    setState(open);
+  };
+
+  const toggleDrawerLogout = (open) => async(event) => {
+    await deleteSessionApi()
     setOpen(false)
     setOpen2(false)
     setState(open);
@@ -116,12 +124,13 @@ export default function SwipeableTemporaryDrawer() {
               <Collapse in={open2} timeout="auto" unmountOnExit>
                 {[
                   ["Dashboard", "/dashboard"],
-                  ["Change Password", "/profile"]
+                  ["Change Password", "/profile"],
+                  ["Logout", "/"]
                 ].map((text, index) => (
                   <Link
                     style={{ textDecoration: "none", color: "black" }}
                     to={text[1]}
-                    onClick={toggleDrawer(false)}
+                    onClick={index===2?toggleDrawerLogout(false):toggleDrawer(false)}
                   >
                     <ListItem button key={text[0]} sx={{ pl: 4 }}>
                       <ListItemText primary={text[0]} />

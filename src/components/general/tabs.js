@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import deleteSessionApi from "../api/deleteSession";
 
 // custom breakpoint
 const nav = (theme) => ({
@@ -87,6 +88,10 @@ export default function CustomizedTabs() {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+  const handleClose3 = async() => {
+    await deleteSessionApi()
+    setAnchorEl2(null);
+  };
 
   return (
     <Box sx={nav}>
@@ -151,6 +156,7 @@ export default function CustomizedTabs() {
           >
             <Link to="/dashboard"><MenuItem onClick={handleClose2}>Dashboard</MenuItem></Link>
             <Link to="/profile"><MenuItem onClick={handleClose2}>Change Password</MenuItem></Link>
+            <Link to="/"><MenuItem onClick={handleClose3}>Logout</MenuItem></Link>
           </Menu>
         </Box>
       </Container>

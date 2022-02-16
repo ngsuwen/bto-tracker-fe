@@ -1,10 +1,10 @@
-export default async function getProjectListApi() {
+export default function getProjectListApi() {
   var requestOptions = {
     method: "GET",
     redirect: "follow",
   };
 
-  const result = fetch("https://bto-tracker-website.herokuapp.com/api/project/", requestOptions)
+  const result = fetch("/api/project/", requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
 

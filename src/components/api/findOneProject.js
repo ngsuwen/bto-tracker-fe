@@ -1,4 +1,4 @@
-export default async function findOneProjectApi(launch) {
+export default function findOneProjectApi(launch) {
 
   var requestOptions = {
     method: "GET",
@@ -6,7 +6,7 @@ export default async function findOneProjectApi(launch) {
   };
 
   const result = fetch(
-    `https://bto-tracker-website.herokuapp.com/api/project/${launch}`,
+    `/api/project/${launch}`,
     requestOptions
   )
     .then((response) => response.json())

@@ -1,4 +1,4 @@
-export default async function findProjectApi(launch) {
+export default function findProjectApi(launch) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -9,7 +9,7 @@ export default async function findProjectApi(launch) {
   };
 
   const result = fetch(
-    `https://bto-tracker-website.herokuapp.com/api/project/${launch}`,
+    `/api/project/${launch}`,
     requestOptions
   )
     .then((response) => response.json())

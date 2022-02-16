@@ -1,4 +1,4 @@
-export default async function addProjectApi(obj, state) {
+export default function addProjectApi(obj, state) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   
@@ -39,7 +39,7 @@ export default async function addProjectApi(obj, state) {
     redirect: "follow",
   };
   
-  const result = fetch("https://bto-tracker-website.herokuapp.com/api/project/", requestOptions)
+  const result = fetch("/api/project/", requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
 
