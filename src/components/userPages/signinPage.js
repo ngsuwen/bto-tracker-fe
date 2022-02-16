@@ -7,19 +7,30 @@ import {
   Box,
 } from "@mui/material";
 import createSessionApi from "../api/createSession";
+import { DataContext } from "../../App";
+import { Navigate } from "react-router-dom";
 
 export default function SigninPage() {
-
+  const { user, setUser } = React.useContext(DataContext)
+  const [ error, setError ] = React.useState(false)
   const userRef = React.useRef()
   const passwordRef = React.useRef()
 
   const submitHandler=async()=>{
     const data = await createSessionApi(userRef.current.value, passwordRef.current.value)
-    console.log(data)
+    if (data.username){
+      setError(false)
+      setUser(data)
+    } else {
+      setError(true)
+    }
   }
 
   return (
     <Container maxWidth="xs">
+      {user && (
+          <Navigate to="/dashboard" replace={true} />
+        )}
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "50%" }}>
         Welcome
       </Typography>
@@ -33,6 +44,14 @@ export default function SigninPage() {
       </Typography>
 
       {/* ---------------------------------------------------------------------------------- */}
+      <Typography
+        variant="body2"
+        color="red"
+        sx={{ textAlign: "justify" }}
+      >
+        {error?"Incorrect username or password.":""}
+      </Typography>
+
       <Typography
         variant="body1"
         fontWeight="bold"

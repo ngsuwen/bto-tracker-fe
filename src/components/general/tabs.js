@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import deleteSessionApi from "../api/deleteSession";
+import { DataContext } from "../../App";
 
 // custom breakpoint
 const nav = (theme) => ({
@@ -71,6 +72,7 @@ export default function CustomizedTabs() {
   const open = Boolean(anchorEl);
   const [anchorEl2, setAnchorEl2] = React.useState(null);
   const open2 = Boolean(anchorEl2);
+  const { user, setUser } = React.useContext(DataContext)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -89,7 +91,8 @@ export default function CustomizedTabs() {
     setAnchorEl2(null);
   };
   const handleClose3 = async() => {
-    await deleteSessionApi()
+    await deleteSessionApi();
+    setUser(null);
     setAnchorEl2(null);
   };
 
@@ -118,17 +121,19 @@ export default function CustomizedTabs() {
           </Box>
           <Box>
             <StyledTabs value={1} aria-label="styled tabs example">
+              {user?"":
               <StyledTab2
                 onClick={handleClick}
                 label="+ Contribute"
                 specialId="contribute-tab"
-              />
-              {/* <StyledTab label="Sign In" link="/signin" /> */}
+              />}
+              {user?
               <StyledTab2
                 onClick={handleClick2}
-                label="Username"
+                label={user.username}
                 specialId="tab-nav"
-              />
+              />:
+              <StyledTab label="Sign In" link="/signin" />}
             </StyledTabs>
           </Box>
           <Menu

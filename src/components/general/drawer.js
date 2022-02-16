@@ -14,6 +14,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import { Link } from "react-router-dom";
 import deleteSessionApi from "../api/deleteSession";
+import { DataContext } from "../../App";
 
 // custom breakpoint
 const nav = (theme) => ({
@@ -22,6 +23,7 @@ const nav = (theme) => ({
 });
 
 export default function SwipeableTemporaryDrawer() {
+  const { user, setUser } = React.useContext(DataContext);
   const [state, setState] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -37,6 +39,7 @@ export default function SwipeableTemporaryDrawer() {
 
   const toggleDrawerLogout = (open) => async(event) => {
     await deleteSessionApi()
+    setUser(null)
     setOpen(false)
     setOpen2(false)
     setState(open);
@@ -86,6 +89,8 @@ export default function SwipeableTemporaryDrawer() {
             </List>
             <Divider />
             <List>
+              {user?"":
+              <>
               <ListItem button key={"contribute"} onClick={handleClick} >
                 <ListItemText primary={"+ Contribute"} />
                 {open ? <ExpandLess /> : <ExpandMore />}
@@ -108,17 +113,11 @@ export default function SwipeableTemporaryDrawer() {
                   </Link>
                 ))}
               </Collapse>
-              {/* <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to={"/signin"}
-                onClick={toggleDrawer(false)}
-              >
-              <ListItem>
-                <ListItemText primary={"Sign In"} />
-              </ListItem>
-              </Link> */}
+              </>}
+              {user?
+              <>
               <ListItem button key={"username"} onClick={handleClick2} >
-                <ListItemText primary={"Username"} />
+                <ListItemText primary={user.username} />
                 {open2 ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
               <Collapse in={open2} timeout="auto" unmountOnExit>
@@ -138,6 +137,16 @@ export default function SwipeableTemporaryDrawer() {
                   </Link>
                 ))}
               </Collapse>
+              </>:
+              <Link
+              style={{ textDecoration: "none", color: "black" }}
+              to={"/signin"}
+              onClick={toggleDrawer(false)}
+            >
+            <ListItem>
+              <ListItemText primary={"Sign In"} />
+            </ListItem>
+            </Link>}
             </List>
           </Box>
         </SwipeableDrawer>
