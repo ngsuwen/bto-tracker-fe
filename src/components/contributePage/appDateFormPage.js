@@ -8,7 +8,11 @@ import {
   Select,
   TextField,
   Button,
-  Box
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import { DataContext } from "../../App";
 import addQueueApi from "../api/addQueue";
@@ -19,6 +23,8 @@ export default function AppDateForm() {
   const [proj, setProj] = React.useState("");
   const [qType, setQType] = React.useState("");
   const [flatType, setFlatType] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState();
 
   const dateRef = React.useRef();
   const numberRef = React.useRef();
@@ -34,7 +40,14 @@ export default function AppDateForm() {
     setFlatType(event.target.value);
   };
 
-  const submitHandler=async()=>{
+  const handleClose = () => {
+    if (message === "Form submitted. Thank you for your contribution.") {
+      window.location.reload();
+    }
+    setOpen(false);
+  };
+
+  const submitHandler = async () => {
     const obj = {
       launch: proj,
       date: dateRef.current.value,
@@ -42,14 +55,16 @@ export default function AppDateForm() {
       unit_type: flatType,
       queue_type: qType,
       validation: validRef.current.value,
-    }
-    const queueSubmit = await addQueueApi(obj)
-    if (queueSubmit.message){
-      console.log('error')
+    };
+    const queueSubmit = await addQueueApi(obj);
+    if (queueSubmit.message) {
+      setMessage("Form submit failed. Please check your fields again.");
+      setOpen(true);
     } else {
-      console.log(queueSubmit)
+      setMessage("Form submitted. Thank you for your contribution.");
+      setOpen(true);
     }
-  }
+  };
 
   const launchArr = () => {
     let arr = [];
@@ -190,7 +205,7 @@ export default function AppDateForm() {
       <Typography
         variant="body1"
         fontWeight="bold"
-        sx={{ marginTop: "0.5rem", marginBottom:"1vh", textAlign: "justify" }}
+        sx={{ marginTop: "0.5rem", marginBottom: "1vh", textAlign: "justify" }}
       >
         Your appointment date
       </Typography>
@@ -215,16 +230,43 @@ export default function AppDateForm() {
         variant="body2"
         sx={{ marginBottom: "1vh", textAlign: "justify" }}
       >
-        Validated submissions will be shown with a ✔️.
-        If there are conflicting submissions, those with validations will be prioritized.
+        Validated submissions will be shown with a ✔️. If there are conflicting
+        submissions, those with validations will be prioritized.
       </Typography>
 
       <TextField inputRef={validRef} fullWidth sx={{ marginBottom: "3vh" }} />
 
-    {/* ---------------------------------------------------------------------------------- */}
-    <Box sx={{ display:"flex", justifyContent:"flex-end",  marginBottom: "8vh" }}>
-    <Button onClick={submitHandler} variant="outlined">Submit form</Button>
-    </Box>
+      {/* ---------------------------------------------------------------------------------- */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: "8vh",
+        }}
+      >
+        <Button onClick={submitHandler} variant="outlined">
+          Submit form
+        </Button>
+      </Box>
+
+      {/* ---------------------------------------------------------------------------------- */}
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+
     </Container>
   );
 }
