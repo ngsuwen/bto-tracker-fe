@@ -17,13 +17,13 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
-import getProjectList from "../../api/getProjectList";
+import { DataContext } from "../../../App";
 import addUnitApi from "../../api/addUnit";
 
 export default function AddUnits() {
+  const { projList } = React.useContext(DataContext);
   // useStates
   const [proj, setProj] = React.useState("");
-  const [launchArr, setLaunchArr] = React.useState([]);
   const [blk, setBlk] = React.useState();
   const [unitNo, setUnitNo] = React.useState();
   const [floors, setFloors] = React.useState();
@@ -92,7 +92,7 @@ export default function AddUnits() {
           if (result.message) {
             setMessage("Add failed. Please check your fields again.");
             setOpen(true);
-            return
+            return;
           }
         }
         lowestFloor++;
@@ -105,27 +105,23 @@ export default function AddUnits() {
     }
   };
 
-  React.useEffect(() => {
+  const launchArr = () => {
     let arr = [];
-    const fetchData = async () => {
-      const projectArr = await getProjectList();
-      projectArr.forEach((element, index) =>
-        arr.push(
-          <MenuItem value={element.launch}>
-            {element.launch[0].toUpperCase() +
-              element.launch.slice(1, 3) +
-              " " +
-              element.launch.slice(3, 7) +
-              " " +
-              element.launch[7].toUpperCase() +
-              element.launch.slice(8)}
-          </MenuItem>
-        )
+    projList.forEach((element, index) => {
+      arr.push(
+        <MenuItem value={element}>
+          {element[0].toUpperCase() +
+            element.slice(1, 3) +
+            " " +
+            element.slice(3, 7) +
+            " " +
+            element[7].toUpperCase() +
+            element.slice(8)}
+        </MenuItem>
       );
-      setLaunchArr(arr);
-    };
-    fetchData();
-  }, []);
+    });
+    return arr;
+  };
 
   return (
     <Container maxWidth="md">
@@ -165,7 +161,7 @@ export default function AddUnits() {
           label="BTO project"
           onChange={projHandleChange}
         >
-          {launchArr}
+          {launchArr()}
         </Select>
       </FormControl>
 

@@ -10,11 +10,19 @@ import {
   Button,
   Box
 } from "@mui/material";
+import { DataContext } from "../../App";
+import addQueueApi from "../api/addQueue";
 
 export default function AppDateForm() {
+  const { projList } = React.useContext(DataContext);
+
   const [proj, setProj] = React.useState("");
   const [qType, setQType] = React.useState("");
   const [flatType, setFlatType] = React.useState("");
+
+  const dateRef = React.useRef();
+  const numberRef = React.useRef();
+  const validRef = React.useRef();
 
   const projHandleChange = (event) => {
     setProj(event.target.value);
@@ -24,6 +32,41 @@ export default function AppDateForm() {
   };
   const flatTypeHandleChange = (event) => {
     setFlatType(event.target.value);
+  };
+
+  const submitHandler=async()=>{
+    const obj = {
+      launch: proj,
+      date: dateRef.current.value,
+      number: numberRef.current.value,
+      unit_type: flatType,
+      queue_type: qType,
+      validation: validRef.current.value,
+    }
+    const queueSubmit = await addQueueApi(obj)
+    if (queueSubmit.message){
+      console.log('error')
+    } else {
+      console.log(queueSubmit)
+    }
+  }
+
+  const launchArr = () => {
+    let arr = [];
+    projList.forEach((element, index) => {
+      arr.push(
+        <MenuItem value={element}>
+          {element[0].toUpperCase() +
+            element.slice(1, 3) +
+            " " +
+            element.slice(3, 7) +
+            " " +
+            element[7].toUpperCase() +
+            element.slice(8)}
+        </MenuItem>
+      );
+    });
+    return arr;
   };
 
   return (
@@ -58,9 +101,7 @@ export default function AppDateForm() {
           label="BTO project"
           onChange={projHandleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {launchArr()}
         </Select>
       </FormControl>
 
@@ -90,9 +131,8 @@ export default function AppDateForm() {
           label="Queue type"
           onChange={qTypeHandleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={"mgps"}>MGPS</MenuItem>
+          <MenuItem value={"public"}>Public</MenuItem>
         </Select>
       </FormControl>
 
@@ -121,9 +161,11 @@ export default function AppDateForm() {
           label="Flat type"
           onChange={flatTypeHandleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={"r2"}>2-Room</MenuItem>
+          <MenuItem value={"r3"}>3-Room</MenuItem>
+          <MenuItem value={"r4"}>4-Room</MenuItem>
+          <MenuItem value={"r5"}>5-Room</MenuItem>
+          <MenuItem value={"gen"}>3-Gen</MenuItem>
         </Select>
       </FormControl>
 
@@ -139,10 +181,10 @@ export default function AppDateForm() {
         variant="body2"
         sx={{ marginBottom: "1vh", textAlign: "justify" }}
       >
-        You can be specific e.g. "Q456", or vague e.g. "Q45x".
+        You can be specific e.g. "456", or vague e.g. "45x".
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField inputRef={numberRef} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -152,8 +194,14 @@ export default function AppDateForm() {
       >
         Your appointment date
       </Typography>
+      <Typography
+        variant="body2"
+        sx={{ marginBottom: "1vh", textAlign: "justify" }}
+      >
+        Format: YYYY-MM-DD
+      </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField inputRef={dateRef} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -171,11 +219,11 @@ export default function AppDateForm() {
         If there are conflicting submissions, those with validations will be prioritized.
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField inputRef={validRef} fullWidth sx={{ marginBottom: "3vh" }} />
 
     {/* ---------------------------------------------------------------------------------- */}
     <Box sx={{ display:"flex", justifyContent:"flex-end",  marginBottom: "8vh" }}>
-    <Button variant="outlined">Submit form</Button>
+    <Button onClick={submitHandler} variant="outlined">Submit form</Button>
     </Box>
     </Container>
   );
