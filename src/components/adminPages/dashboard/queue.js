@@ -15,9 +15,11 @@ import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import SwipeableViews from "react-swipeable-views";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import getQueueUnitListApi from "../../api/getQueueUnitList";
 
 export default function Message() {
   const [value, setValue] = React.useState(0);
+  const [ queue, setQueue ] = React.useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

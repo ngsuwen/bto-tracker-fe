@@ -1,5 +1,3 @@
-// PASS USER STATE HERE, CHECK ROLE AND DISPLAY INFO
-
 import * as React from "react";
 import { Container, Typography } from "@mui/material";
 import Message from "./message";
@@ -7,9 +5,20 @@ import Queue from "./queue";
 import Project from "./project";
 import User from "./user";
 import { DataContext } from "../../../App";
+import getQueueListApi from "../../api/getQueueList";
 
 export default function Dashboard() {
   const { user } = React.useContext(DataContext);
+  const [ queue, setQueue ] = React.useState([]);
+
+  React.useEffect(()=>{
+    const fetchData=async()=>{
+      const queueArr = await getQueueListApi(user.fk_launch)
+      console.log(queueArr)
+      setQueue(queueArr)
+    }
+    fetchData()
+  },[])
 
   return (
     <Container maxWidth="md">
@@ -28,7 +37,7 @@ export default function Dashboard() {
 
       {/* ---------------------------------------------------------------------------------- */}
 
-      <Message />
+      <Message data={queue} />
 
       {/* ---------------------------------------------------------------------------------- */}
 

@@ -12,7 +12,21 @@ import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function Message() {
+export default function Message({ data }) {
+
+  const messageStr=(date, number)=>{
+    const dateStr = new Date(date).toString()
+    let queueNum = ''
+    if (number<10){
+      queueNum='00'+number
+    } else if (number<100){
+      queueNum='0'+number
+    } else {
+      queueNum = number
+    }
+    return `Flat Selection on ${dateStr.substr(4,11)} for Queue Number ${queueNum}`
+  }
+
   return (
     <Paper
       variant="outlined"
@@ -27,7 +41,7 @@ export default function Message() {
           bgcolor: "background.paper",
         }}
       >
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
+        {data.map((value) => (
           <ListItem
             key={value}
             secondaryAction={
@@ -47,7 +61,7 @@ export default function Message() {
               primary={
                 <Box display="flex" sx={{ minWidth: 500 }}>
                   <Typography sx={{ marginBottom: "0.5rem" }}>
-                    Flat Selection on 04 Oct 2021 for Queue Number 094
+                    {messageStr(value.date, value.number)}
                   </Typography>
                   <ImageSearchIcon
                     fontSize="small"
