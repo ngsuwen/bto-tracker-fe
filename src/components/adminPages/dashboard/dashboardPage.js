@@ -6,8 +6,11 @@ import Message from "./message";
 import Queue from "./queue";
 import Project from "./project";
 import User from "./user";
+import { DataContext } from "../../../App";
 
 export default function Dashboard() {
+  const { user } = React.useContext(DataContext);
+
   return (
     <Container maxWidth="md">
       
@@ -29,8 +32,14 @@ export default function Dashboard() {
 
       {/* ---------------------------------------------------------------------------------- */}
 
+      {user.role==="superadmin"?
+      <>
       <Project />
       <User />
+      </>:
+      user.role==="admin"?
+      <Queue/>:
+      ""}
 
       {/* ---------------------------------------------------------------------------------- */}
     
