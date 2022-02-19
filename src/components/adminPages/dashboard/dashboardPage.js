@@ -14,11 +14,10 @@ export default function Dashboard() {
   React.useEffect(()=>{
     const fetchData=async()=>{
       const queueArr = await getQueueListApi(user.fk_launch)
-      console.log(queueArr)
       setQueue(queueArr)
     }
     fetchData()
-  },[])
+  },[user])
 
   return (
     <Container maxWidth="md">

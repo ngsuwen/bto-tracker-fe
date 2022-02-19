@@ -43,7 +43,7 @@ export default function Message({ data }) {
       >
         {data.map((value) => (
           <ListItem
-            key={value}
+            key={value.fk_launch}
             secondaryAction={
               <>
                 <IconButton>

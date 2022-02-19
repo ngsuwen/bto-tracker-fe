@@ -11,15 +11,124 @@ import {
   Tab,
 } from "@mui/material";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
-import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import SwipeableViews from "react-swipeable-views";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import { DataContext } from "../../../App";
+import findOneProjectApi from "../../api/findOneProject";
 import getQueueUnitListApi from "../../api/getQueueUnitList";
 
 export default function Message() {
   const [value, setValue] = React.useState(0);
-  const [ queue, setQueue ] = React.useState();
+  const [project, setProject] = React.useState({
+    unit_breakdown: [0, 0, 0, 0, 0],
+  });
+  const [state, setState] = React.useState([]);
+
+  const { user } = React.useContext(DataContext);
+  const [swipeableComp, setSwipeableComp] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await findOneProjectApi(user.fk_launch);
+      setProject(data);
+    };
+    fetchData();
+  }, []);
+
+  // unit types function
+  const unitTypes = () => {
+    let unitTypes = [];
+    project.unit_breakdown.forEach((element, index) => {
+      if (element !== 0) {
+        if (index !== 4) {
+          let room = index + 2;
+          if (!state.includes("r" + room)) {
+            setState([...state, "r" + room]);
+          }
+          unitTypes.push(<Tab label={room + "-Room"} />);
+        } else {
+          if (!state.includes("gen")) {
+            setState([...state, "gen"]);
+          }
+          unitTypes.push(<Tab label={"3-Gen"} />);
+        }
+      }
+    });
+    return unitTypes;
+  };
+
+  // entry string
+  const messageStr = (date, number) => {
+    const dateStr = new Date(date).toString();
+    let queueNum = "";
+    if (number < 10) {
+      queueNum = "00" + number;
+    } else if (number < 100) {
+      queueNum = "0" + number;
+    } else {
+      queueNum = number;
+    }
+    return `Flat Selection on ${dateStr.substr(
+      4,
+      11
+    )} for Queue Number ${queueNum}`;
+  };
+
+  // queue list function
+  React.useEffect(() => {
+    const queueList = () => {
+      let queueArr = [];
+      let newArr = state.sort();
+      newArr.forEach(async (element) => {
+        const getQueue = await getQueueUnitListApi(user.fk_launch, element);
+        queueArr.push(
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 530,
+              bgcolor: "background.paper",
+            }}
+          >
+            {getQueue.map((value, index) => (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <>
+                    <IconButton>
+                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                    <IconButton>
+                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                  </>
+                }
+              >
+                <ListItemText
+                  primary={
+                    <Box display="flex">
+                      <Typography sx={{ marginBottom: "0.5rem" }}>
+                        {messageStr(value.date, value.number)}
+                      </Typography>
+                      <ImageSearchIcon
+                        fontSize="small"
+                        color="action"
+                        sx={{ marginLeft: "0.5rem" }}
+                      />
+                    </Box>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        );
+        console.log(queueArr.length);
+      });
+      setSwipeableComp(queueArr);
+    };
+    queueList();
+  }, [state]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -56,10 +165,7 @@ export default function Message() {
           allowScrollButtonsMobile
           aria-label="scrollable force tabs example"
         >
-          <Tab label="2-room" />
-          <Tab label="3-room" />
-          <Tab label="4-room" />
-          <Tab label="5-room" />
+          {unitTypes()}
         </Tabs>
 
         {/* ---------------------------------------------------------------------------------- */}
@@ -69,171 +175,7 @@ export default function Message() {
           onChangeIndex={handleChangeIndex}
           disabled
         >
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: "100%",
-              minWidth: 530,
-              bgcolor: "background.paper",
-            }}
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <>
-                    <IconButton>
-                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                    <IconButton>
-                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                  </>
-                }
-              >
-                <ListItemText
-                  primary={
-                    <Box display="flex">
-                      <Typography sx={{ marginBottom: "0.5rem" }}>
-                        Flat Selection on 04 Oct 2021 for Queue Number 094
-                      </Typography>
-                      <ImageSearchIcon
-                        fontSize="small"
-                        color="action"
-                        sx={{ marginLeft: "0.5rem" }}
-                      />
-                    </Box>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-
-          {/* ---------------------------------------------------------------------------------- */}
-
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: "100%",
-              minWidth: 530,
-              bgcolor: "background.paper",
-            }}
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <>
-                    <IconButton>
-                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                    <IconButton>
-                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                  </>
-                }
-              >
-                <ListItemText
-                  primary={
-                    <Box display="flex">
-                      <Typography sx={{ marginBottom: "0.5rem" }}>
-                        Flat Selection on 04 Oct 2021 for Queue Number 097
-                      </Typography>
-                      <ImageSearchIcon
-                        fontSize="small"
-                        color="action"
-                        sx={{ marginLeft: "0.5rem" }}
-                      />
-                    </Box>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-
-          {/* ---------------------------------------------------------------------------------- */}
-
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: "100%",
-              minWidth: 530,
-              bgcolor: "background.paper",
-            }}
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <>
-                    <IconButton>
-                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                    <IconButton>
-                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                  </>
-                }
-              >
-                <ListItemText
-                  primary={
-                    <Box display="flex">
-                      <Typography sx={{ marginBottom: "0.5rem" }}>
-                        Flat Selection on 04 Oct 2021 for Queue Number 098
-                      </Typography>
-                      <ImageSearchIcon
-                        fontSize="small"
-                        color="action"
-                        sx={{ marginLeft: "0.5rem" }}
-                      />
-                    </Box>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-
-          {/* ---------------------------------------------------------------------------------- */}
-
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: "100%",
-              minWidth: 530,
-              bgcolor: "background.paper",
-            }}
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => (
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <>
-                    <IconButton>
-                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                    <IconButton>
-                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                  </>
-                }
-              >
-                <ListItemText
-                  primary={
-                    <Box display="flex">
-                      <Typography sx={{ marginBottom: "0.5rem" }}>
-                        Flat Selection on 04 Oct 2021 for Queue Number 095
-                      </Typography>
-                      <ImageSearchIcon
-                        fontSize="small"
-                        color="action"
-                        sx={{ marginLeft: "0.5rem" }}
-                      />
-                    </Box>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
+          {swipeableComp}
         </SwipeableViews>
       </Paper>
     </>
