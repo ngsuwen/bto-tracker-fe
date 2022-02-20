@@ -11,9 +11,11 @@ import {
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
+import editQueueAckApi from "../../api/editQueueAck";
 
 export default function Message({ data }) {
 
+  // message str
   const messageStr=(type, date, number)=>{
     const dateStr = new Date(date).toString()
     let queueNum = ''
@@ -31,6 +33,16 @@ export default function Message({ data }) {
     }
   }
 
+  // acknowledge message
+  const editQueue=async(launch, type, number, change)=>{
+    const result = await editQueueAckApi(launch, type, number, change)
+    if (result.message){
+      console.log('fail')
+    } else {
+        window.location.reload()
+    }
+  }
+
   return (
     <Paper
       variant="outlined"
@@ -45,15 +57,15 @@ export default function Message({ data }) {
           bgcolor: "background.paper",
         }}
       >
-        {data.map((value) => (
+        {data.map((value, index) => (
           <ListItem
-            key={value.fk_launch}
+            key={index}
             secondaryAction={
               <>
-                <IconButton>
+                <IconButton onClick={()=> editQueue(value.fk_launch, value.unit_type, value.number, true)}>
                   <DoneIcon sx={{ marginBottom: "0.7rem" }} />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={()=> editQueue(value.fk_launch, value.unit_type, value.number, false)}>
                   <CloseIcon
                     sx={{ marginBottom: "0.7rem" }}
                   />
@@ -77,6 +89,11 @@ export default function Message({ data }) {
             />
           </ListItem>
         ))}
+        {data.length===0?
+          <Typography display={'flex'} justifyContent={'center'}>
+            No new messages
+          </Typography>:""
+        }
       </List>
     </Paper>
   );
