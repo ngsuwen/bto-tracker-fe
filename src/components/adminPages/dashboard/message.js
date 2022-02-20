@@ -14,7 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export default function Message({ data }) {
 
-  const messageStr=(date, number)=>{
+  const messageStr=(type, date, number)=>{
     const dateStr = new Date(date).toString()
     let queueNum = ''
     if (number<10){
@@ -24,7 +24,11 @@ export default function Message({ data }) {
     } else {
       queueNum = number
     }
-    return `Flat Selection on ${dateStr.substr(4,11)} for Queue Number ${queueNum}`
+    if (type[0]==="r"){
+      return `${type[1]}-room Flat Selection on ${dateStr.substr(4,11)} for Queue Number ${queueNum}`
+    } else {
+      return `3-Gen Flat Selection on ${dateStr.substr(4,11)} for Queue Number ${queueNum}`
+    }
   }
 
   return (
@@ -61,7 +65,7 @@ export default function Message({ data }) {
               primary={
                 <Box display="flex" sx={{ minWidth: 500 }}>
                   <Typography sx={{ marginBottom: "0.5rem" }}>
-                    {messageStr(value.date, value.number)}
+                    {messageStr(value.unit_type, value.date, value.number)}
                   </Typography>
                   <ImageSearchIcon
                     fontSize="small"

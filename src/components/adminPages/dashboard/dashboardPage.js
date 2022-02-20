@@ -21,7 +21,8 @@ export default function Dashboard() {
 
   return (
     <Container maxWidth="md">
-      
+      {user?
+      <>
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
         Messages
       </Typography>
@@ -46,9 +47,8 @@ export default function Dashboard() {
       <User />
       </>:
       user.role==="admin"?
-      <Queue/>:
-      ""}
-
+      <Queue/>:""}
+      </>:""}
       {/* ---------------------------------------------------------------------------------- */}
     
     </Container>

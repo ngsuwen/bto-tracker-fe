@@ -24,9 +24,10 @@ export default function Message() {
     unit_breakdown: [0, 0, 0, 0, 0],
   });
   const [state, setState] = React.useState([]);
-
-  const { user } = React.useContext(DataContext);
   const [swipeableComp, setSwipeableComp] = React.useState([]);
+  const [queue, setQueue] = React.useState({"r6":[1]})
+  
+  const { user } = React.useContext(DataContext);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -39,17 +40,32 @@ export default function Message() {
   // unit types function
   const unitTypes = () => {
     let unitTypes = [];
-    project.unit_breakdown.forEach((element, index) => {
+    project.unit_breakdown.forEach(async(element, index) => {
       if (element !== 0) {
         if (index !== 4) {
           let room = index + 2;
-          if (!state.includes("r" + room)) {
-            setState([...state, "r" + room]);
+          let rRoom = "r" + room
+          if (!state.includes(rRoom)) {
+            setState([...state, rRoom]);
+          }
+          if (!queue[rRoom]){
+            const getQueue = await getQueueUnitListApi(user.fk_launch, rRoom);
+            setQueue({
+              ...queue,
+              [rRoom]:getQueue
+            })
           }
           unitTypes.push(<Tab label={room + "-Room"} />);
         } else {
           if (!state.includes("gen")) {
             setState([...state, "gen"]);
+          }
+          if (!queue["gen"]){
+            const getQueue = await getQueueUnitListApi(user.fk_launch, "gen");
+            setQueue({
+              ...queue,
+              ["gen"]:getQueue
+            })
           }
           unitTypes.push(<Tab label={"3-Gen"} />);
         }
@@ -81,7 +97,6 @@ export default function Message() {
       let queueArr = [];
       let newArr = state.sort();
       newArr.forEach(async (element) => {
-        const getQueue = await getQueueUnitListApi(user.fk_launch, element);
         queueArr.push(
           <List
             sx={{
@@ -91,7 +106,7 @@ export default function Message() {
               bgcolor: "background.paper",
             }}
           >
-            {getQueue.map((value, index) => (
+            {queue[element].map((value, index) => (
               <ListItem
                 key={index}
                 secondaryAction={
@@ -123,12 +138,11 @@ export default function Message() {
             ))}
           </List>
         );
-        console.log(queueArr.length);
       });
       setSwipeableComp(queueArr);
     };
     queueList();
-  }, [state]);
+  }, [state, queue]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
