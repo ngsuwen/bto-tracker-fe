@@ -13,7 +13,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import editQueueAckApi from "../../api/editQueueAck";
 
-export default function Message({ data }) {
+export default function MessageAdmin({ data }) {
 
   // message str
   const messageStr=(type, date, number)=>{

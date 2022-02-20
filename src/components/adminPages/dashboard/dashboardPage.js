@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container, Typography } from "@mui/material";
-import Message from "./message";
+import MessageAdmin from "./messageAdmin";
+import MessageSuper from "./messageSuper";
 import Queue from "./queue";
 import Project from "./project";
 import User from "./user";
@@ -37,7 +38,12 @@ export default function Dashboard() {
 
       {/* ---------------------------------------------------------------------------------- */}
 
-      <Message data={queue} />
+      {user.role==="superadmin"?
+      <>
+      <MessageSuper data={queue} />
+      </>:
+      user.role==="admin"?
+      <MessageAdmin data={queue} />:""}
 
       {/* ---------------------------------------------------------------------------------- */}
 
@@ -48,6 +54,7 @@ export default function Dashboard() {
       </>:
       user.role==="admin"?
       <Queue/>:""}
+
       </>:""}
       {/* ---------------------------------------------------------------------------------- */}
     
