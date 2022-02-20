@@ -40,7 +40,7 @@ export default function User() {
     let userArr=[]
     users.sort()
     users.forEach((element,index)=>{
-      if (element.username && element.role!=="superadmin"){
+      if (element.username && element.role!=="superadmin" && element.username!=="deleted"){
         userArr.push(
           <ListItem
           key={index}

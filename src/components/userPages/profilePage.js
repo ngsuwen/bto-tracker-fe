@@ -2,13 +2,16 @@ import * as React from "react";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
 import { DataContext } from "../../App";
 import editUserApi from "../api/editUser";
+import deleteUserApi from "../api/deleteUser";
+import deleteSessionApi from "../api/deleteSession";
+import { Navigate } from "react-router-dom";
 
 export default function ProfilePage() {
   const oldPasswordRef = React.useRef();
   const newPasswordRef = React.useRef();
   const retypePasswordRef = React.useRef();
   const [settings, setSettings] = React.useState();
-  const { user } = React.useContext(DataContext)
+  const { user, setUser } = React.useContext(DataContext)
 
   React.useEffect(() => {
     setSettings(null);
@@ -35,11 +38,20 @@ export default function ProfilePage() {
   };
 
   const deleteHandler = async () => {
-    setSettings("old error");
+    const result = await deleteUserApi(user.id, oldPasswordRef.current.value)
+      if (result.message==="Wrong password"){
+        setSettings("old error");
+      } else {
+        setUser(null)
+        await deleteSessionApi()
+      }
   };
 
   return (
     <Container maxWidth="xs">
+      {!user && (
+          <Navigate to="/" replace={true} />
+        )}
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "50%" }}>
         {user?user.username:""}
       </Typography>
