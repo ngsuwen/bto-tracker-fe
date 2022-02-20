@@ -29,26 +29,28 @@ export default function User() {
     let userArr=[]
     users.sort()
     users.forEach((element,index)=>{
-      userArr.push(
-        <ListItem
-        key={element.username}
-        secondaryAction={
-          <>
-            <IconButton>
-              <CloseIcon sx={{ marginBottom: "0.7rem" }} />
-            </IconButton>
-          </>
-        }
-      >
-        <ListItemText
-          primary={
-              <Typography sx={{ marginBottom: "0.5rem" }}>
-                {element.username}
-              </Typography>
+      if (element.username && element.role!=="superadmin"){
+        userArr.push(
+          <ListItem
+          key={element.username}
+          secondaryAction={
+            <>
+              <IconButton>
+                <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+              </IconButton>
+            </>
           }
-        />
-      </ListItem>
-      )
+        >
+          <ListItemText
+            primary={
+                <Typography sx={{ marginBottom: "0.5rem" }}>
+                  {element.username}
+                </Typography>
+            }
+          />
+        </ListItem>
+        )
+      }
     })
     return userArr.sort()
   }
