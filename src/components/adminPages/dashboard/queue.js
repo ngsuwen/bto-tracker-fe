@@ -15,13 +15,13 @@ import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import CloseIcon from "@mui/icons-material/Close";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import DoneIcon from "@mui/icons-material/Done";
-import { Link } from "react-router-dom";
 import { DataContext } from "../../../App";
 
 // api imports
 import findOneProjectApi from "../../api/findOneProject";
 import getQueueUnitListApi from "../../api/getQueueUnitList";
 import editQueueApi from "../../api/editQueue";
+import deleteQueueApi from "../../api/deleteQueue";
 
 export default function Message() {
 
@@ -69,7 +69,7 @@ export default function Message() {
                     <IconButton onClick={()=> editQueue(value.unit_type, value.number, !value.status)}>
                       {value.status?<DoneIcon sx={{ marginBottom: "0.7rem" }} />:<QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />}
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={()=> deleteQueue(value.unit_type, value.number)}>
                       <CloseIcon sx={{ marginBottom: "0.7rem" }} />
                     </IconButton>
                   </>
@@ -166,6 +166,16 @@ export default function Message() {
   // update queue 
   const editQueue=async(type, number, change)=>{
     const result = await editQueueApi(user.fk_launch, type, number, change)
+    if (result.message){
+      console.log('fail')
+    } else {
+        window.location.reload()
+    }
+  }
+
+  // delete queue
+  const deleteQueue=async(type, number)=>{
+    const result = await deleteQueueApi(user.fk_launch, type, number)
     if (result.message){
       console.log('fail')
     } else {
