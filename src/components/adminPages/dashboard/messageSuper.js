@@ -97,6 +97,10 @@ export default function MessageSuper() {
             </ListItem>)
           }
         })}
+        {users.filter((element)=>element.username===null)?
+        <Typography display={'flex'} justifyContent={'center'}>
+          No new messages
+        </Typography>:""}
       </List>
     </Paper>
   );
