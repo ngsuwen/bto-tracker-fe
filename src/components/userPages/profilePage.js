@@ -1,13 +1,14 @@
-// PASS USER STATE HERE
-
 import * as React from "react";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
+import { DataContext } from "../../App";
+import editUserApi from "../api/editUser";
 
 export default function ProfilePage() {
   const oldPasswordRef = React.useRef();
   const newPasswordRef = React.useRef();
   const retypePasswordRef = React.useRef();
   const [settings, setSettings] = React.useState();
+  const { user } = React.useContext(DataContext)
 
   React.useEffect(() => {
     setSettings(null);
@@ -21,7 +22,15 @@ export default function ProfilePage() {
     ) {
       setSettings("retype error");
     } else {
-      setSettings("old error");
+      const result = await editUserApi(user.id, oldPasswordRef.current.value, newPasswordRef.current.value)
+      if (result.message==="Wrong password"){
+        setSettings("old error");
+      } else {
+        setSettings("success")
+        oldPasswordRef.current.value=""
+        retypePasswordRef.current.value=""
+        newPasswordRef.current.value=""
+      }
     }
   };
 
@@ -32,16 +41,31 @@ export default function ProfilePage() {
   return (
     <Container maxWidth="xs">
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "50%" }}>
-        Username
+        {user?user.username:""}
       </Typography>
 
       <Typography
         variant="body2"
         sx={{ marginTop: "0.5rem", marginBottom: "5vh", textAlign: "justify" }}
       >
-        This is an Admin account, and will remain valid till the completion of
+        This is {user?user.role==="admin"?"an Admin":"a Data Scraper":""} account, and will remain valid till the completion of
         flat selection, unless otherwise requested.
       </Typography>
+
+      {settings === "success" ? (
+        <Typography
+          variant="body2"
+          color="error"
+          sx={{
+            marginBottom: "1vh",
+            textAlign: "justify",
+          }}
+        >
+          Update successful!
+        </Typography>
+      ) : (
+        ""
+      )}
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
