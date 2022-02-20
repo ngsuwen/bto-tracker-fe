@@ -10,10 +10,21 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import getUserListApi from "../../api/getUserList";
+import deleteUserAdminApi from "../../api/deleteUserAdmin";
 
 export default function User() {
   const [users,setUsers]=React.useState([])
 
+  // delete request
+  const deleteRequest = async (id) => {
+    const result = await deleteUserAdminApi(id);
+    if (result.message) {
+      console.log("fail");
+    } else {
+      window.location.reload();
+    }
+  };
+  
   React.useEffect(()=>{
     const fetchData=async()=>{
       const data = await getUserListApi()
@@ -32,10 +43,10 @@ export default function User() {
       if (element.username && element.role!=="superadmin"){
         userArr.push(
           <ListItem
-          key={element.username}
+          key={index}
           secondaryAction={
             <>
-              <IconButton>
+              <IconButton onClick={() => deleteRequest(element.id)}>
                 <CloseIcon sx={{ marginBottom: "0.7rem" }} />
               </IconButton>
             </>

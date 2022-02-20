@@ -1,4 +1,4 @@
-export default function deleteSessionApi(username, password) {
+export default function deleteSessionApi() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
   

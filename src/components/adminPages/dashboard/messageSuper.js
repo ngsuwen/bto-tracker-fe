@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 // api
 import editQueueAckApi from "../../api/editQueueAck";
 import getUserListApi from "../../api/getUserList";
+import deleteUserAdminApi from "../../api/deleteUserAdmin";
 
 export default function MessageSuper() {
   const [users, setUsers] = React.useState([]);
@@ -28,6 +29,16 @@ export default function MessageSuper() {
     };
     fetchData();
   }, []);
+
+  // delete request
+  const deleteRequest = async (id) => {
+    const result = await deleteUserAdminApi(id);
+    if (result.message) {
+      console.log("fail");
+    } else {
+      window.location.reload();
+    }
+  };
 
   // acknowledge message
   const editQueue = async (launch, type, number, change) => {
@@ -63,7 +74,7 @@ export default function MessageSuper() {
                   <IconButton onClick={() => console.log("true")}>
                     <DoneIcon sx={{ marginBottom: "0.7rem" }} />
                   </IconButton>
-                  <IconButton onClick={() => console.log("false")}>
+                  <IconButton onClick={() => deleteRequest(value.id)}>
                     <CloseIcon sx={{ marginBottom: "0.7rem" }} />
                   </IconButton>
                 </>
@@ -73,7 +84,7 @@ export default function MessageSuper() {
                 primary={
                   <Box display="flex" sx={{ minWidth: 500 }}>
                     <Typography sx={{ marginBottom: "0.5rem" }}>
-                      Application for {value.role==="admin"?"Admin":"Data Scraper"} role at {value.fk_launch[0].toUpperCase()+value.fk_launch.slice(1,3)+' '+value.fk_launch.slice(3,7)+' '+value.fk_launch[7].toUpperCase()+value.fk_launch.slice(8)}.
+                      Application for {value.role==="admin"?"Admin":"Data Scraper"} role at {value.fk_launch[0].toUpperCase()+value.fk_launch.slice(1,3)+' '+value.fk_launch.slice(3,7)+' '+value.fk_launch[7].toUpperCase()+value.fk_launch.slice(8)}
                     </Typography>
                     <ImageSearchIcon
                       fontSize="small"
@@ -86,13 +97,6 @@ export default function MessageSuper() {
             </ListItem>)
           }
         })}
-        {users.length === 0 ? (
-          <Typography display={"flex"} justifyContent={"center"}>
-            No new messages
-          </Typography>
-        ) : (
-          ""
-        )}
       </List>
     </Paper>
   );
