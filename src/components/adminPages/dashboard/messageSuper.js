@@ -7,6 +7,11 @@ import {
   Typography,
   Box,
   Paper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Button,
+  TextField
 } from "@mui/material";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import DoneIcon from "@mui/icons-material/Done";
@@ -16,9 +21,34 @@ import CloseIcon from "@mui/icons-material/Close";
 import editQueueAckApi from "../../api/editQueueAck";
 import getUserListApi from "../../api/getUserList";
 import deleteUserAdminApi from "../../api/deleteUserAdmin";
+import editUserAdminApi from "../../api/editUserAdmin";
 
 export default function MessageSuper() {
   const [users, setUsers] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [userIdToCreate, setUserIdToCreate] = React.useState()
+
+  const usernameRef = React.useRef();
+  const passwordRef = React.useRef();
+
+  const handleClickOpen = (id) => {
+    setUserIdToCreate(id)
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // create user 
+  const handleCloseSubmit = async() => {
+    const result = await editUserAdminApi(userIdToCreate, usernameRef.current.value, passwordRef.current.value)
+    console.log(result)
+    if (!result.message){
+      window.location.reload()
+    }
+    setOpen(false);
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -33,16 +63,6 @@ export default function MessageSuper() {
   // delete request
   const deleteRequest = async (id) => {
     const result = await deleteUserAdminApi(id);
-    if (result.message) {
-      console.log("fail");
-    } else {
-      window.location.reload();
-    }
-  };
-
-  // acknowledge message
-  const editQueue = async (launch, type, number, change) => {
-    const result = await editQueueAckApi(launch, type, number, change);
     if (result.message) {
       console.log("fail");
     } else {
@@ -71,7 +91,7 @@ export default function MessageSuper() {
               key={index}
               secondaryAction={
                 <>
-                  <IconButton onClick={() => console.log("true")}>
+                  <IconButton onClick={()=> handleClickOpen(value.id)}>
                     <DoneIcon sx={{ marginBottom: "0.7rem" }} />
                   </IconButton>
                   <IconButton onClick={() => deleteRequest(value.id)}>
@@ -97,11 +117,41 @@ export default function MessageSuper() {
             </ListItem>)
           }
         })}
-        {users.filter((element)=>element.username===null)?
+        {users.findIndex((element)=>element.username===null)===-1?
         <Typography display={'flex'} justifyContent={'center'}>
-          No new messages
-        </Typography>:""}
+        No new messages
+      </Typography>:""}
       </List>
+
+      {/* ----------------------------------------------------------------------------------- */}
+      
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+          <TextField
+            inputRef={usernameRef}
+            autoFocus
+            margin="dense"
+            id="name"
+            label="username"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            inputRef={passwordRef}
+            margin="dense"
+            id="name"
+            label="password"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleCloseSubmit}>Create</Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 }
