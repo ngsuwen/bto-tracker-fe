@@ -10,15 +10,22 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
+import SwipeableViews from "react-swipeable-views";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import CloseIcon from "@mui/icons-material/Close";
-import SwipeableViews from "react-swipeable-views";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import DoneIcon from "@mui/icons-material/Done";
+import { Link } from "react-router-dom";
 import { DataContext } from "../../../App";
+
+// api imports
 import findOneProjectApi from "../../api/findOneProject";
 import getQueueUnitListApi from "../../api/getQueueUnitList";
+import editQueueApi from "../../api/editQueue";
 
 export default function Message() {
+
+  // usestates
   const [value, setValue] = React.useState(0);
   const [project, setProject] = React.useState({
     unit_breakdown: [0, 0, 0, 0, 0],
@@ -27,8 +34,10 @@ export default function Message() {
   const [swipeableComp, setSwipeableComp] = React.useState([]);
   const [queue, setQueue] = React.useState({"r6":[1]})
   
+  // user context
   const { user } = React.useContext(DataContext);
 
+  // useeffect - proj details, for unit_breakdown
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await findOneProjectApi(user.fk_launch);
@@ -37,7 +46,60 @@ export default function Message() {
     fetchData();
   }, []);
 
-  // unit types function
+  // useeffect - queue entries
+  React.useEffect(() => {
+    const queueList = () => {
+      let queueArr = [];
+      let newArr = state.sort();
+      newArr.forEach(async (element) => {
+        queueArr.push(
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 530,
+              bgcolor: "background.paper",
+            }}
+          >
+            {queue[element].map((value, index) => (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <>
+                    <IconButton onClick={()=> editQueue(value.unit_type, value.number, !value.status)}>
+                      {value.status?<DoneIcon sx={{ marginBottom: "0.7rem" }} />:<QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />}
+                    </IconButton>
+                    <IconButton>
+                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
+                    </IconButton>
+                  </>
+                }
+              >
+                <ListItemText
+                  primary={
+                    <Box display="flex">
+                      <Typography sx={{ marginBottom: "0.5rem" }}>
+                        {messageStr(value.date, value.number)}
+                      </Typography>
+                      <ImageSearchIcon
+                        fontSize="small"
+                        color="action"
+                        sx={{ marginLeft: "0.5rem" }}
+                      />
+                    </Box>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        );
+      });
+      setSwipeableComp(queueArr);
+    };
+    queueList();
+  }, [state, queue]);
+  
+  // unit types function - table tabs, setqueue
   const unitTypes = () => {
     let unitTypes = [];
     project.unit_breakdown.forEach(async(element, index) => {
@@ -91,66 +153,25 @@ export default function Message() {
     )} for Queue Number ${queueNum}`;
   };
 
-  // queue list function
-  React.useEffect(() => {
-    const queueList = () => {
-      let queueArr = [];
-      let newArr = state.sort();
-      newArr.forEach(async (element) => {
-        queueArr.push(
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: "100%",
-              minWidth: 530,
-              bgcolor: "background.paper",
-            }}
-          >
-            {queue[element].map((value, index) => (
-              <ListItem
-                key={index}
-                secondaryAction={
-                  <>
-                    <IconButton>
-                      <QuestionMarkIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                    <IconButton>
-                      <CloseIcon sx={{ marginBottom: "0.7rem" }} />
-                    </IconButton>
-                  </>
-                }
-              >
-                <ListItemText
-                  primary={
-                    <Box display="flex">
-                      <Typography sx={{ marginBottom: "0.5rem" }}>
-                        {messageStr(value.date, value.number)}
-                      </Typography>
-                      <ImageSearchIcon
-                        fontSize="small"
-                        color="action"
-                        sx={{ marginLeft: "0.5rem" }}
-                      />
-                    </Box>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        );
-      });
-      setSwipeableComp(queueArr);
-    };
-    queueList();
-  }, [state, queue]);
-
+  // tab change
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  // swipeable change
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+  // update queue 
+  const editQueue=async(type, number, change)=>{
+    const result = await editQueueApi(user.fk_launch, type, number, change)
+    if (result.message){
+      console.log('fail')
+    } else {
+        window.location.reload()
+    }
+  }
 
   return (
     <>
