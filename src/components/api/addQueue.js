@@ -14,6 +14,7 @@ export default function addQueueApi(obj) {
       queue_type: obj.queue_type,
       validation: obj.validation,
       status: false,
+      acknowledged: false,
     });
   
     var requestOptions = {

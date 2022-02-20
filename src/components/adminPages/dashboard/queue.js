@@ -32,6 +32,7 @@ export default function Message() {
   });
   const [state, setState] = React.useState([]);
   const [swipeableComp, setSwipeableComp] = React.useState([]);
+  const [unitTypesTabs, setUnitTypesTabs] = React.useState([]);
   const [queue, setQueue] = React.useState({"r6":[1]})
   
   // user context
@@ -51,7 +52,7 @@ export default function Message() {
     const queueList = () => {
       let queueArr = [];
       let newArr = state.sort();
-      newArr.forEach(async (element) => {
+      newArr.forEach(async (element, num) => { // why need async here?
         queueArr.push(
           <List
             sx={{
@@ -61,7 +62,7 @@ export default function Message() {
               bgcolor: "background.paper",
             }}
           >
-            {queue[element].map((value, index) => (
+            {queue[num].sort().map((value, index) => (
               <ListItem
                 key={index}
                 secondaryAction={
@@ -100,41 +101,41 @@ export default function Message() {
   }, [state, queue]);
   
   // unit types function - table tabs, setqueue
-  const unitTypes = () => {
-    let unitTypes = [];
-    project.unit_breakdown.forEach(async(element, index) => {
-      if (element !== 0) {
-        if (index !== 4) {
-          let room = index + 2;
-          let rRoom = "r" + room
-          if (!state.includes(rRoom)) {
-            setState([...state, rRoom]);
+  React.useEffect(()=>{
+    const unitTypes = async() => {
+      let unitTypesComp = [];
+      let unitTypesArr = [];
+
+      project.unit_breakdown.forEach((element, index)=>{
+        if (element !== 0) {
+          if (index !== 4) {
+            let room = index + 2;
+            let rRoom = "r" + room;
+            if (!unitTypesArr.includes(rRoom)) {
+              unitTypesArr.push(rRoom)
+              unitTypesComp.push(<Tab label={room + "-Room"} />)
+            }
+          } else {
+            if (!unitTypesArr.includes("gen")) {
+              unitTypesArr.push("gen")
+              unitTypesComp.push(<Tab label="3-Gen" />)
+            }
           }
-          if (!queue[rRoom]){
-            const getQueue = await getQueueUnitListApi(user.fk_launch, rRoom);
-            setQueue({
-              ...queue,
-              [rRoom]:getQueue
-            })
-          }
-          unitTypes.push(<Tab label={room + "-Room"} />);
-        } else {
-          if (!state.includes("gen")) {
-            setState([...state, "gen"]);
-          }
-          if (!queue["gen"]){
-            const getQueue = await getQueueUnitListApi(user.fk_launch, "gen");
-            setQueue({
-              ...queue,
-              ["gen"]:getQueue
-            })
-          }
-          unitTypes.push(<Tab label={"3-Gen"} />);
         }
-      }
-    });
-    return unitTypes;
-  };
+      })
+      const promises = unitTypesArr.map(async(element)=>{
+        const getQueue = await getQueueUnitListApi(user.fk_launch, element)
+        return getQueue
+      })
+      
+      const queueObj = await Promise.all(promises)
+
+      setState(unitTypesArr)
+      setUnitTypesTabs(unitTypesComp)
+      setQueue(queueObj)
+    }
+    unitTypes()
+  },[project])
 
   // entry string
   const messageStr = (date, number) => {
@@ -210,7 +211,7 @@ export default function Message() {
           allowScrollButtonsMobile
           aria-label="scrollable force tabs example"
         >
-          {unitTypes()}
+          {unitTypesTabs}
         </Tabs>
 
         {/* ---------------------------------------------------------------------------------- */}
