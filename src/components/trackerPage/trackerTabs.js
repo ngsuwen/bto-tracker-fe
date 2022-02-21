@@ -5,13 +5,31 @@ import * as React from "react";
 import {
   Container,
   Typography,
+  IconButton
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import getUnitsListApi from "../api/getUnitsList";
+import findOneProjectApi from "../api/findOneProject";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Tabs() {
-  let { launch } = useParams();
+  const [project, setProject] = React.useState({});
   const [blks, setBlks] = React.useState([])
+  const [favourite, setFavourite] = React.useState(false)
+
+  let { launch } = useParams();
+  launch = launch.replace("/%20/g", " ");
+
+  React.useEffect(() => {
+    const fetchData = async() => {
+      const data = await findOneProjectApi(launch);  
+      data.launch = data.launch[0].toUpperCase()+data.launch.slice(1,3)+' '+data.launch.slice(3,7)
+      setProject(data);
+      var storedWatchlist = JSON.parse(localStorage.watchlist);
+      setFavourite(storedWatchlist.includes(data.name)?true:false)
+    };
+    fetchData();
+  }, []);
 
   React.useEffect(()=>{
     const fetchData=async()=>{
@@ -36,10 +54,26 @@ export default function Tabs() {
     return blksArr
   }
 
+  // favourite handler
+  const favouriteHandler=()=>{
+    setFavourite(!favourite)
+    var storedWatchlist = JSON.parse(localStorage.watchlist);
+    if (favourite){
+      storedWatchlist.splice(storedWatchlist.indexOf(project.name),1)
+      localStorage.watchlist = JSON.stringify(storedWatchlist);
+    } else {
+      storedWatchlist.push(project.name)
+      localStorage.watchlist = JSON.stringify(storedWatchlist);
+    }
+  }
+
   return (
     <Container maxWidth="md">
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
-        Hougang Olive @ Hougang {/* NAME */}
+        {project.name}
+        <IconButton aria-label="add to favorites" onClick={favouriteHandler}>
+          <FavoriteIcon fontSize="small" color={favourite?"error":"inherit"} />
+        </IconButton>
       </Typography>
       <Typography
         variant="body1"
@@ -48,7 +82,10 @@ export default function Tabs() {
         <Link style={{ textDecoration: 'none', color: 'black' }} to={`/tracker/summary/${launch}`}>QUEUE</Link>{displayBlks()}
       </Typography>
       <Typography variant="body2" color="red">
-        * Volunteers required: Data scrapers, admin. Apply here.
+      {(project.admin && project.data_scraper)?"":"Volunteers required: "}
+        {(!project.admin && !project.data_scraper)?"Data scrapers, admin.": 
+          !project.admin?"Admin":
+          !project.data_scraper?"Data scrapers":""}
       </Typography>
 
     </Container>

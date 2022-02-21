@@ -163,7 +163,7 @@ export default function Info() {
         To track units, click{" "}
         <Link
           style={{ textDecoration: "none" }}
-          to="/tracker/summary"
+          to={`/tracker/summary/${launch}`}
           target="_blank"
           rel="noopener noreferrer"
         >
