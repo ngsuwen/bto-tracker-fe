@@ -143,7 +143,7 @@ export default function MessageSuper() {
               </ListItem>)
           }
         })}
-        {users.findIndex((element)=>element.username===null) && users.findIndex((element)=>element.username==="deleted" )===-1?
+        {users.findIndex((element)=>element.username===null)===-1 && users.findIndex((element)=>element.username==="deleted" )===-1?
         <Typography display={'flex'} justifyContent={'center'}>
         No new messages
       </Typography>:""}
