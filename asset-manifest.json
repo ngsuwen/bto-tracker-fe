@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/bto-tracker-fe/static/css/main.2b421e4f.css",
-    "main.js": "/bto-tracker-fe/static/js/main.a1b0fac7.js",
+    "main.js": "/bto-tracker-fe/static/js/main.d121dfff.js",
     "index.html": "/bto-tracker-fe/index.html",
     "main.2b421e4f.css.map": "/bto-tracker-fe/static/css/main.2b421e4f.css.map",
-    "main.a1b0fac7.js.map": "/bto-tracker-fe/static/js/main.a1b0fac7.js.map"
+    "main.d121dfff.js.map": "/bto-tracker-fe/static/js/main.d121dfff.js.map"
   },
   "entrypoints": [
     "static/css/main.2b421e4f.css",
-    "static/js/main.a1b0fac7.js"
+    "static/js/main.d121dfff.js"
   ]
 }
