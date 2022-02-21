@@ -15,8 +15,106 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
+import findOneProjectApi from "../api/findOneProject";
+import getQueueUnitListApi from "../api/getQueueUnitList";
 
 export default function Summary() {
+  const [project, setProject] = React.useState({unit_breakdown:[]});
+  const [queue, setQueue] = React.useState({"r6":[1]})
+  const [unitTypes, setUnitTypes] = React.useState([])
+  const [queueTable, setQueueTable] = React.useState([])
+
+  let { launch } = useParams();
+  launch = launch.replace("/%20/g", " ");
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await findOneProjectApi(launch);
+      data.launch =
+        data.launch[0].toUpperCase() +
+        data.launch.slice(1, 3) +
+        " " +
+        data.launch.slice(3, 7);
+      setProject(data);
+    };
+    fetchData();
+  }, []);
+
+  // get unit types and queue
+  React.useEffect(() => {
+    const fetchData = async () => {
+      let unitTypesArr = [];
+      if (project.unit_breakdown.length > 0) {
+        project.unit_breakdown.map((element, index) => {
+          if (element !== 0) {
+            if (index !== 4) {
+              let room = index + 2;
+              unitTypesArr.push("r" + room);
+            } else {
+              unitTypesArr.push("gen");
+            }
+          }
+        });
+
+        const promises = unitTypesArr.map(async (element) => {
+          const getQueue = await getQueueUnitListApi(launch, element);
+          return getQueue;
+        });
+
+        const queueObj = await Promise.all(promises);
+        setUnitTypes(unitTypesArr);
+        setQueue(queueObj);
+      }
+    };
+    fetchData();
+  }, [project]);
+
+  //get queue tables
+  React.useEffect(()=>{
+    let unitTypesArr = [];
+    let queueArr=[[],[],[],[],[],[]];
+    unitTypes.forEach((element, index) => {
+
+      // -------------------------------------------------------------------
+      unitTypesArr.push(
+        <>
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            sx={{ marginTop: "1.5rem" }}
+          >
+            {element==="gen"?"3-Gen":element[1] + "-Room"}
+          </Typography>
+          <Typography variant="body2">
+            <br />
+            <Grid container>
+              {queue[index]?
+                queue[index].forEach((value) => {
+                queueArr[index].push(
+                <>
+                  <Grid item xs={2}>
+                    {value.date.substr(0, 10)}
+                  </Grid>
+                  <Grid item xs={9} sx={{ textAlign: "left" }}>
+                    {value.number}
+                    {value.status?"":" *"}
+                  </Grid>
+                </>);
+              }):""}
+              {queueArr[index]}
+            </Grid>
+          </Typography>
+
+          <Divider sx={{ marginY: "1.5rem" }} />
+        </>
+      );
+      // -------------------------------------------------------------------
+      
+    });
+    setQueueTable(unitTypesArr)
+  }, [queue, unitTypes])
+    
   return (
     <>
       <Container maxWidth="md">
@@ -68,73 +166,11 @@ export default function Summary() {
           </Table>
         </TableContainer>
 
-        <Typography variant="h6" fontWeight="bold" sx={{ marginTop: "1.5rem" }}>
-          3-Room
-        </Typography>
-        <Typography variant="body2">
-          <br />
-          <Grid container>
-            <Grid item xs={2}>
-              27/08
-            </Grid>
-            <Grid item xs={9} sx={{ textAlign: "left" }}>
-              064 - 070 (6)
-            </Grid>
-            <Grid item xs={2}>
-              28/08
-            </Grid>
-            <Grid item xs={9} sx={{ textAlign: "left" }}>
-              071 - 077 (6)
-            </Grid>
-          </Grid>
-        </Typography>
+        {queueTable}
 
-        <Divider sx={{ marginY: "1.5rem" }} />
-
-        <Typography variant="h6" fontWeight="bold" sx={{ marginTop: "1.5rem" }}>
-          4-Room
+        <Typography sx={{ marginBottom: "3rem", fontStyle: 'oblique' }} >
+          * = not validated
         </Typography>
-        <Typography variant="body2">
-          <br />
-          <Grid container>
-            <Grid item xs={2}>
-              27/08
-            </Grid>
-            <Grid item xs={9} sx={{ textAlign: "left" }}>
-              064 - 070 (6)
-            </Grid>
-            <Grid item xs={2}>
-              28/08
-            </Grid>
-            <Grid item xs={9} sx={{ textAlign: "left" }}>
-              071 - 077 (6)
-            </Grid>
-          </Grid>
-        </Typography>
-
-        <Divider sx={{ marginY: "1.5rem" }} />
-
-        <Typography variant="h6" fontWeight="bold" sx={{ marginTop: "1.5rem" }}>
-          5-Room
-        </Typography>
-        <Typography variant="body2">
-          <br />
-          <Grid container>
-            <Grid item xs={2}>
-              27/08
-            </Grid>
-            <Grid item xs={9} sx={{ textAlign: "left" }}>
-              064 - 070 (6)
-            </Grid>
-            <Grid item xs={2}>
-              28/08
-            </Grid>
-            <Grid item xs={9} sx={{ textAlign: "left" }}>
-              071 - 077 (6)
-            </Grid>
-          </Grid>
-        </Typography>
-        <Divider sx={{ marginY: "1.5rem" }} />
       </Container>
     </>
   );
