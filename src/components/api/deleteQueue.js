@@ -8,7 +8,7 @@ export default function deleteQueueApi(launch, type, number) {
       redirect: "follow",
     };
   
-    const result = fetch(`/api/queue/${launch}/${type}/${number}`, requestOptions)
+    const result = fetch(`https://bto-tracker-website.herokuapp.com/api/queue/${launch}/${type}/${number}`, requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log("error", error));
   

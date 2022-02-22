@@ -20,7 +20,7 @@ export default function createUserRequestApi(obj) {
     body: raw,
     redirect: "follow",
   };
-  const result = fetch("/api/user/", requestOptions)
+  const result = fetch("https://bto-tracker-website.herokuapp.com/api/user/", requestOptions)
   .then((response) => response.json())
   .catch((error) => console.log("error", error));
   

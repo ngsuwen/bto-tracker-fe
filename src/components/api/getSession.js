@@ -4,7 +4,7 @@ export default function getSessionApi() {
       redirect: "follow",
     };
   
-    const result = fetch("/api/sessions/", requestOptions)
+    const result = fetch("https://bto-tracker-website.herokuapp.com/api/sessions/", requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log("error", error));
   
