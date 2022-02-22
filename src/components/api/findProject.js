@@ -9,7 +9,7 @@ export default function findProjectApi(launch) {
   };
 
   const result = fetch(
-    `/api/project/${launch}`,
+    `https://bto-tracker-website.herokuapp.com/api/project/${launch}`,
     requestOptions
   )
     .then((response) => response.json())

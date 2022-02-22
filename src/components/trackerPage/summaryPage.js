@@ -118,7 +118,7 @@ export default function Summary() {
   return (
     <>
       <Container maxWidth="md">
-        <TableContainer
+        {/* <TableContainer
           sx={{ boxShadow: 0, marginBottom: "3rem" }}
           component={Paper}
         >
@@ -164,7 +164,7 @@ export default function Summary() {
               </TableRow>
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
 
         {queueTable}
 

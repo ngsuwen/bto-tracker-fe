@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
   Box,
+  Tooltip
 } from "@mui/material";
 import getUnitsPerBlkApi from "../api/getUnitsPerBlk";
 import { useParams } from "react-router-dom";
@@ -35,21 +36,28 @@ export default function Units() {
     let cell = [];
     for (let i = 0; i < unitNo.length; i++) {
       if (unitBlk.taken.includes(level + "-" + unitNo[i])) {
-        cell.push(<TableCell sx={{ bgcolor: "#999999" }} />);
+        cell.push(<Tooltip title={level + "-" + unitNo[i]}>
+          <TableCell sx={{ bgcolor: "#999999" }} />
+          </Tooltip>);
         continue;
       }
       let added = false;
       for (let j = 0; j < unitBlk.total.length; j++) {
         if (unitBlk.total[j][0].includes(level + "-" + unitNo[i])) {
           cell.push(
-            <TableCell sx={{ bgcolor: colorCode[unitBlk.total[j][1]] }} />
+            <Tooltip title={level + "-" + unitNo[i]}>
+              <TableCell sx={{ bgcolor: colorCode[unitBlk.total[j][1]] }} />
+            </Tooltip>
           );
           added = true;
           break;
         }
       }
       if (!added) {
-        cell.push(<TableCell sx={{ bgcolor: "#fff" }} />);
+        cell.push(
+          <Tooltip title={level + "-" + unitNo[i]}>
+            <TableCell sx={{ bgcolor: "#fff" }} />
+          </Tooltip>);
       }
     }
     return cell;
