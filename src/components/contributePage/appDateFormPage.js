@@ -16,6 +16,10 @@ import {
 } from "@mui/material";
 import { DataContext } from "../../App";
 import addQueueApi from "../api/addQueue";
+import { create } from 'ipfs-http-client'
+
+const url = 'https://ipfs.infura.io:5001/api/v0'
+const client = create(url)
 
 export default function AppDateForm() {
   const { projList } = React.useContext(DataContext);
@@ -28,7 +32,7 @@ export default function AppDateForm() {
 
   const dateRef = React.useRef();
   const numberRef = React.useRef();
-  const validRef = React.useRef();
+  const [validation, setValidation] = React.useState();
 
   const projHandleChange = (event) => {
     setProj(event.target.value);
@@ -54,7 +58,7 @@ export default function AppDateForm() {
       number: numberRef.current.value,
       unit_type: flatType,
       queue_type: qType,
-      validation: validRef.current.value,
+      validation: validation,
     };
     const queueSubmit = await addQueueApi(obj);
     if (queueSubmit.message) {
@@ -65,6 +69,18 @@ export default function AppDateForm() {
       setOpen(true);
     }
   };
+
+  // file upload
+  const onFileUpload = async (e) => {
+    const file = e.target.files[0]
+    try {
+      const addedFile = await client.add(file)
+      const url = `https://ipfs.infura.io/ipfs/${addedFile.path}`
+      setValidation(url)
+    } catch (err) {
+      console.log('Error uploading file: ', err)
+    }
+  }
 
   const launchArr = () => {
     let arr = [];
@@ -234,7 +250,7 @@ export default function AppDateForm() {
         submissions, those with validations will be prioritized.
       </Typography>
 
-      <TextField inputRef={validRef} fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField onChange={onFileUpload} type="file" fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Box

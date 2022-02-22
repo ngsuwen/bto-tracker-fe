@@ -16,6 +16,10 @@ import {
 } from "@mui/material";
 import createUserRequestApi from "../api/createUserRequest";
 import { DataContext } from "../../App";
+import { create } from 'ipfs-http-client'
+
+const url = 'https://ipfs.infura.io:5001/api/v0'
+const client = create(url)
 
 export default function AdminForm() {
   const { projList } = React.useContext(DataContext);
@@ -25,7 +29,7 @@ export default function AdminForm() {
 
   const emailRef = React.useRef();
   const messageRef = React.useRef();
-  const validationRef = React.useRef();
+  const [validation, setValidation] = React.useState();
 
   const handleClose = () => {
     if (message === "Form submitted. Thank you for your contribution.") {
@@ -40,7 +44,7 @@ export default function AdminForm() {
       role: "admin",
       email: emailRef.current.value,
       message: messageRef.current.value,
-      validation: validationRef.current.value,
+      validation: validation,
     };
     const formSubmit = await createUserRequestApi(obj);
     if (formSubmit.message) {
@@ -73,6 +77,18 @@ export default function AdminForm() {
   const projHandleChange = (event) => {
     setProj(event.target.value);
   };
+
+  // file upload
+  const onFileUpload = async (e) => {
+    const file = e.target.files[0]
+    try {
+      const addedFile = await client.add(file)
+      const url = `https://ipfs.infura.io/ipfs/${addedFile.path}`
+      setValidation(url)
+    } catch (err) {
+      console.log('Error uploading file: ', err)
+    }
+  }
 
   return (
     <Container maxWidth="md">
@@ -156,8 +172,7 @@ export default function AdminForm() {
         censor private information (eg. your name, address etc).
       </Typography>
 
-      <TextField inputRef={validationRef} fullWidth sx={{ marginBottom: "3vh" }} />
-
+      <TextField onChange={onFileUpload} type="file" fullWidth sx={{ marginBottom: "3vh" }} />
       {/* ---------------------------------------------------------------------------------- */}
       <Box
         sx={{
