@@ -4,14 +4,15 @@ import * as React from "react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom"
 
-export default function TrackerCard({ name }) { //props to be updated
+export default function TrackerCard({ project }) { //props to be updated
+  console.log(project)
   return (
-    <Link style={{textDecoration:'none', color:"black"}} to="/tracker/summary/nov2021hougang-Olive" target="_blank" rel="noopener noreferrer">
+    <Link style={{textDecoration:'none', color:"black"}} to={`/tracker/summary/${project[0].launch}`} target="_blank" rel="noopener noreferrer">
       <Box
         sx={{
           borderRadius: "0.4rem",
           backgroundImage:
-            "url(https://cdn-blog.seedly.sg/wp-content/uploads/2021/10/17143739/Hougang-Olive-Nov-BTO-2021-768x420.jpeg)",
+            `url(${project[0].preview_url})`,
           height: 200,
           maxWidth:"100%",
           width: 325,
@@ -19,8 +20,7 @@ export default function TrackerCard({ name }) { //props to be updated
           backgroundPosition: "center",
         }}
       />
-      <Typography variant="body1" fontWeight={"bold"} paddingY={"0.2rem"}>{name}</Typography>
-      <Typography variant="subtitle2" color="text.secondary">Last queue number: 060 (28/08)</Typography>
+      <Typography variant="body1" fontWeight={"bold"} paddingY={"0.2rem"}>{project[0].name}</Typography>
     </Link>
   );
 }

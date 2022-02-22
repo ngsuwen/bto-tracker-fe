@@ -90,6 +90,7 @@ export default function Summary() {
             <br />
             <Grid container>
               {queue[index]?
+              queue[index].length>0?
                 queue[index].forEach((value) => {
                 queueArr[index].push(
                 <>
@@ -101,7 +102,7 @@ export default function Summary() {
                     {value.status?"":" *"}
                   </Grid>
                 </>);
-              }):""}
+              }):"No data yet...":""}
               {queueArr[index]}
             </Grid>
           </Typography>

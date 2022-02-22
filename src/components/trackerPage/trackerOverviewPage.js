@@ -4,19 +4,22 @@
 import * as React from "react";
 import { Container, Typography, Grid } from "@mui/material";
 import TrackerCard from "./trackerCard";
+import getProjectListApi from "../api/getProjectList";
 
 export default function TrackerOverview() {
   const [watchlist, setWatchlist] = React.useState([]);
+  const [projList, setProjList] = React.useState([]);
 
   // get watchlist
   const getWatchlist = () => {
     let watchlistArr = [];
-    watchlist.forEach((element) =>
+    watchlist.forEach((element, index) =>{
       watchlistArr.push(
         <Grid item lg={3}>
-          <TrackerCard name={element}/>
+          <TrackerCard project={projList[index]}/>
         </Grid>
       )
+      }
     );
     return watchlistArr;
   };
@@ -24,7 +27,16 @@ export default function TrackerOverview() {
   React.useEffect(()=>{
     var storedWatchlist = JSON.parse(localStorage.watchlist);
     setWatchlist(storedWatchlist)
-  })
+    let projArr=[]
+    const fetchData=async()=>{
+      const proj = await getProjectListApi();
+      storedWatchlist.forEach((element)=>{
+        projArr.push(proj.filter((value)=>value.name===element))
+      })
+      setProjList(projArr)
+    }
+    fetchData()
+  },[])
 
   return (
     <>
@@ -37,7 +49,7 @@ export default function TrackerOverview() {
           spacing={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
-          {getWatchlist()}
+          {projList.length>0?getWatchlist():""}
         </Grid>
       </Container>
     </>
