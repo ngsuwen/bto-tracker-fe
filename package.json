@@ -28,7 +28,7 @@
     "eject": "react-scripts eject"
   },
 
-  "proxy": "https://bto-tracker-website.herokuapp.com/",
+  "proxy": "http://localhost:8000/",
   
   "eslintConfig": {
     "extends": [

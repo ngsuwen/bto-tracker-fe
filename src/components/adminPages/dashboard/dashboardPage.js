@@ -6,6 +6,7 @@ import Queue from "./queue";
 import Project from "./project";
 import User from "./user";
 import Units from "./units";
+import UnitsAdmin from "./unitsPage";
 
 import { DataContext } from "../../../App";
 import getQueueListApi from "../../api/getQueueList";
@@ -58,7 +59,11 @@ export default function Dashboard() {
       <User />
       </>:
       user.role==="admin"?
-      <Queue/>:<Units/>:""}
+      <Queue/>:
+      <>
+        <Units/>
+        <UnitsAdmin/>
+      </>:""}
       {/* ---------------------------------------------------------------------------------- */}
     
     </Container>

@@ -13,7 +13,7 @@ export default function Units() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await findOneProjectApi("nov2021hougang-Olive");
+      const data = await findOneProjectApi(user.fk_launch);
       data.launch =
         data.launch[0].toUpperCase() +
         data.launch.slice(1, 3) +
@@ -27,7 +27,7 @@ export default function Units() {
   React.useEffect(() => {
     const fetchData = async () => {
       let blocks = [];
-      let units = await getUnitsListApi("nov2021hougang-Olive");
+      let units = await getUnitsListApi(user.fk_launch);
       units.forEach((element) => {
         if (!blocks.includes(element.blk)) {
           blocks.push(element.blk);
@@ -40,34 +40,26 @@ export default function Units() {
 
   // display blocks
   const displayBlks = () => {
-    let blksArr = [];
+    let blksArr = [
+    <Link
+      style={{ textDecoration: "none", color: "black" }}
+      to={`/dashboard/`}
+    >
+      LIST
+    </Link>];
     blks.forEach((element, index) => {
-      if (index === 0) {
-        blksArr.push(
-          <>
-            {" "}
-            <Link
-              style={{ textDecoration: "none", color: "black" }}
-              to={`/tracker/nov2021hougang-Olive/${element}`}
-            >
-              {element}
-            </Link>
-          </>
-        );
-      } else {
-        blksArr.push(
-          <>
-            {" "}
-            |{" "}
-            <Link
-              style={{ textDecoration: "none", color: "black" }}
-              to={`/tracker/nov2021hougang-Olive/${element}`}
-            >
-              {element}
-            </Link>
-          </>
-        );
-      }
+      blksArr.push(
+        <>
+          {" "}
+          |{" "}
+          <Link
+            style={{ textDecoration: "none", color: "black" }}
+            to={`/dashboard/${user.fk_launch}/${element}`}
+          >
+            {element}
+          </Link>
+        </>
+      );
     });
     return blksArr;
   };

@@ -15,7 +15,7 @@ export default function editUserAdminApi(id, username, password) {
     redirect: "follow",
   };
 
-  const result = fetch(`https://bto-tracker-website.herokuapp.com/api/user/admin`, requestOptions)
+  const result = fetch(`/api/user/admin`, requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
 

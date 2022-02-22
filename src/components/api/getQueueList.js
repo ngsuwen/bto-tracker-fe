@@ -4,7 +4,7 @@ export default function getQueueListApi(launch) {
       redirect: "follow",
     };
 
-    const result = fetch(`https://bto-tracker-website.herokuapp.com/api/queue/${launch}`, requestOptions)
+    const result = fetch(`/api/queue/${launch}`, requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log("error", error));
   

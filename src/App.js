@@ -116,6 +116,7 @@ function App() {
         <Route path="/admin/edit/:launch" element={<EditBto />} />
         <Route path="/admin/edit/units" element={<EditUnits />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/:launch/:blk" element={<Dashboard />} />
       </Routes>
       <Footer />
       </DataContext.Provider>
