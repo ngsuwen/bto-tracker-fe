@@ -7,6 +7,8 @@ import {
   Typography,
   Box,
   Paper,
+  Dialog, 
+  DialogContent
 } from "@mui/material";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import DoneIcon from "@mui/icons-material/Done";
@@ -14,7 +16,20 @@ import CloseIcon from "@mui/icons-material/Close";
 import editQueueAckApi from "../../api/editQueueAck";
 
 export default function MessageAdmin({ data }) {
+  const [img, setImg] = React.useState();
+  const [openImg, setOpenImg] = React.useState(false);
+  
+  // view image
+  const openImage=(img)=>{
+    setOpenImg(true)
+    setImg(img)
+  }
 
+  // close image
+  const handleCloseImg = () => {
+    setOpenImg(false);
+  };
+  
   // message str
   const messageStr=(type, date, number)=>{
     const dateStr = new Date(date).toString()
@@ -80,6 +95,7 @@ export default function MessageAdmin({ data }) {
                     {messageStr(value.unit_type, value.date, value.number)}
                   </Typography>
                   <ImageSearchIcon
+                    onClick={()=>openImage(value.validation)}
                     fontSize="small"
                     color="action"
                     sx={{ marginLeft: "0.5rem" }}
@@ -95,6 +111,11 @@ export default function MessageAdmin({ data }) {
           </Typography>:""
         }
       </List>
+      <Dialog open={openImg} onClose={handleCloseImg}>
+        <DialogContent>
+          <img src={img}/>
+        </DialogContent>
+      </Dialog>
     </Paper>
   );
 }

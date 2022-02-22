@@ -25,7 +25,9 @@ import editUserAdminApi from "../../api/editUserAdmin";
 export default function MessageSuper() {
   const [users, setUsers] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [userIdToCreate, setUserIdToCreate] = React.useState()
+  const [userIdToCreate, setUserIdToCreate] = React.useState();
+  const [img, setImg] = React.useState();
+  const [openImg, setOpenImg] = React.useState(false);
 
   const usernameRef = React.useRef();
   const passwordRef = React.useRef();
@@ -69,6 +71,17 @@ export default function MessageSuper() {
     }
   };
 
+  // view image
+  const openImage=(img)=>{
+    setOpenImg(true)
+    setImg(img)
+  }
+
+  // close image
+  const handleCloseImg = () => {
+    setOpenImg(false);
+  };
+
   return (
     <Paper
       variant="outlined"
@@ -106,6 +119,7 @@ export default function MessageSuper() {
                       Application for {value.role==="admin"?"Admin":"Data Scraper"} role at {value.fk_launch[0].toUpperCase()+value.fk_launch.slice(1,3)+' '+value.fk_launch.slice(3,7)+' '+value.fk_launch[7].toUpperCase()+value.fk_launch.slice(8)}
                     </Typography>
                     <ImageSearchIcon
+                      onClick={()=>openImage(value.validation)}
                       fontSize="small"
                       color="action"
                       sx={{ marginLeft: "0.5rem" }}
@@ -132,11 +146,6 @@ export default function MessageSuper() {
                       <Typography sx={{ marginBottom: "0.5rem" }}>
                         Request to delete {value.role==="admin"?"Admin":"Data Scraper"} role at {value.fk_launch[0].toUpperCase()+value.fk_launch.slice(1,3)+' '+value.fk_launch.slice(3,7)+' '+value.fk_launch[7].toUpperCase()+value.fk_launch.slice(8)}
                       </Typography>
-                      <ImageSearchIcon
-                        fontSize="small"
-                        color="action"
-                        sx={{ marginLeft: "0.5rem" }}
-                      />
                     </Box>
                   }
                 />
@@ -177,6 +186,11 @@ export default function MessageSuper() {
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleCloseSubmit}>Create</Button>
         </DialogActions>
+      </Dialog>
+      <Dialog open={openImg} onClose={handleCloseImg}>
+        <DialogContent>
+          <img src={img}/>
+        </DialogContent>
       </Dialog>
     </Paper>
   );
