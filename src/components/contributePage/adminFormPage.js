@@ -85,7 +85,7 @@ export default function AdminForm() {
         sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
       >
         It is preferable that the admin is also an applicant of the BTO project.
-        Once verified, you will receive a sign-up link sent to your email.
+        Once verified, you will receive an email with your account details.
       </Typography>
 
       {/* ---------------------------------------------------------------------------------- */}

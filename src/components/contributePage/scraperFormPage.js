@@ -9,13 +9,70 @@ import {
   TextField,
   Button,
   Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   RadioGroup,
   FormControlLabel,
-  Radio,
+  Radio
 } from "@mui/material";
+import createUserRequestApi from "../api/createUserRequest";
+import { DataContext } from "../../App";
 
-export default function ScraperForm() {
+export default function AdminForm() {
+  const { projList } = React.useContext(DataContext);
   const [proj, setProj] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState();
+  const [ script, setScript ] = React.useState(false)
+
+  const emailRef = React.useRef();
+  const messageRef = React.useRef();
+  const validationRef = React.useRef();
+
+  const handleClose = () => {
+    if (message === "Form submitted. Thank you for your contribution.") {
+      window.location.reload();
+    }
+    setOpen(false);
+  };
+
+  const submitHandler = async () => {
+    const obj = {
+      launch: proj,
+      role: "data_scraper",
+      email: emailRef.current.value,
+      message: messageRef.current.value,
+      validation: validationRef.current.value,
+    };
+    const formSubmit = await createUserRequestApi(obj);
+    if (formSubmit.message) {
+      setMessage("Form submit failed. Please check your fields again.");
+      setOpen(true);
+    } else {
+      setMessage("Form submitted. Thank you for your contribution.");
+      setOpen(true);
+    }
+  };
+
+  const launchArr = () => {
+    let arr = [];
+    projList.forEach((element, index) => {
+      arr.push(
+        <MenuItem value={element}>
+          {element[0].toUpperCase() +
+            element.slice(1, 3) +
+            " " +
+            element.slice(3, 7) +
+            " " +
+            element[7].toUpperCase() +
+            element.slice(8)}
+        </MenuItem>
+      );
+    });
+    return arr;
+  };
 
   const projHandleChange = (event) => {
     setProj(event.target.value);
@@ -24,16 +81,15 @@ export default function ScraperForm() {
   return (
     <Container maxWidth="md">
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
-        Data Scraper Application Form
+        Admin Application Form
       </Typography>
 
       <Typography
         variant="body2"
         sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
       >
-        Data Scrapers MUST be an applicant of the BTO project and have access to
-        the exclusive BTO viewing page. Once verified, you will receive a
-        sign-up link sent to your email.
+        It is preferable that the admin is also an applicant of the BTO project.
+        Once verified, you will receive an email with your account details.
       </Typography>
 
       {/* ---------------------------------------------------------------------------------- */}
@@ -54,9 +110,7 @@ export default function ScraperForm() {
           label="BTO project"
           onChange={projHandleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {launchArr()}
         </Select>
       </FormControl>
 
@@ -66,17 +120,17 @@ export default function ScraperForm() {
         fontWeight="bold"
         sx={{ marginTop: "0.5rem", textAlign: "justify" }}
       >
-        Why do you want to be a data scraper?
+        Why do you want to be an admin?
       </Typography>
       <Typography
         variant="body2"
         sx={{ marginBottom: "1vh", textAlign: "justify" }}
       >
         We would love to know more about you. This is also to filter spams and
-        make sure that our selected data scrapers are committed.
+        make sure that our selected admins are committed.
       </Typography>
 
-      <TextField multiline rows={2} fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField inputRef={messageRef} multiline rows={2} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -87,7 +141,7 @@ export default function ScraperForm() {
         Your email address
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField inputRef={emailRef} fullWidth sx={{ marginBottom: "3vh" }} />
 
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
@@ -106,7 +160,8 @@ export default function ScraperForm() {
         censor private information (eg. your name, address etc).
       </Typography>
 
-      <TextField fullWidth sx={{ marginBottom: "3vh" }} />
+      <TextField inputRef={validationRef} fullWidth sx={{ marginBottom: "3vh" }} />
+
       {/* ---------------------------------------------------------------------------------- */}
       <Typography
         variant="body1"
@@ -122,18 +177,20 @@ export default function ScraperForm() {
           name="row-radio-buttons-group"
           sx={{ marginBottom: "3vh" }}
         >
-          <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-          <FormControlLabel value="no" control={<Radio />} label="No" />
+          <FormControlLabel onFocus={()=>setScript(true)} value="yes" control={<Radio />} label="Yes" />
+          <FormControlLabel onFocus={()=>setScript(false)} value="no" control={<Radio />} label="No" />
         </RadioGroup>
       </FormControl>
 
       {/* ---------------------------------------------------------------------------------- */}
+      {script?
+      <>
       <Typography
         variant="body1"
         fontWeight="bold"
         sx={{ marginTop: "0.5rem", textAlign: "justify" }}
       >
-        Are you willing to share your script? {/* make it appear only if yes was selected */}
+        Are you willing to share your script?
       </Typography>
       <FormControl>
         <RadioGroup
@@ -146,6 +203,7 @@ export default function ScraperForm() {
           <FormControlLabel value="no" control={<Radio />} label="No" />
         </RadioGroup>
       </FormControl>
+      </>:""}
 
       {/* ---------------------------------------------------------------------------------- */}
       <Box
@@ -155,8 +213,28 @@ export default function ScraperForm() {
           marginBottom: "8vh",
         }}
       >
-        <Button variant="outlined">Submit form</Button>
+        <Button onClick={submitHandler} variant="outlined">
+          Submit form
+        </Button>
       </Box>
+
+      {/* ---------------------------------------------------------------------------------- */}
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {message}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
