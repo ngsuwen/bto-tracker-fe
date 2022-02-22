@@ -9,6 +9,8 @@ import {
   Paper,
   Tabs,
   Tab,
+  Dialog,
+  DialogContent
 } from "@mui/material";
 import SwipeableViews from "react-swipeable-views";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
@@ -34,9 +36,23 @@ export default function Message() {
   const [swipeableComp, setSwipeableComp] = React.useState([]);
   const [unitTypesTabs, setUnitTypesTabs] = React.useState([]);
   const [queue, setQueue] = React.useState({"r6":[1]})
-  
-  // user context
-  const { user } = React.useContext(DataContext);
+
+  const [img, setImg] = React.useState();
+  const [openImg, setOpenImg] = React.useState(false);
+
+// user context
+const { user } = React.useContext(DataContext);
+
+  // view image
+  const openImage=(img)=>{
+    setOpenImg(true)
+    setImg(img)
+  }
+
+  // close image
+  const handleCloseImg = () => {
+    setOpenImg(false);
+  };
 
   // useeffect - proj details, for unit_breakdown
   React.useEffect(() => {
@@ -83,6 +99,7 @@ export default function Message() {
                         {messageStr(value.date, value.number)}
                       </Typography>
                       <ImageSearchIcon
+                        onClick={()=>openImage(value.validation)}
                         fontSize="small"
                         color="action"
                         sx={{ marginLeft: "0.5rem" }}
@@ -224,6 +241,11 @@ export default function Message() {
           {swipeableComp}
         </SwipeableViews>
       </Paper>
+      <Dialog open={openImg} onClose={handleCloseImg}>
+        <DialogContent>
+          <img src={img}/>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
