@@ -13,14 +13,13 @@ import {
   List,
   ListItem,
   ListItemText,
-  IconButton,
+  Tooltip
 } from "@mui/material";
 import getUnitsPerBlkApi from "../../api/getUnitsPerBlk";
 import getUnitsListApi from "../../api/getUnitsList";
 import { useParams } from "react-router-dom";
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
 import { DataContext } from "../../../App";
+import editUnitApi from "../../api/editUnit";
 
 // available colors
 const colorCode = {
@@ -40,26 +39,39 @@ export default function UnitsAdmin() {
 
   const { user } = React.useContext(DataContext);
 
+  // sort function
+  // function compare( a, b ) {
+  //   if ( a.blk < b.blk ){
+  //     return -1;
+  //   }
+  //   if ( a.blk > b.blk ){
+  //     return 1;
+  //   }
+  //   return 0;
+  // }
+  
   // check unit availability
   function checkUnitAvaiable(level) {
     let cell = [];
     for (let i = 0; i < unitNo.length; i++) {
       if (unitBlk.taken.includes(level + "-" + unitNo[i])) {
-        cell.push(<TableCell sx={{ bgcolor: "#999999" }} />);
+        cell.push(<Tooltip title={level + "-" + unitNo[i]}><TableCell sx={{ bgcolor: "#999999" }} onClick={()=>submitHandler(blk, level + "-" + unitNo[i], true)} /></Tooltip>);
         continue;
       }
       let added = false;
       for (let j = 0; j < unitBlk.total.length; j++) {
         if (unitBlk.total[j][0].includes(level + "-" + unitNo[i])) {
           cell.push(
-            <TableCell sx={{ bgcolor: colorCode[unitBlk.total[j][1]] }} />
+            <Tooltip title={level + "-" + unitNo[i]}>
+            <TableCell sx={{ bgcolor: colorCode[unitBlk.total[j][1]] }}  onClick={()=>submitHandler(blk, level + "-" + unitNo[i], false)}/>
+            </Tooltip>
           );
           added = true;
           break;
         }
       }
       if (!added) {
-        cell.push(<TableCell sx={{ bgcolor: "#fff" }} />);
+        cell.push(<Tooltip title={level + "-" + unitNo[i]}><TableCell sx={{ bgcolor: "#fff" }}  onClick={()=>submitHandler(blk, level + "-" + unitNo[i], false)}/></Tooltip>);
       }
     }
     return cell;
@@ -98,6 +110,14 @@ export default function UnitsAdmin() {
     };
     fetchData();
   }, [blk, launch]);
+
+  // submitHandler
+  const submitHandler=async(blk, unit, input)=>{
+    const submit = await editUnitApi(user.fk_launch, blk, unit, input)
+    if (submit.status){
+      window.location.reload()
+    }
+  }
 
 
   return (
@@ -166,7 +186,7 @@ export default function UnitsAdmin() {
                   >
                     <ListItemText
                       primary={
-                        <Box display="flex" sx={{ minWidth: 500 }}>
+                        <Box display="flex" sx={{ minWidth: 500 }} onClick={()=>submitHandler(value.blk, value.unit, !value.availability)}>
                           <Typography sx={{ marginBottom: "0.5rem" }} style={{color:value.availability?"#000000":"#DCDCDC"}}>
                             {value.blk+": "+value.unit}
                           </Typography>
