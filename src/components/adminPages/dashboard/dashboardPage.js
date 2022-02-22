@@ -5,6 +5,8 @@ import MessageSuper from "./messageSuper";
 import Queue from "./queue";
 import Project from "./project";
 import User from "./user";
+import Units from "./units";
+
 import { DataContext } from "../../../App";
 import getQueueListApi from "../../api/getQueueList";
 
@@ -23,6 +25,8 @@ export default function Dashboard() {
   return (
     <Container maxWidth="md">
       {user?
+      user.role==="data_scraper"?
+      "":
       <>
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
         Messages
@@ -35,27 +39,26 @@ export default function Dashboard() {
         These messages require your verification. Messages will be auto deleted
         after you have acknowledged them.
       </Typography>
+      </>
+      :""}
 
       {/* ---------------------------------------------------------------------------------- */}
-
-      {user.role==="superadmin"?
-      <>
-      <MessageSuper data={queue} />
-      </>:
+      {user?
+      user.role==="superadmin"?
+      <MessageSuper data={queue} />:
       user.role==="admin"?
-      <MessageAdmin data={queue} />:""}
+      <MessageAdmin data={queue} />:"":""}
 
       {/* ---------------------------------------------------------------------------------- */}
-
-      {user.role==="superadmin"?
+      
+      {user?
+      user.role==="superadmin"?
       <>
       <Project />
       <User />
       </>:
       user.role==="admin"?
-      <Queue/>:""}
-
-      </>:""}
+      <Queue/>:<Units/>:""}
       {/* ---------------------------------------------------------------------------------- */}
     
     </Container>
