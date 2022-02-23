@@ -14,7 +14,7 @@ export default function editQueueAckApi(launch, type, number, statusUpdate) {
       redirect: "follow",
     };
   
-    const result = fetch(`https://bto-tracker-website.herokuapp.com/api/queue/${launch}/${type}/${number}`, requestOptions)
+    const result = fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/api/queue/${launch}/${type}/${number}`, requestOptions)
       .then((response) => response.json())
       .catch((error) => console.log("error", error));
   

@@ -14,7 +14,7 @@ export default function getUnitsPerblkObjApi(launch, blk) {
   const objOutput = {};
 
   const result = fetch(
-    `https://bto-tracker-website.herokuapp.com/api/units/${launch}/${blk}`,
+    `${process.env.REACT_APP_BACKEND_BASE_URL}/api/units/${launch}/${blk}`,
     requestOptions
   )
     .then((response) => response.json())

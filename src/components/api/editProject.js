@@ -43,7 +43,7 @@ export default function editProjectApi(launch, obj, state) {
     redirect: "follow",
   };
 
-  const result = fetch(`https://bto-tracker-website.herokuapp.com/api/project/${launch}`, requestOptions)
+  const result = fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/api/project/${launch}`, requestOptions)
     .then((response) => response.json())
     .catch((error) => console.log("error", error));
 

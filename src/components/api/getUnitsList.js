@@ -5,7 +5,7 @@ export default function getUnitsListApi(launch) {
   };
 
   const result = fetch(
-    `https://bto-tracker-website.herokuapp.com/api/units/${launch}`,
+    `${process.env.REACT_APP_BACKEND_BASE_URL}/api/units/${launch}`,
     requestOptions
   )
     .then((response) => response.json())
