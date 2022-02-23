@@ -5,6 +5,7 @@ import * as React from "react";
 import { Container, TextField, MenuItem, Typography, Box, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { DataContext } from "../../App";
+import { Link } from "react-router-dom";
 
 // page destination
 const searchFx = [
@@ -13,7 +14,7 @@ const searchFx = [
     label: "Project Information",
   },
   {
-    value: "tracker",
+    value: "tracker/summary",
     label: "Tracker",
   },
 ];
@@ -130,12 +131,14 @@ export default function Search() {
             </MenuItem>
           ))}
         </TextField>
+        <Link to={(search && bto)?`/${search}/${bto}`:''}>
         <SearchIcon
           fontSize="medium"
           filled="true"
           sx={searchIcon}
         />
         <Button variant="contained" sx={searchButton}>Submit</Button>
+        </Link>
       </Container>
     </Container>
   );

@@ -24,7 +24,7 @@ import { create } from 'ipfs-http-client'
 const url = 'https://ipfs.infura.io:5001/api/v0'
 const client = create(url)
 
-export default function AdminForm() {
+export default function ScraperForm() {
   const { projList } = React.useContext(DataContext);
   const [proj, setProj] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -97,14 +97,14 @@ export default function AdminForm() {
   return (
     <Container maxWidth="md">
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
-        Admin Application Form
+        Data Scraper Application Form
       </Typography>
 
       <Typography
         variant="body2"
         sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
       >
-        It is preferable that the admin is also an applicant of the BTO project.
+        You have to be an applicant with access to the Project's units page to be a data scraper.
         Once verified, you will receive an email with your account details.
       </Typography>
 
@@ -136,14 +136,14 @@ export default function AdminForm() {
         fontWeight="bold"
         sx={{ marginTop: "0.5rem", textAlign: "justify" }}
       >
-        Why do you want to be an admin?
+        Why do you want to be a data scraper?
       </Typography>
       <Typography
         variant="body2"
         sx={{ marginBottom: "1vh", textAlign: "justify" }}
       >
         We would love to know more about you. This is also to filter spams and
-        make sure that our selected admins are committed.
+        make sure that our selected data scrapers are committed.
       </Typography>
 
       <TextField inputRef={messageRef} multiline rows={2} fullWidth sx={{ marginBottom: "3vh" }} />
