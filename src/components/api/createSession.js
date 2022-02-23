@@ -9,6 +9,7 @@ export default function createSessionApi(username, password) {
 
   var requestOptions = {
     method: "POST",
+    credentials: "include",
     headers: myHeaders,
     body: raw
   };
