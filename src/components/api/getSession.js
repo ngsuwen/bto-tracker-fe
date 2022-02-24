@@ -1,6 +1,7 @@
 export default function getSessionApi() {
     var requestOptions = {
       method: "GET",
+      credentials: "include",
       redirect: "follow",
     };
   
