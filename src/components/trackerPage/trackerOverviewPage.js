@@ -25,7 +25,7 @@ export default function TrackerOverview() {
   };
 
   React.useEffect(()=>{
-    var storedWatchlist = JSON.parse(localStorage.watchlist);
+    var storedWatchlist = localStorage.watchlist?JSON.parse(localStorage.watchlist):[];
     setWatchlist(storedWatchlist)
     let projArr=[]
     const fetchData=async()=>{
@@ -49,7 +49,7 @@ export default function TrackerOverview() {
           spacing={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
-          {projList.length>0 && watchlist.length>0?getWatchlist():""}
+          {projList.length>0?getWatchlist():""}
         </Grid>
       </Container>
     </>

@@ -25,7 +25,7 @@ export default function Tabs() {
       const data = await findOneProjectApi(launch);  
       data.launch = data.launch[0].toUpperCase()+data.launch.slice(1,3)+' '+data.launch.slice(3,7)
       setProject(data);
-      var storedWatchlist = JSON.parse(localStorage.watchlist);
+      var storedWatchlist = localStorage.watchlist?JSON.parse(localStorage.watchlist):[];
       setFavourite(storedWatchlist.includes(data.name)?true:false)
     };
     fetchData();
@@ -57,7 +57,7 @@ export default function Tabs() {
   // favourite handler
   const favouriteHandler=()=>{
     setFavourite(!favourite)
-    var storedWatchlist = JSON.parse(localStorage.watchlist);
+    var storedWatchlist = localStorage.watchlist?JSON.parse(localStorage.watchlist):[];
     if (favourite){
       storedWatchlist.splice(storedWatchlist.indexOf(project.name),1)
       localStorage.watchlist = JSON.stringify(storedWatchlist);
