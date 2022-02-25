@@ -38,6 +38,7 @@ export default function AddUnits() {
   const { r2, r3, r4, r5, gen } = state;
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = React.useState();
+  const [clicked, setClicked] = React.useState(false);
 
   const projHandleChange = (event) => {
     setProj(event.target.value);
@@ -52,15 +53,18 @@ export default function AddUnits() {
       gen: e,
     });
   };
-
+  
   const handleClose = () => {
     if (message === "Added units successfully.") {
+      setClicked(false)
       window.location.reload();
     }
+    setClicked(false)
     setOpen(false);
   };
 
   const submitHandler = async () => {
+    setClicked(true)
     try {
       let floorRange = floors.split(" to ");
       let floorExcept = except.split(", ");
@@ -324,8 +328,8 @@ export default function AddUnits() {
           marginBottom: "8vh",
         }}
       >
-        <Button onClick={submitHandler} variant="outlined">
-          Add new
+        <Button disabled={clicked} onClick={submitHandler} variant="outlined">
+          {clicked?"Adding...":"Add new"}
         </Button>
       </Box>
 
