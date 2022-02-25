@@ -11,9 +11,17 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import { DataContext } from "../../../App";
+import deleteProjectApi from "../../api/deleteProj";
 
 export default function Project() {
   const { projList } = React.useContext(DataContext);
+
+  const deleteHandler=async(launch)=>{
+    const result = await deleteProjectApi(launch)
+    if (result){
+      window.location.reload()
+    }
+  }
   
   // project list function
   const projectList =()=>{
@@ -30,7 +38,7 @@ export default function Project() {
                 <AddIcon sx={{ marginBottom: "0.7rem" }} />
               </IconButton>
             </Link>
-            <IconButton>
+            <IconButton onClick={deleteHandler}>
               <CloseIcon sx={{ marginBottom: "0.7rem" }} />
             </IconButton>
           </>

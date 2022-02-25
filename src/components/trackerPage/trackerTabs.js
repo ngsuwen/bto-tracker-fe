@@ -40,7 +40,7 @@ export default function Tabs() {
           blocks.push(element.blk)
         }
       })
-      setBlks(blocks)
+      setBlks(blocks.sort())
     }
     fetchData()
   },[])

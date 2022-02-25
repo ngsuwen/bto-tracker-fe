@@ -29,7 +29,7 @@ export default function Units() {
           blocks.push(element.blk);
         }
       });
-      setBlks(blocks);
+      setBlks(blocks.sort());
     };
     fetchData();
   }, []);
