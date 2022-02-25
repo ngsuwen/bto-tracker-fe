@@ -4,6 +4,7 @@ export default function deleteSessionApi() {
   
     var requestOptions = {
       method: "DELETE",
+      credentials: "include",
       headers: myHeaders,
     };
   

@@ -2,24 +2,20 @@ import * as React from "react";
 import { Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import getUnitsListApi from "../../api/getUnitsList";
-import findOneProjectApi from "../../api/findOneProject";
+import getUnitsFeedbackApi from "../../api/getUnitsFeedback";
 import { DataContext } from "../../../App";
+import MessageScraper from "./messageScraper";
 
 export default function Units() {
-  const [project, setProject] = React.useState({});
+  const [messages, setMessages] = React.useState([]);
   const [blks, setBlks] = React.useState([]);
 
   const { user } = React.useContext(DataContext);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await findOneProjectApi(user.fk_launch);
-      data.launch =
-        data.launch[0].toUpperCase() +
-        data.launch.slice(1, 3) +
-        " " +
-        data.launch.slice(3, 7);
-      setProject(data);
+      const data = await getUnitsFeedbackApi(user.fk_launch);
+      setMessages(data);
     };
     fetchData();
   }, []);
@@ -66,8 +62,21 @@ export default function Units() {
 
   return (
     <Container maxWidth="md">
+      <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "8vh" }}>
+        Messages
+      </Typography>
+
+      <Typography
+        variant="body2"
+        sx={{ marginTop: "0.5rem", marginBottom: "3vh", textAlign: "justify" }}
+      >
+        These messages require your verification.
+      </Typography>
+
+      <MessageScraper data={messages}/>
+
       <Typography variant="h5" fontWeight="bold" sx={{ marginTop: "3rem" }}>
-        {project.name}
+      Overview
       </Typography>
       <Typography
         variant="body1"

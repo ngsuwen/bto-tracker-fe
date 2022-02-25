@@ -54,10 +54,7 @@ export default function Units() {
         }
       }
       if (!added) {
-        cell.push(
-          <Tooltip title={level + "-" + unitNo[i]}>
-            <TableCell sx={{ bgcolor: "#fff" }} />
-          </Tooltip>);
+        cell.push(<TableCell sx={{ bgcolor: "#fff" }} />);
       }
     }
     return cell;

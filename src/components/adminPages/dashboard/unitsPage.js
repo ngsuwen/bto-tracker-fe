@@ -71,7 +71,7 @@ export default function UnitsAdmin() {
         }
       }
       if (!added) {
-        cell.push(<Tooltip title={level + "-" + unitNo[i]}><TableCell sx={{ bgcolor: "#fff" }}  onClick={()=>submitHandler(blk, level + "-" + unitNo[i], false)}/></Tooltip>);
+        cell.push(<TableCell sx={{ bgcolor: "#fff" }} />);
       }
     }
     return cell;
@@ -109,7 +109,7 @@ export default function UnitsAdmin() {
       console.log(launch)
     };
     fetchData();
-  }, [blk, launch]);
+  }, [blk, launch, user]);
 
   // submitHandler
   const submitHandler=async(blk, unit, input)=>{
@@ -122,6 +122,7 @@ export default function UnitsAdmin() {
 
   return (
     <>
+    {user?
       <Container maxWidth="md">
         {blk ? (
           <>
@@ -200,6 +201,7 @@ export default function UnitsAdmin() {
           </Paper>
         )}
       </Container>
+      :""}
     </>
   );
 }
