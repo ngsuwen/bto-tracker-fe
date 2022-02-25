@@ -25,7 +25,7 @@ export default function Project() {
         key={element}
         secondaryAction={
           <>
-            <Link to="/admin/add/units">
+            <Link to={`/admin/add/units/${element}`}>
               <IconButton>
                 <AddIcon sx={{ marginBottom: "0.7rem" }} />
               </IconButton>

@@ -111,7 +111,7 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/admin/add" element={<AddBto />} />
-        <Route path="/admin/add/units" element={<AddUnits />} />
+        <Route path="/admin/add/units/:launch" element={<AddUnits />} />
         <Route path="/admin/add/user" element={<AddUser />} />
         <Route path="/admin/edit/:launch" element={<EditBto />} />
         <Route path="/admin/edit/units" element={<EditUnits />} />

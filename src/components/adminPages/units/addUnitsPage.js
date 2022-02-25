@@ -9,9 +9,6 @@ import {
   Box,
   Radio,
   RadioGroup,
-  InputLabel,
-  MenuItem,
-  Select,
   Dialog,
   DialogActions,
   DialogContent,
@@ -19,11 +16,12 @@ import {
 } from "@mui/material";
 import { DataContext } from "../../../App";
 import addUnitApi from "../../api/addUnit";
+import { useParams } from "react-router-dom";
 
 export default function AddUnits() {
-  const { projList } = React.useContext(DataContext);
+  const { user } = React.useContext(DataContext);
   // useStates
-  const [proj, setProj] = React.useState("");
+  // const [proj, setProj] = React.useState("");
   const [blk, setBlk] = React.useState();
   const [unitNo, setUnitNo] = React.useState();
   const [floors, setFloors] = React.useState();
@@ -39,10 +37,16 @@ export default function AddUnits() {
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = React.useState();
   const [clicked, setClicked] = React.useState(false);
+  
+  let { launch } = useParams();
 
-  const projHandleChange = (event) => {
-    setProj(event.target.value);
-  };
+  // React.useEffect(()=>{
+  //   setProj(launch)
+  // },[])
+
+  // const projHandleChange = (event) => {
+  //   setProj(event.target.value);
+  // };
 
   const radioHandler = (a, b, c, d, e) => {
     setState({
@@ -87,7 +91,7 @@ export default function AddUnits() {
             }
           }
           const obj = {
-            launch: proj,
+            launch: launch,
             blk: blk,
             unit: unit + "-" + unitNo,
             unit_type: unitType,
@@ -109,26 +113,28 @@ export default function AddUnits() {
     }
   };
 
-  const launchArr = () => {
-    let arr = [];
-    projList.forEach((element, index) => {
-      arr.push(
-        <MenuItem value={element}>
-          {element[0].toUpperCase() +
-            element.slice(1, 3) +
-            " " +
-            element.slice(3, 7) +
-            " " +
-            element[7].toUpperCase() +
-            element.slice(8)}
-        </MenuItem>
-      );
-    });
-    return arr;
-  };
+  // const launchArr = () => {
+  //   let arr = [];
+  //   projList.forEach((element, index) => {
+  //     arr.push(
+  //       <MenuItem value={element}>
+  //         {element[0].toUpperCase() +
+  //           element.slice(1, 3) +
+  //           " " +
+  //           element.slice(3, 7) +
+  //           " " +
+  //           element[7].toUpperCase() +
+  //           element.slice(8)}
+  //       </MenuItem>
+  //     );
+  //   });
+  //   return arr;
+  // };
 
   return (
     <Container maxWidth="md">
+      {user?
+      <>
       <Typography
         variant="h5"
         fontWeight="bold"
@@ -157,8 +163,8 @@ export default function AddUnits() {
       </Typography>
 
       <FormControl fullWidth sx={{ marginBottom: "3vh" }}>
-        <InputLabel id="demo-simple-select-label">BTO project</InputLabel>
-        <Select
+        {/* <InputLabel id="demo-simple-select-label">BTO project</InputLabel> */}
+        {/* <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={proj}
@@ -166,7 +172,14 @@ export default function AddUnits() {
           onChange={projHandleChange}
         >
           {launchArr()}
-        </Select>
+        </Select> */}
+        <TextField
+          id="outlined-read-only-input"
+          defaultValue={launch[0].toUpperCase()+launch.slice(1,3)+' '+launch.slice(3,7)+' '+launch[7].toUpperCase()+launch.slice(8)}
+          InputProps={{
+            readOnly: true,
+          }}
+        />
       </FormControl>
 
       {/* ---------------------------------------------------------------------------------- */}
@@ -350,6 +363,7 @@ export default function AddUnits() {
           <Button onClick={handleClose}>Ok</Button>
         </DialogActions>
       </Dialog>
+      </>:""}
     </Container>
   );
 }
