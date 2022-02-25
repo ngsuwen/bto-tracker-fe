@@ -38,7 +38,7 @@ export default function Project() {
                 <AddIcon sx={{ marginBottom: "0.7rem" }} />
               </IconButton>
             </Link>
-            <IconButton onClick={deleteHandler}>
+            <IconButton onClick={()=>deleteHandler(element)}>
               <CloseIcon sx={{ marginBottom: "0.7rem" }} />
             </IconButton>
           </>
