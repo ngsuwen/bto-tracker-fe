@@ -35,7 +35,7 @@ One pain point many BTO buyers face is the flat selection process. HDB will only
 
 - Once the application is accepted by the administrators, users will receive an email with their username and password. 
 
-![image](https://user-images.githubusercontent.com/88722847/156010774-10c5b7ca-316f-421f-b949-d7c4aff56ea9.png)
+![image](https://user-images.githubusercontent.com/88722847/156013752-0ed357cb-7e3b-4dc0-800c-a032b9ba873e.png)
 
 - Users can change their password upon logging in for the first time. 
 
