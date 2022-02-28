@@ -46,3 +46,4 @@ Back-End [Repo](https://github.com/ngsuwen/bto-tracker-be).
 ## Ways to improve
 
 - More information for the public would be really useful, eg price of unit. 
+- Prepare a scraping script for data scrapers if they do not have a script ready. 
